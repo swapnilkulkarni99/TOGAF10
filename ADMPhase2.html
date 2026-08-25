@@ -26,13 +26,14 @@
     selectedStep: 1,
     csStep: 1,
     selectedTemplate: 'saw',
+    activeBrainNode: 'triggers',
     flashcards: [
-      { q: 'What formally triggers the start of Phase A (Architecture Vision)?', a: 'Receipt of a formal Request for Architecture Work sent from the sponsoring organization to the architecture organization.', open: false },
-      { q: 'What is the primary output contract that governs the architecture development project?', a: 'The approved Statement of Architecture Work, signed by the sponsoring organization.', open: false },
-      { q: 'What is the key difference between the Architecture Definition Document and the Architecture Requirements Specification?', a: 'The Architecture Definition Document provides the qualitative view of the solution, while the Architecture Requirements Specification provides the quantitative view.', open: false },
-      { q: 'What technique is used in Phase A to discover and document business needs?', a: 'Business Scenarios, which derive requirements from business value, outcomes, and SMART objectives.', open: false },
-      { q: 'What are the 5 SMART criteria required for outcomes in a Business Scenario?', a: 'Specific, Measurable, Actionable, Realistic, and Time-bound (SMART).', open: false },
-      { q: 'How many detailed steps are defined in TOGAF ADM Phase A?', a: '11 detailed steps, beginning with establishing the project and ending with securing approval for the Statement of Architecture Work.', open: false }
+      { q: 'What formally triggers the start of Phase A (Architecture Vision)?', a: 'Receipt of a formal Request for Architecture Work sent from the sponsoring organization to the architecture organization[cite: 3, 4].', open: false },
+      { q: 'What is the primary output contract that governs the architecture development project?', a: 'The approved Statement of Architecture Work, signed by the sponsoring organization[cite: 3, 4].', open: false },
+      { q: 'What is the key difference between the Architecture Definition Document and the Architecture Requirements Specification?', a: 'The Architecture Definition Document provides the qualitative view of the solution, while the Architecture Requirements Specification provides the quantitative view[cite: 3, 4].', open: false },
+      { q: 'What technique is used in Phase A to discover and document business needs?', a: 'Business Scenarios, which derive requirements from business value, outcomes, and SMART objectives[cite: 3, 4].', open: false },
+      { q: 'What are the 5 SMART criteria required for outcomes in a Business Scenario?', a: 'Specific, Measurable, Actionable, Realistic, and Time-bound (SMART)[cite: 3, 4].', open: false },
+      { q: 'How many detailed steps are defined in TOGAF ADM Phase A?', a: '11 detailed steps, beginning with establishing the project and ending with securing approval for the Statement of Architecture Work[cite: 3, 4].', open: false }
     ]
   }" class="flex-1 flex flex-col max-w-7xl w-full mx-auto p-4 md:p-6 gap-6">
 
@@ -55,7 +56,7 @@
           <i class="fa-solid fa-compass-drafting text-amber-600 text-xl"></i>
           <div>
             <p class="font-bold text-amber-950">Core Value Proposition</p>
-            <p class="text-amber-800">Sets the aspirational target vision, defines scope, and secures formal mandate to execute.</p>
+            <p class="text-amber-800">Sets the aspirational target vision, defines scope, and secures formal mandate to execute[cite: 3, 4].</p>
           </div>
         </div>
       </div>
@@ -65,6 +66,9 @@
     <nav class="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
       <button @click="activeTab = 'overview'" :class="activeTab === 'overview' ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'" class="px-4 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
         <i class="fa-solid fa-chart-pie"></i> Overview & Purpose
+      </button>
+      <button @click="activeTab = 'brainmap'" :class="activeTab === 'brainmap' ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'" class="px-4 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
+        <i class="fa-solid fa-sitemap text-amber-300"></i> Phase A Brainmap
       </button>
       <button @click="activeTab = 'steps'" :class="activeTab === 'steps' ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'" class="px-4 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
         <i class="fa-solid fa-list-check"></i> 11 Steps & Workflow
@@ -87,7 +91,7 @@
       <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl shadow-sm flex items-start gap-3">
         <span class="text-xl">💡</span>
         <div class="text-xs md:text-sm text-blue-950">
-          <strong class="font-bold">Must-Know Foundation Fact:</strong> Phase A represents the formal start of an architecture development cycle. It builds directly on the capability established in the Preliminary Phase and begins upon receipt of a formal <strong>Request for Architecture Work</strong>. Its core output is an approved <strong>Statement of Architecture Work</strong> that serves as the governing contract for the project.
+          <strong class="font-bold">Must-Know Foundation Fact:</strong> Phase A represents the formal start of an architecture development cycle[cite: 3, 4]. It builds directly on the capability established in the Preliminary Phase and begins upon receipt of a formal <strong>Request for Architecture Work</strong>[cite: 3, 4]. Its core output is an approved <strong>Statement of Architecture Work</strong> that serves as the governing contract for the project[cite: 3, 4].
         </div>
       </div>
 
@@ -102,12 +106,12 @@
             <h3 class="text-base font-bold text-slate-900 mb-2">Core Purpose</h3>
             <div class="prose prose-slate max-w-none text-xs">
               <p>
-                Establish the architecture project, define its boundaries, identify key stakeholders and concerns, and develop a high-level aspirational vision across all BDAT domains (Business, Data, Application, Technology) to solve a business problem and secure executive approval.
+                Establish the architecture project, define its boundaries, identify key stakeholders and concerns, and develop a high-level aspirational vision across all BDAT domains (Business, Data, Application, Technology) to solve a business problem and secure executive approval[cite: 3, 4].
               </p>
             </div>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 flex items-center gap-1.5">
-            <i class="fa-solid fa-circle-info text-blue-500"></i> Serves as an aspirational vision and boundary for downstream phases.
+            <i class="fa-solid fa-circle-info text-blue-500"></i> Serves as an aspirational vision and boundary for downstream phases[cite: 3, 4].
           </div>
         </div>
 
@@ -119,19 +123,19 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
               <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">1. Aspirational Vision</span>
-              <p class="text-xs font-medium text-slate-800 mt-1">Develop a first-cut, high-level description of Baseline and Target states across all BDAT domains.</p>
+              <p class="text-xs font-medium text-slate-800 mt-1">Develop a first-cut, high-level description of Baseline and Target states across all BDAT domains[cite: 3, 4].</p>
             </div>
             <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
               <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">2. Project Governance Contract</span>
-              <p class="text-xs font-medium text-slate-800 mt-1">Consolidate scope, schedule, budget, and responsibilities into an approved Statement of Architecture Work.</p>
+              <p class="text-xs font-medium text-slate-800 mt-1">Consolidate scope, schedule, budget, and responsibilities into an approved Statement of Architecture Work[cite: 3, 4].</p>
             </div>
             <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
               <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">3. Business Transformation Readiness</span>
-              <p class="text-xs font-medium text-slate-800 mt-1">Assess the enterprise's willingness, workforce skills, and cultural readiness to accept change.</p>
+              <p class="text-xs font-medium text-slate-800 mt-1">Assess the enterprise's willingness, workforce skills, and cultural readiness to accept change[cite: 3, 4].</p>
             </div>
             <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
               <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">4. Scope Definition</span>
-              <p class="text-xs font-medium text-slate-800 mt-1">Specify what is in-scope and out-of-scope across breadth, depth, time horizon, and architecture levels.</p>
+              <p class="text-xs font-medium text-slate-800 mt-1">Specify what is in-scope and out-of-scope across breadth, depth, time horizon, and architecture levels[cite: 3, 4].</p>
             </div>
           </div>
         </div>
@@ -143,14 +147,14 @@
           <i class="fa-solid fa-align-left text-blue-600"></i> TOGAF 10 Fundamental Content Alignment
         </h3>
         <p class="text-xs md:text-sm text-slate-700">
-          In TOGAF 10, Phase A acts as the bridge between enterprise strategy and detailed domain architecture modeling. By translating high-level business goals and strategic drivers into an overarching Architecture Vision, the architect establishes clear guardrails for subsequent BDAT development in Phases B, C, and D. It creates the initial draft of the Architecture Definition Document and Architecture Requirements Specification, initializing qualitative and quantitative tracking for the entire ADM cycle.
+          In TOGAF 10, Phase A acts as the bridge between enterprise strategy and detailed domain architecture modeling[cite: 3, 4]. By translating high-level business goals and strategic drivers into an overarching Architecture Vision, the architect establishes clear guardrails for subsequent BDAT development in Phases B, C, and D[cite: 3, 4]. It creates the initial draft of the Architecture Definition Document and Architecture Requirements Specification, initializing qualitative and quantitative tracking for the entire ADM cycle[cite: 3, 4].
         </p>
       </div>
 
       <!-- Objectives Summary Table -->
       <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
         <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-crosshairs text-blue-600"></i> Primary Objectives of Phase A
+          <i class="fa-solid fa-crosshairs text-blue-600"></i> Primary Objectives of Phase A[cite: 3, 4]
         </h3>
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs md:text-sm">
@@ -164,28 +168,28 @@
             <tbody class="divide-y divide-slate-200 text-slate-700">
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">1. Aspirational Vision</td>
-                <td class="py-3 px-4">Formulate high-level summary of Baseline and Target BDAT architectures and business value.</td>
-                <td class="py-3 px-4 text-slate-600">Architecture Vision Document</td>
+                <td class="py-3 px-4">Formulate high-level summary of Baseline and Target BDAT architectures and business value[cite: 3, 4].</td>
+                <td class="py-3 px-4 text-slate-600">Architecture Vision Document[cite: 3, 4]</td>
               </tr>
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">2. Formal Mandate & Contract</td>
-                <td class="py-3 px-4">Define program of work, budget, resources, schedule, and secure sponsor approval.</td>
-                <td class="py-3 px-4 text-slate-600">Approved Statement of Architecture Work</td>
+                <td class="py-3 px-4">Define program of work, budget, resources, schedule, and secure sponsor approval[cite: 3, 4].</td>
+                <td class="py-3 px-4 text-slate-600">Approved Statement of Architecture Work[cite: 3, 4]</td>
               </tr>
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">3. Stakeholder Alignment</td>
-                <td class="py-3 px-4">Map stakeholders, concerns, business drivers, requirements, and communication needs.</td>
-                <td class="py-3 px-4 text-slate-600">Communications Plan & Stakeholder Map</td>
+                <td class="py-3 px-4">Map stakeholders, concerns, business drivers, requirements, and communication needs[cite: 3, 4].</td>
+                <td class="py-3 px-4 text-slate-600">Communications Plan & Stakeholder Map[cite: 3, 4]</td>
               </tr>
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">4. Capability & Readiness</td>
-                <td class="py-3 px-4">Evaluate organizational readiness for change and baseline capability maturity.</td>
-                <td class="py-3 px-4 text-slate-600">Capability Assessment & Transformation Readiness</td>
+                <td class="py-3 px-4">Evaluate organizational readiness for change and baseline capability maturity[cite: 3, 4].</td>
+                <td class="py-3 px-4 text-slate-600">Capability Assessment & Transformation Readiness[cite: 3, 4]</td>
               </tr>
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">5. Initial Containers</td>
-                <td class="py-3 px-4">Create qualitative container (ADD) and quantitative criteria container (Requirements Spec).</td>
-                <td class="py-3 px-4 text-slate-600">Draft ADD & Draft Architecture Requirements Spec</td>
+                <td class="py-3 px-4">Create qualitative container (ADD) and quantitative criteria container (Requirements Spec)[cite: 3, 4].</td>
+                <td class="py-3 px-4 text-slate-600">Draft ADD & Draft Architecture Requirements Spec[cite: 3, 4]</td>
               </tr>
             </tbody>
           </table>
@@ -194,19 +198,192 @@
 
     </div>
 
-    <!-- TAB 2: PHASE STEPS & WORKFLOW -->
+    <!-- TAB 2: BRAINMAP (MIND MAP VISUALIZATION) -->
+    <div x-show="activeTab === 'brainmap'" x-cloak class="space-y-6">
+      
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
+        
+        <!-- BRAINMAP HEADER -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <i class="fa-solid fa-sitemap text-blue-600"></i> Phase A Concept Brainmap
+            </h3>
+            <p class="text-xs text-slate-500 mt-0.5">Interactive mental structure mapping triggers, activities, deliverables, and techniques for Phase A[cite: 3, 4].</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-slate-600">Click a branch node to inspect detail:</span>
+          </div>
+        </div>
+
+        <!-- VISUAL MIND MAP GRAPH LAYOUT -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 items-start">
+          
+          <!-- CENTRAL CORE NODE -->
+          <div class="lg:col-span-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white rounded-2xl p-5 text-center shadow-md border border-blue-400 relative overflow-hidden">
+            <span class="text-xs font-extrabold uppercase tracking-widest bg-white/20 px-3 py-1 rounded-full text-blue-100">TOGAF 10 ADM</span>
+            <h2 class="text-2xl font-black text-white mt-1">PHASE A: ARCHITECTURE VISION</h2>
+            <p class="text-xs text-blue-100 max-w-2xl mx-auto mt-1">Initiates the ADM cycle, defines scope, builds consensus across BDAT domains, and secures approval for the Statement of Architecture Work[cite: 3, 4].</p>
+          </div>
+
+          <!-- BRANCH 1: TRIGGERS & CONTRACTS -->
+          <div @click="activeBrainNode = 'triggers'" 
+               :class="activeBrainNode === 'triggers' ? 'border-blue-600 bg-blue-50/60 shadow-md ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-blue-300'"
+               class="p-4 rounded-xl border transition-all cursor-pointer space-y-2 relative">
+            <div class="flex items-center gap-2 text-blue-800 font-bold text-xs uppercase tracking-wider">
+              <i class="fa-solid fa-file-signature text-base"></i> 1. Triggers & Contracts
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">Initiation & Mandate</h4>
+            <p class="text-xs text-slate-600">Begins with Request for Architecture Work; ends with approved Statement of Architecture Work[cite: 3, 4].</p>
+            <div class="pt-2 text-[11px] text-blue-700 font-semibold flex items-center justify-between">
+              <span>View details & concepts</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
+          <!-- BRANCH 2: 11 ACTIVITY STEPS -->
+          <div @click="activeBrainNode = 'steps'" 
+               :class="activeBrainNode === 'steps' ? 'border-blue-600 bg-blue-50/60 shadow-md ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-blue-300'"
+               class="p-4 rounded-xl border transition-all cursor-pointer space-y-2 relative">
+            <div class="flex items-center gap-2 text-amber-800 font-bold text-xs uppercase tracking-wider">
+              <i class="fa-solid fa-list-ol text-base"></i> 2. 11 Activity Steps
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">Execution Workflow</h4>
+            <p class="text-xs text-slate-600">Systematic process from project establishment to risk identification and contract sign-off[cite: 3, 4].</p>
+            <div class="pt-2 text-[11px] text-amber-700 font-semibold flex items-center justify-between">
+              <span>View step groupings</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
+          <!-- BRANCH 3: CORE CONTAINERS -->
+          <div @click="activeBrainNode = 'containers'" 
+               :class="activeBrainNode === 'containers' ? 'border-blue-600 bg-blue-50/60 shadow-md ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-blue-300'"
+               class="p-4 rounded-xl border transition-all cursor-pointer space-y-2 relative">
+            <div class="flex items-center gap-2 text-emerald-800 font-bold text-xs uppercase tracking-wider">
+              <i class="fa-solid fa-box-archive text-base"></i> 3. Deliverable Containers
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">ADD vs. Requirements Spec</h4>
+            <p class="text-xs text-slate-600">Qualitative container (ADD) paired with quantitative criteria (Requirements Spec)[cite: 3, 4].</p>
+            <div class="pt-2 text-[11px] text-emerald-700 font-semibold flex items-center justify-between">
+              <span>View deliverable models</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
+          <!-- BRANCH 4: CORE TECHNIQUES -->
+          <div @click="activeBrainNode = 'techniques'" 
+               :class="activeBrainNode === 'techniques' ? 'border-blue-600 bg-blue-50/60 shadow-md ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-blue-300'"
+               class="p-4 rounded-xl border transition-all cursor-pointer space-y-2 relative">
+            <div class="flex items-center gap-2 text-indigo-800 font-bold text-xs uppercase tracking-wider">
+              <i class="fa-solid fa-wand-magic-sparkles text-base"></i> 4. ADM Techniques
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">Business Scenarios & Readiness</h4>
+            <p class="text-xs text-slate-600">Deriving SMART outcomes and evaluating human/workforce readiness for change[cite: 3, 4].</p>
+            <div class="pt-2 text-[11px] text-indigo-700 font-semibold flex items-center justify-between">
+              <span>View technique rules</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BRAINMAP NODE DETAIL EXPANSION PANEL -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-xs md:text-sm">
+          
+          <!-- NODE 1 DETAILS -->
+          <div x-show="activeBrainNode === 'triggers'" class="space-y-3 prose prose-slate max-w-none">
+            <h4 class="text-blue-900 font-bold m-0 text-base">Branch 1: Triggers & Contractual Deliverables</h4>
+            <p class="m-0 text-slate-700">Phase A is framed by two critical documents that mark the transition into and out of vision development[cite: 3, 4]:</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 not-prose mt-2">
+              <div class="bg-white p-3 rounded-lg border border-slate-200">
+                <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold text-[10px]">TRIGGERING INPUT</span>
+                <strong class="block text-slate-900 font-bold text-xs mt-1">Request for Architecture Work</strong>
+                <p class="text-xs text-slate-600 mt-1">Sent from the sponsoring organization to the architecture team. Triggers Phase A initiation[cite: 3, 4].</p>
+              </div>
+              <div class="bg-white p-3 rounded-lg border border-slate-200">
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">GOVERNING CONTRACT</span>
+                <strong class="block text-slate-900 font-bold text-xs mt-1">Statement of Architecture Work</strong>
+                <p class="text-xs text-slate-600 mt-1">Approved contract detailing scope, budget, schedule, deliverables, and RACI responsibilities[cite: 3, 4].</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- NODE 2 DETAILS -->
+          <div x-show="activeBrainNode === 'steps'" class="space-y-3 prose prose-slate max-w-none">
+            <h4 class="text-amber-900 font-bold m-0 text-base">Branch 2: 11 Activity Steps Logical Grouping</h4>
+            <p class="m-0 text-slate-700">The 11 detailed steps of Phase A follow a logical progression[cite: 3, 4]:</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 not-prose mt-2">
+              <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
+                <strong class="text-blue-800 block">Initiation (1-3)</strong>
+                <span class="text-slate-600">Establish project, identify stakeholders/concerns, confirm goals & drivers[cite: 3, 4].</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
+                <strong class="text-blue-800 block">Evaluation (4-6)</strong>
+                <span class="text-slate-600">Evaluate capabilities, assess transformation readiness, define scope[cite: 3, 4].</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
+                <strong class="text-blue-800 block">Vision (7-9)</strong>
+                <span class="text-slate-600">Confirm principles, develop Architecture Vision, set value & KPIs[cite: 3, 4].</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
+                <strong class="text-blue-800 block">Approval (10-11)</strong>
+                <span class="text-slate-600">Identify transformation risks, secure approved Statement of Architecture Work[cite: 3, 4].</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- NODE 3 DETAILS -->
+          <div x-show="activeBrainNode === 'containers'" class="space-y-3 prose prose-slate max-w-none">
+            <h4 class="text-emerald-900 font-bold m-0 text-base">Branch 3: Qualitative vs. Quantitative Deliverable Containers</h4>
+            <p class="m-0 text-slate-700">Phase A creates draft versions of two companion containers that are refined in subsequent phases[cite: 3, 4]:</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 not-prose mt-2">
+              <div class="bg-white p-3 rounded-lg border border-slate-200">
+                <strong class="text-emerald-900 block font-bold text-xs">Architecture Definition Document (ADD)</strong>
+                <span class="text-xs text-slate-600 mt-1 block">Provides the <strong>QUALITATIVE</strong> view of the solution. Contains architecture models across BDAT domains for Baseline, Transition, and Target states[cite: 3, 4].</span>
+              </div>
+              <div class="bg-white p-3 rounded-lg border border-slate-200">
+                <strong class="text-emerald-900 block font-bold text-xs">Architecture Requirements Specification</strong>
+                <span class="text-xs text-slate-600 mt-1 block">Provides the <strong>QUANTITATIVE</strong> view of the solution. Contains measurable compliance criteria, service contracts, and performance constraints[cite: 3, 4].</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- NODE 4 DETAILS -->
+          <div x-show="activeBrainNode === 'techniques'" class="space-y-3 prose prose-slate max-w-none">
+            <h4 class="text-indigo-900 font-bold m-0 text-base">Branch 4: Essential ADM Techniques in Phase A</h4>
+            <p class="m-0 text-slate-700">Two foundational techniques drive information gathering in Phase A[cite: 3, 4]:</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 not-prose mt-2">
+              <div class="bg-white p-3 rounded-lg border border-slate-200">
+                <strong class="text-indigo-900 block font-bold text-xs">Business Scenarios</strong>
+                <span class="text-xs text-slate-600 mt-1 block">Identifies business needs and derives architecture characteristics. Requires <strong>SMART</strong> target outcomes (Specific, Measurable, Actionable, Realistic, Time-bound)[cite: 3, 4].</span>
+              </div>
+              <div class="bg-white p-3 rounded-lg border border-slate-200">
+                <strong class="text-indigo-900 block font-bold text-xs">Business Transformation Readiness Assessment</strong>
+                <span class="text-xs text-slate-600 mt-1 block">Joint effort between HR, corporate staff, and IT planners to evaluate cultural, workforce, and operational readiness to accept change[cite: 3, 4].</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 3: 11 STEPS & WORKFLOW -->
     <div x-show="activeTab === 'steps'" x-cloak class="space-y-6">
       
       <!-- CALLOUT: STEP EXAM TRAP -->
       <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm flex items-start gap-3">
         <span class="text-xl">⚠️</span>
         <div class="text-xs md:text-sm text-amber-950">
-          <strong class="font-bold">Exam Pitfall:</strong> Remember the sequence! Phase A officially begins upon receipt of a <strong>Request for Architecture Work</strong> (which is generated in Preliminary or Phase F/H). Phase A ends with the approval of the <strong>Statement of Architecture Work</strong>. Do not confuse the triggering input document with the final approved contract deliverable!
+          <strong class="font-bold">Exam Pitfall:</strong> Remember the sequence! Phase A officially begins upon receipt of a <strong>Request for Architecture Work</strong> (which is generated in Preliminary or Phase F/H)[cite: 3, 4]. Phase A ends with the approval of the <strong>Statement of Architecture Work</strong>[cite: 3, 4]. Do not confuse the triggering input document with the final approved contract deliverable!
         </div>
       </div>
 
       <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-        <h3 class="text-base font-bold text-slate-900 mb-2">The 11 Detailed Steps of Phase A</h3>
+        <h3 class="text-base font-bold text-slate-900 mb-2">The 11 Detailed Steps of Phase A[cite: 3, 4]</h3>
         <p class="text-xs text-slate-500 mb-6">Click on any step below to view activities, inputs, outputs, and high-yield exam takeaways.</p>
         
         <!-- Workflow Step Tracker Buttons -->
@@ -231,198 +408,198 @@
           <!-- Step 1 -->
           <div x-show="selectedStep === 1" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-folder-plus"></i> Step 1: Establish the Architecture Project
+              <i class="fa-solid fa-folder-plus"></i> Step 1: Establish the Architecture Project[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Formally set up the architecture project structure, establish project governance mechanisms, allocate architect resources, and initialize tracking steps upon receiving the formal Request for Architecture Work.</p>
+              <p>Formally set up the architecture project structure, establish project governance mechanisms, allocate architect resources, and initialize tracking steps upon receiving the formal Request for Architecture Work[cite: 3, 4].</p>
               <ul>
-                <li>Review the Request for Architecture Work sent from the sponsoring organization.</li>
-                <li>Conduct preliminary compliance and resource checks.</li>
-                <li>Set up project monitoring tools and repository partitions.</li>
+                <li>Review the Request for Architecture Work sent from the sponsoring organization[cite: 3, 4].</li>
+                <li>Conduct preliminary compliance and resource checks[cite: 3, 4].</li>
+                <li>Set up project monitoring tools and repository partitions[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: The Request for Architecture Work is the initiating input created in Preliminary, Phase F, or Phase H.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: The Request for Architecture Work is the initiating input created in Preliminary, Phase F, or Phase H[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 2 -->
           <div x-show="selectedStep === 2" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-users"></i> Step 2: Identify Stakeholders, Concerns, and Business Requirements
+              <i class="fa-solid fa-users"></i> Step 2: Identify Stakeholders, Concerns, and Business Requirements[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Identify key individuals, teams, or organizations with a interest in the system, document their concerns, and develop a Communications Plan using stakeholder mapping techniques.</p>
+              <p>Identify key individuals, teams, or organizations with an interest in the system, document their concerns, and develop a Communications Plan using stakeholder mapping techniques[cite: 3, 4].</p>
               <ul>
-                <li>Analyze stakeholder power, influence, and interest dimensions.</li>
-                <li>Identify key concerns (e.g., security, cost, performance, compliance).</li>
-                <li>Develop the Communications Plan defining who, what, when, and how information is shared.</li>
+                <li>Analyze stakeholder power, influence, and interest dimensions[cite: 3, 4].</li>
+                <li>Identify key concerns (e.g., security, cost, performance, compliance)[cite: 3, 4].</li>
+                <li>Develop the Communications Plan defining who, what, when, and how information is shared[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Stakeholders' concerns directly shape the architecture viewpoints selected in downstream phases.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: Stakeholders' concerns directly shape the architecture viewpoints selected in downstream phases[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 3 -->
           <div x-show="selectedStep === 3" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-bullseye"></i> Step 3: Confirm and Elaborate Business Goals, Drivers, and Constraints
+              <i class="fa-solid fa-bullseye"></i> Step 3: Confirm and Elaborate Business Goals, Drivers, and Constraints[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Review the broader enterprise context to confirm business principles, goals, and strategic drivers. Identify enterprise constraints such as budget, timeframes, and regulatory boundaries.</p>
+              <p>Review the broader enterprise context to confirm business principles, goals, and strategic drivers. Identify enterprise constraints such as budget, timeframes, and regulatory boundaries[cite: 3, 4].</p>
               <ul>
-                <li>Elaborate business strategy and market drivers prompting change.</li>
-                <li>Identify external and internal constraints impacting architecture execution.</li>
-                <li>Re-evaluate refined Statements of Business Principles, Goals, and Drivers.</li>
+                <li>Elaborate business strategy and market drivers prompting change[cite: 3, 4].</li>
+                <li>Identify external and internal constraints impacting architecture execution[cite: 3, 4].</li>
+                <li>Re-evaluate refined Statements of Business Principles, Goals, and Drivers[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Business drivers explain WHY the change is necessary; constraints set strict boundaries on HOW it can be delivered.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: Business drivers explain WHY the change is necessary; constraints set strict boundaries on HOW it can be delivered[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 4 -->
           <div x-show="selectedStep === 4" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-chart-bar"></i> Step 4: Evaluate Capabilities
+              <i class="fa-solid fa-chart-bar"></i> Step 4: Evaluate Capabilities[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Assess the baseline business and IT capabilities of the organization to understand current performance levels and identify gaps required to support the proposed transformation.</p>
+              <p>Assess the baseline business and IT capabilities of the organization to understand current performance levels and identify gaps required to support the proposed transformation[cite: 3, 4].</p>
               <ul>
-                <li>Review baseline Business Capabilities and IT capability maturity.</li>
-                <li>Examine architecture maturity and re-use potential.</li>
-                <li>Document baseline capability gaps in the Capability Assessment deliverable.</li>
+                <li>Review baseline Business Capabilities and IT capability maturity[cite: 3, 4].</li>
+                <li>Examine architecture maturity and re-use potential[cite: 3, 4].</li>
+                <li>Document baseline capability gaps in the Capability Assessment deliverable[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Capability Assessment spans business capabilities, IT function maturity, and EA team capability.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: Capability Assessment spans business capabilities, IT function maturity, and EA team capability[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 5 -->
           <div x-show="selectedStep === 5" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-person-running"></i> Step 5: Assess Readiness for Business Transformation
+              <i class="fa-solid fa-person-running"></i> Step 5: Assess Readiness for Business Transformation[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Evaluate the organization's cultural, workforce, and operational readiness to undergo change using Business Transformation Readiness Assessment techniques.</p>
+              <p>Evaluate the organization's cultural, workforce, and operational readiness to undergo change using Business Transformation Readiness Assessment techniques[cite: 3, 4].</p>
               <ul>
-                <li>Identify transformation readiness factors (e.g., vision, leadership, culture, skills).</li>
-                <li>Assign maturity ratings and identify readiness risks.</li>
-                <li>Formulate preliminary risk mitigation actions to be incorporated into implementation plans.</li>
+                <li>Identify transformation readiness factors (e.g., vision, leadership, culture, skills)[cite: 3, 4].</li>
+                <li>Assign maturity ratings and identify readiness risks[cite: 3, 4].</li>
+                <li>Formulate preliminary risk mitigation actions to be incorporated into implementation plans[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Joint effort between HR, corporate staff, business lines, and IT planners to address human change factors.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: Joint effort between HR, corporate staff, business lines, and IT planners to address human change factors[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 6 -->
           <div x-show="selectedStep === 6" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-crop-simple"></i> Step 6: Define Scope
+              <i class="fa-solid fa-crop-simple"></i> Step 6: Define Scope[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Establish what is inside and outside the scope of the architecture effort. Define the breadth, depth, time horizon, and level of the Architecture Landscape to be covered.</p>
+              <p>Establish what is inside and outside the scope of the architecture effort. Define the breadth, depth, time horizon, and level of the Architecture Landscape to be covered[cite: 3, 4].</p>
               <ul>
-                <li>Define enterprise breadth (affected organizations and business units).</li>
-                <li>Define architecture domains to be addressed (Business, Data, Application, Technology).</li>
-                <li>Specify planning horizon (e.g., 3-5 years) and level of detail (Strategic, Segment, or Capability).</li>
+                <li>Define enterprise breadth (affected organizations and business units)[cite: 3, 4].</li>
+                <li>Define architecture domains to be addressed (Business, Data, Application, Technology)[cite: 3, 4].</li>
+                <li>Specify planning horizon (e.g., 3-5 years) and level of detail (Strategic, Segment, or Capability)[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Scoping prevents "scope creep" and ensures architecture effort matches available budget and authority.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: Scoping prevents "scope creep" and ensures architecture effort matches available budget and authority[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 7 -->
           <div x-show="selectedStep === 7" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-scale-balanced"></i> Step 7: Confirm and Elaborate Architecture Principles
+              <i class="fa-solid fa-scale-balanced"></i> Step 7: Confirm and Elaborate Architecture Principles[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Review, clarify, and elaborate existing Architecture Principles (including Business Principles) established in the Preliminary Phase to ensure alignment with the specific project scope.</p>
+              <p>Review, clarify, and elaborate existing Architecture Principles (including Business Principles) established in the Preliminary Phase to ensure alignment with the specific project scope[cite: 3, 4].</p>
               <ul>
-                <li>Verify principles against project goals and resolve ambiguities.</li>
-                <li>Confirm alignment between target architecture direction and principles.</li>
-                <li>Document any necessary principle clarifications or extensions.</li>
+                <li>Verify principles against project goals and resolve ambiguities[cite: 3, 4].</li>
+                <li>Confirm alignment between target architecture direction and principles[cite: 3, 4].</li>
+                <li>Document any necessary principle clarifications or extensions[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Principles defined in Preliminary are confirmed and clarified in Phase A for project applicability.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: Principles defined in Preliminary are confirmed and clarified in Phase A for project applicability[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 8 -->
           <div x-show="selectedStep === 8" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-lightbulb"></i> Step 8: Develop Architecture Vision
+              <i class="fa-solid fa-lightbulb"></i> Step 8: Develop Architecture Vision[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Formulate a first-cut, high-level aspirational description of the Baseline and Target Architectures across Business, Data, Application, and Technology domains using Business Scenarios.</p>
+              <p>Formulate a first-cut, high-level aspirational description of the Baseline and Target Architectures across Business, Data, Application, and Technology domains using Business Scenarios[cite: 3, 4].</p>
               <ul>
-                <li>Apply Business Scenarios to uncover core business needs and SMART outcomes.</li>
-                <li>Create high-level architecture views (e.g., Value Chain diagram, Solution Concept diagram).</li>
-                <li>Draft initial qualitative container (ADD) and quantitative container (Requirements Spec).</li>
+                <li>Apply Business Scenarios to uncover core business needs and SMART outcomes[cite: 3, 4].</li>
+                <li>Create high-level architecture views (e.g., Value Chain diagram, Solution Concept diagram)[cite: 3, 4].</li>
+                <li>Draft initial qualitative container (ADD) and quantitative container (Requirements Spec)[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Creates the Architecture Vision document and initializes the Draft Architecture Definition Document.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: Creates the Architecture Vision document and initializes the Draft Architecture Definition Document[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 9 -->
           <div x-show="selectedStep === 9" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-gem"></i> Step 9: Define Target Architecture Value Propositions and KPIs
+              <i class="fa-solid fa-gem"></i> Step 9: Define Target Architecture Value Propositions and KPIs[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Outline the direct business value, return on investment, and Key Performance Indicators (KPIs) that the Target Architecture must deliver to satisfy stakeholder expectations.</p>
+              <p>Outline the direct business value, return on investment, and Key Performance Indicators (KPIs) that the Target Architecture must deliver to satisfy stakeholder expectations[cite: 3, 4].</p>
               <ul>
-                <li>Define business value metrics (e.g., cost reduction, revenue growth, risk mitigation).</li>
-                <li>Establish quantitative KPIs for measuring solution success.</li>
-                <li>Assess candidate trade-offs and alternative target states.</li>
+                <li>Define business value metrics (e.g., cost reduction, revenue growth, risk mitigation)[cite: 3, 4].</li>
+                <li>Establish quantitative KPIs for measuring solution success[cite: 3, 4].</li>
+                <li>Assess candidate trade-offs and alternative target states[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Demonstrating business value is critical for securing stakeholder buy-in and funding.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: Demonstrating business value is critical for securing stakeholder buy-in and funding[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 10 -->
           <div x-show="selectedStep === 10" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-shield-halved"></i> Step 10: Identify Business Transformation Risks and Mitigation
+              <i class="fa-solid fa-shield-halved"></i> Step 10: Identify Business Transformation Risks and Mitigation[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Uncover potential implementation, cultural, and technical risks associated with the transformation and establish preliminary mitigation plans.</p>
+              <p>Uncover potential implementation, cultural, and technical risks associated with the transformation and establish preliminary mitigation plans[cite: 3, 4].</p>
               <ul>
-                <li>Identify initial risk triggers and classify business vs. technical risks.</li>
-                <li>Assess initial risk levels (effect and frequency) prior to mitigation.</li>
-                <li>Formulate mitigation activities to reduce residual risk to acceptable levels.</li>
+                <li>Identify initial risk triggers and classify business vs. technical risks[cite: 3, 4].</li>
+                <li>Assess initial risk levels (effect and frequency) prior to mitigation[cite: 3, 4].</li>
+                <li>Formulate mitigation activities to reduce residual risk to acceptable levels[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Risk management activities initiated in Phase A carry forward into Phases E, F, and G.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: Risk management activities initiated in Phase A carry forward into Phases E, F, and G[cite: 3, 4].</p>
             </div>
           </div>
 
           <!-- Step 11 -->
           <div x-show="selectedStep === 11" class="space-y-3">
             <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-file-signature"></i> Step 11: Develop Statement of Architecture Work and Secure Approval
+              <i class="fa-solid fa-file-signature"></i> Step 11: Develop Statement of Architecture Work and Secure Approval[cite: 3, 4]
             </div>
             <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Consolidate project scope, workplan, schedule, resource requirements, acceptance criteria, and budget into a formal contract, and obtain formal signature from the sponsoring organization.</p>
+              <p>Consolidate project scope, workplan, schedule, resource requirements, acceptance criteria, and budget into a formal contract, and obtain formal signature from the sponsoring organization[cite: 3, 4].</p>
               <ul>
-                <li>Draft the formal Statement of Architecture Work based on all Phase A findings.</li>
-                <li>Conduct formal sponsor review and resolve scope or budget trade-offs.</li>
-                <li>Secure formal signature to authorize proceeding to Phase B (Business Architecture).</li>
+                <li>Draft the formal Statement of Architecture Work based on all Phase A findings[cite: 3, 4].</li>
+                <li>Conduct formal sponsor review and resolve scope or budget trade-offs[cite: 3, 4].</li>
+                <li>Secure formal signature to authorize proceeding to Phase B (Business Architecture)[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: An signed Statement of Architecture Work is the formal contract allowing the team to begin Phase B.</p>
+              <p class="text-blue-800 font-semibold">🎯 Exam Note: A signed Statement of Architecture Work is the formal contract allowing the team to begin Phase B[cite: 3, 4].</p>
             </div>
           </div>
 
@@ -430,7 +607,7 @@
       </div>
     </div>
 
-    <!-- TAB 3: INPUTS, OUTPUTS & TEMPLATES -->
+    <!-- TAB 4: INPUTS, OUTPUTS & TEMPLATES -->
     <div x-show="activeTab === 'artifacts'" x-cloak class="space-y-6">
       
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -438,23 +615,23 @@
         <!-- Mandatory & Optional Inputs -->
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-file-import text-blue-600"></i> Phase A Inputs
+            <i class="fa-solid fa-file-import text-blue-600"></i> Phase A Inputs[cite: 3, 4]
           </h3>
           <div class="space-y-2 text-xs text-slate-700">
             <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <strong class="text-blue-900 block mb-1">Triggering & Strategic Inputs:</strong>
+              <strong class="text-blue-900 block mb-1">Triggering & Strategic Inputs[cite: 3, 4]:</strong>
               <ul class="list-disc list-inside space-y-1 text-slate-600">
-                <li><strong>Request for Architecture Work:</strong> Official triggering document sent by sponsoring organization.</li>
-                <li><strong>Business principles, goals, and strategic drivers:</strong> Contextual guidelines.</li>
-                <li><strong>Organizational Model for EA:</strong> Scoped team structure and governance resources.</li>
+                <li><strong>Request for Architecture Work:</strong> Official triggering document sent by sponsoring organization[cite: 3, 4].</li>
+                <li><strong>Business principles, goals, and strategic drivers:</strong> Contextual guidelines[cite: 3, 4].</li>
+                <li><strong>Organizational Model for EA:</strong> Scoped team structure and governance resources[cite: 3, 4].</li>
               </ul>
             </div>
             <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <strong class="text-blue-900 block mb-1">Framework & Repository Inputs:</strong>
+              <strong class="text-blue-900 block mb-1">Framework & Repository Inputs[cite: 3, 4]:</strong>
               <ul class="list-disc list-inside space-y-1 text-slate-600">
-                <li><strong>Tailored Architecture Framework:</strong> Customized ADM and methods.</li>
-                <li><strong>Architecture Principles:</strong> Business, Data, Application, and Technology principles.</li>
-                <li><strong>Enterprise Continuum & Standards Library:</strong> Existing architectural assets and industry reference models.</li>
+                <li><strong>Tailored Architecture Framework:</strong> Customized ADM and methods[cite: 3, 4].</li>
+                <li><strong>Architecture Principles:</strong> Business, Data, Application, and Technology principles[cite: 3, 4].</li>
+                <li><strong>Enterprise Continuum & Standards Library:</strong> Existing architectural assets and reference models[cite: 3, 4].</li>
               </ul>
             </div>
           </div>
@@ -463,37 +640,37 @@
         <!-- Key Outputs & Deliverables -->
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-file-export text-emerald-600"></i> Phase A Outputs & Deliverables
+            <i class="fa-solid fa-file-export text-emerald-600"></i> Phase A Outputs & Deliverables[cite: 3, 4]
           </h3>
           <div class="space-y-2 text-xs text-slate-700">
             <div class="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 flex items-start gap-2">
               <span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">APPROVED</span>
               <div>
-                <strong class="text-emerald-950">Statement of Architecture Work:</strong> Official project contract governing scope, budget, and schedule.
+                <strong class="text-emerald-950">Statement of Architecture Work:</strong> Official project contract governing scope, budget, and schedule[cite: 3, 4].
               </div>
             </div>
             <div class="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 flex items-start gap-2">
               <span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">APPROVED</span>
               <div>
-                <strong class="text-emerald-950">Architecture Vision Document:</strong> Qualitative aspirational summary of BDAT changes and value.
+                <strong class="text-emerald-950">Architecture Vision Document:</strong> Qualitative aspirational summary of BDAT changes and value[cite: 3, 4].
               </div>
             </div>
             <div class="p-2.5 rounded-lg bg-blue-50 border border-blue-200 flex items-start gap-2">
               <span class="px-2 py-0.5 rounded bg-blue-600 text-white text-[10px] font-bold">DRAFT</span>
               <div>
-                <strong class="text-blue-950">Draft Architecture Definition Document:</strong> Qualitative container for core architectural models.
+                <strong class="text-blue-950">Draft Architecture Definition Document:</strong> Qualitative container for core architectural models[cite: 3, 4].
               </div>
             </div>
             <div class="p-2.5 rounded-lg bg-blue-50 border border-blue-200 flex items-start gap-2">
               <span class="px-2 py-0.5 rounded bg-blue-600 text-white text-[10px] font-bold">DRAFT</span>
               <div>
-                <strong class="text-blue-950">Draft Architecture Requirements Specification:</strong> Quantitative view and compliance criteria.
+                <strong class="text-blue-950">Draft Architecture Requirements Specification:</strong> Quantitative view and compliance criteria[cite: 3, 4].
               </div>
             </div>
             <div class="p-2.5 rounded-lg bg-slate-100 border border-slate-200 flex items-start gap-2">
               <span class="px-2 py-0.5 rounded bg-slate-600 text-white text-[10px] font-bold">OUTPUT</span>
               <div>
-                <strong class="text-slate-900">Communications Plan & Capability Assessment:</strong> Stakeholder map and transformation readiness ratings.
+                <strong class="text-slate-900">Communications Plan & Capability Assessment:</strong> Stakeholder map and transformation readiness ratings[cite: 3, 4].
               </div>
             </div>
           </div>
@@ -504,7 +681,7 @@
       <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-file-code text-amber-600"></i> Phase A Deliverable Template Structures
+            <i class="fa-solid fa-file-code text-amber-600"></i> Phase A Deliverable Template Structures[cite: 3, 4]
           </h3>
           <span class="text-xs text-slate-500">Toggle template views below</span>
         </div>
@@ -527,16 +704,16 @@
           <template x-if="selectedTemplate === 'saw'">
             <div class="space-y-3">
               <div class="border-b border-slate-200 pb-2">
-                <span class="font-bold text-blue-900 uppercase tracking-wider block">Deliverable: Statement of Architecture Work (Approved Contract)</span>
-                <p class="text-slate-600 mt-0.5">Forms the contractual agreement between the architecture organization and the sponsoring organization.</p>
+                <span class="font-bold text-blue-900 uppercase tracking-wider block">Deliverable: Statement of Architecture Work (Approved Contract)[cite: 3, 4]</span>
+                <p class="text-slate-600 mt-0.5">Forms the contractual agreement between the architecture organization and the sponsoring organization[cite: 3, 4].</p>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-700">
-                <div><strong>1. Architecture Project Request:</strong> Background & purpose.</div>
-                <div><strong>2. Project Description & Scope:</strong> BDAT boundaries & breadth.</div>
-                <div><strong>3. Architecture Vision Summary:</strong> High-level target state.</div>
-                <div><strong>4. Project Plan & Schedule:</strong> Milestones & work breakdown.</div>
-                <div><strong>5. Acceptance Criteria & Procedures:</strong> Sign-off rules.</div>
-                <div><strong>6. Roles & Responsibilities:</strong> Governance & team RACI.</div>
+                <div><strong>1. Architecture Project Request:</strong> Background & purpose[cite: 3, 4].</div>
+                <div><strong>2. Project Description & Scope:</strong> BDAT boundaries & breadth[cite: 3, 4].</div>
+                <div><strong>3. Architecture Vision Summary:</strong> High-level target state[cite: 3, 4].</div>
+                <div><strong>4. Project Plan & Schedule:</strong> Milestones & work breakdown[cite: 3, 4].</div>
+                <div><strong>5. Acceptance Criteria & Procedures:</strong> Sign-off rules[cite: 3, 4].</div>
+                <div><strong>6. Roles & Responsibilities:</strong> Governance & team RACI[cite: 3, 4].</div>
               </div>
             </div>
           </template>
@@ -544,16 +721,16 @@
           <template x-if="selectedTemplate === 'vision'">
             <div class="space-y-3">
               <div class="border-b border-slate-200 pb-2">
-                <span class="font-bold text-blue-900 uppercase tracking-wider block">Deliverable: Architecture Vision Document</span>
-                <p class="text-slate-600 mt-0.5">Aspirational qualitative summary of the capabilities delivered by the Target Architecture.</p>
+                <span class="font-bold text-blue-900 uppercase tracking-wider block">Deliverable: Architecture Vision Document[cite: 3, 4]</span>
+                <p class="text-slate-600 mt-0.5">Aspirational qualitative summary of the capabilities delivered by the Target Architecture[cite: 3, 4].</p>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-700">
-                <div><strong>1. Problem Description:</strong> Business issue & stakeholder concerns.</div>
-                <div><strong>2. Value Propositions:</strong> Business benefits & return on investment.</div>
-                <div><strong>3. High-Level Summary Views:</strong> Value Chain & Solution Concept diagrams.</div>
-                <div><strong>4. Target Architecture KPIs:</strong> Quantitative success metrics.</div>
-                <div><strong>5. Reference to ADD:</strong> Link to qualitative container models.</div>
-                <div><strong>6. Risk Mitigation Summary:</strong> Business transformation risk preliminary strategy.</div>
+                <div><strong>1. Problem Description:</strong> Business issue & stakeholder concerns[cite: 3, 4].</div>
+                <div><strong>2. Value Propositions:</strong> Business benefits & ROI[cite: 3, 4].</div>
+                <div><strong>3. High-Level Summary Views:</strong> Value Chain & Solution Concept diagrams[cite: 3, 4].</div>
+                <div><strong>4. Target Architecture KPIs:</strong> Quantitative success metrics[cite: 3, 4].</div>
+                <div><strong>5. Reference to ADD:</strong> Link to qualitative container models[cite: 3, 4].</div>
+                <div><strong>6. Risk Mitigation Summary:</strong> Preliminary transformation risk strategy[cite: 3, 4].</div>
               </div>
             </div>
           </template>
@@ -561,29 +738,29 @@
           <template x-if="selectedTemplate === 'scenario'">
             <div class="space-y-3">
               <div class="border-b border-slate-200 pb-2">
-                <span class="font-bold text-blue-900 uppercase tracking-wider block">Technique: Business Scenario Structure (SMART Criteria)</span>
-                <p class="text-slate-600 mt-0.5">Used in Phase A to derive architecture characteristics from high-level business requirements.</p>
+                <span class="font-bold text-blue-900 uppercase tracking-wider block">Technique: Business Scenario Structure (SMART Criteria)[cite: 3, 4]</span>
+                <p class="text-slate-600 mt-0.5">Used in Phase A to derive architecture characteristics from high-level business requirements[cite: 3, 4].</p>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-center">
                 <div class="bg-white p-2 rounded border border-slate-200">
                   <strong class="text-blue-800 block">S - Specific</strong>
-                  <span class="text-[10px] text-slate-600">Defines clearly what needs to be done.</span>
+                  <span class="text-[10px] text-slate-600">Defines clearly what needs to be done[cite: 3, 4].</span>
                 </div>
                 <div class="bg-white p-2 rounded border border-slate-200">
                   <strong class="text-blue-800 block">M - Measurable</strong>
-                  <span class="text-[10px] text-slate-600">Clear metrics for success and metrics.</span>
+                  <span class="text-[10px] text-slate-600">Clear metrics for success and metrics[cite: 3, 4].</span>
                 </div>
                 <div class="bg-white p-2 rounded border border-slate-200">
                   <strong class="text-blue-800 block">A - Actionable</strong>
-                  <span class="text-[10px] text-slate-600">Segments problem for solution plans.</span>
+                  <span class="text-[10px] text-slate-600">Segments problem for solution plans[cite: 3, 4].</span>
                 </div>
                 <div class="bg-white p-2 rounded border border-slate-200">
                   <strong class="text-blue-800 block">R - Realistic</strong>
-                  <span class="text-[10px] text-slate-600">Solvable within physical/cost limits.</span>
+                  <span class="text-[10px] text-slate-600">Solvable within physical/cost limits[cite: 3, 4].</span>
                 </div>
                 <div class="bg-white p-2 rounded border border-slate-200">
                   <strong class="text-blue-800 block">T - Time-bound</strong>
-                  <span class="text-[10px] text-slate-600">Clear solution expiration window.</span>
+                  <span class="text-[10px] text-slate-600">Clear solution expiration window[cite: 3, 4].</span>
                 </div>
               </div>
             </div>
@@ -593,7 +770,7 @@
 
     </div>
 
-    <!-- TAB 4: REAL-WORLD CASE STUDY (COMPREHENSIVE DEEP-DIVE) -->
+    <!-- TAB 5: REAL-WORLD CASE STUDY (COMPREHENSIVE DEEP-DIVE) -->
     <div x-show="activeTab === 'casestudy'" x-cloak class="space-y-6">
       
       <!-- CASE STUDY HEADER BANNER -->
@@ -614,7 +791,7 @@
           </div>
         </div>
         <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
-          This scenario illustrates how HealthFirst Global executed Phase A (Architecture Vision) to initiate a $45M enterprise transformation migrating legacy hospital Electronic Health Record (EHR) systems to a unified cloud-native Telehealth and Patient Analytics platform.
+          This scenario illustrates how HealthFirst Global executed Phase A (Architecture Vision) to initiate a $45M enterprise transformation migrating legacy hospital Electronic Health Record (EHR) systems to a unified cloud-native Telehealth and Patient Analytics platform[cite: 3, 4].
         </p>
       </div>
 
@@ -658,37 +835,37 @@
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">1. Receive Triggering Request</td>
                 <td class="py-3 px-4">Received formal mandate from Executive Board triggering cloud EHR & telehealth initiative.</td>
-                <td class="py-3 px-4 text-slate-600">Request for Architecture Work</td>
+                <td class="py-3 px-4 text-slate-600">Request for Architecture Work[cite: 3, 4]</td>
                 <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-bold">CONSUMED</span></td>
               </tr>
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">2. Stakeholder Engagement</td>
                 <td class="py-3 px-4">Mapped Chief Medical Officer, CIO, regional clinic heads, and patient advocacy representatives.</td>
-                <td class="py-3 px-4 text-slate-600">Communications Plan & Stakeholder Map</td>
+                <td class="py-3 px-4 text-slate-600">Communications Plan & Stakeholder Map[cite: 3, 4]</td>
                 <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">APPROVED</span></td>
               </tr>
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">3. Develop Aspirational Vision</td>
                 <td class="py-3 px-4">Formulated high-level summary of Cloud EHR, unified patient data layer, and secure API gateways.</td>
-                <td class="py-3 px-4 text-slate-600">Architecture Vision Document</td>
+                <td class="py-3 px-4 text-slate-600">Architecture Vision Document[cite: 3, 4]</td>
                 <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">APPROVED</span></td>
               </tr>
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">4. Initialize Architecture Containers</td>
                 <td class="py-3 px-4">Created draft containers for qualitative BDAT models and quantitative HL7/FHIR interoperability criteria.</td>
-                <td class="py-3 px-4 text-slate-600">Draft ADD & Draft Architecture Requirements Spec</td>
+                <td class="py-3 px-4 text-slate-600">Draft ADD & Draft Architecture Requirements Spec[cite: 3, 4]</td>
                 <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-bold">DRAFT</span></td>
               </tr>
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">5. Transformation Readiness</td>
                 <td class="py-3 px-4">Assessed medical staff digital literacy, clinical workflow disruption risks, and change management needs.</td>
-                <td class="py-3 px-4 text-slate-600">Business Transformation Readiness Assessment</td>
+                <td class="py-3 px-4 text-slate-600">Business Transformation Readiness Assessment[cite: 3, 4]</td>
                 <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">COMPLETED</span></td>
               </tr>
               <tr>
                 <td class="py-3 px-4 font-semibold text-blue-900">6. Secure Formal Contract</td>
                 <td class="py-3 px-4">Drafted 2-year project schedule, $45M budget, RACI matrix, and secured Chief Medical Officer & CIO signatures.</td>
-                <td class="py-3 px-4 text-slate-600">Approved Statement of Architecture Work</td>
+                <td class="py-3 px-4 text-slate-600">Approved Statement of Architecture Work[cite: 3, 4]</td>
                 <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">APPROVED</span></td>
               </tr>
             </tbody>
@@ -701,7 +878,7 @@
         <h4 class="text-base font-bold text-slate-900 flex items-center gap-2">
           <i class="fa-solid fa-list-check text-blue-600"></i> 3. Detailed Step-by-Step Execution Workflow at HealthFirst
         </h4>
-        <p class="text-xs text-slate-500">Click each step below to see how the Enterprise Architect executed the 11 Phase A steps in practice.</p>
+        <p class="text-xs text-slate-500">Click each step below to see how the Enterprise Architect executed the 11 Phase A steps in practice[cite: 3, 4].</p>
 
         <!-- Interactive Step Selector for Case Study -->
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
@@ -719,57 +896,57 @@
           
           <div x-show="csStep === 1">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 1 Action: Establish the Architecture Project</h5>
-            <p>The Lead Architect reviewed the formal Request for Architecture Work submitted by the Board. Initialized project tracking in Jira, set up the Architecture Repository partition, and assigned 4 dedicated domain architects.</p>
+            <p>The Lead Architect reviewed the formal Request for Architecture Work submitted by the Board[cite: 3, 4]. Initialized project tracking in Jira, set up the Architecture Repository partition, and assigned 4 dedicated domain architects[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 2">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 2 Action: Identify Stakeholders, Concerns, & Requirements</h5>
-            <p>Mapped key stakeholders: Chief Medical Officer (concerned with clinical accuracy), Chief Information Security Officer (HIPAA compliance), Chief Financial Officer (ROI), and Head of Nursing (workflow complexity). Published the Communications Plan.</p>
+            <p>Mapped key stakeholders: Chief Medical Officer (concerned with clinical accuracy), Chief Information Security Officer (HIPAA compliance), Chief Financial Officer (ROI), and Head of Nursing (workflow complexity)[cite: 3, 4]. Published the Communications Plan[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 3">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 3 Action: Confirm Business Goals, Drivers, & Constraints</h5>
-            <p>Confirmed strategic goal: "360-degree patient view across all care locations". Identified strict regulatory constraints: data residency mandates requiring in-region health data storage.</p>
+            <p>Confirmed strategic goal: "360-degree patient view across all care locations". Identified strict regulatory constraints: data residency mandates requiring in-region health data storage[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 4">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 4 Action: Evaluate Capabilities</h5>
-            <p>Evaluated baseline IT capabilities. Identified severe capability gaps in real-time streaming data processing, cloud security management, and API gateway operations.</p>
+            <p>Evaluated baseline IT capabilities[cite: 3, 4]. Identified severe capability gaps in real-time streaming data processing, cloud security management, and API gateway operations[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 5">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 5 Action: Assess Business Transformation Readiness</h5>
-            <p>Conducted readiness assessment across 35 hospitals. Found high leadership commitment but low digital readiness among senior clinical staff, prompting a dedicated clinical change management program.</p>
+            <p>Conducted readiness assessment across 35 hospitals[cite: 3, 4]. Found high leadership commitment but low digital readiness among senior clinical staff, prompting a dedicated clinical change management program[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 6">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 6 Action: Define Scope</h5>
-            <p>Specified scope boundaries: In-scope = all 35 acute care hospitals, outpatient clinics, and mobile telehealth apps. Out-of-scope = long-term research labs and third-party supplier IT systems. Time horizon = 3 years.</p>
+            <p>Specified scope boundaries: In-scope = all 35 acute care hospitals, outpatient clinics, and mobile telehealth apps. Out-of-scope = long-term research labs and third-party supplier IT systems. Time horizon = 3 years[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 7">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 7 Action: Confirm Architecture Principles</h5>
-            <p>Confirmed principles established in Preliminary: "Patient Data Privacy First", "Zero Trust Cloud Security", and "Interoperability via Open FHIR APIs".</p>
+            <p>Confirmed principles established in Preliminary: "Patient Data Privacy First", "Zero Trust Cloud Security", and "Interoperability via Open FHIR APIs"[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 8">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 8 Action: Develop Architecture Vision</h5>
-            <p>Formulated the aspirational vision document featuring the Solution Concept Diagram: a centralized hybrid-cloud patient record hub feeding regional hospital EHR interfaces and patient mobile apps. Created Draft ADD.</p>
+            <p>Formulated the aspirational vision document featuring the Solution Concept Diagram: a centralized hybrid-cloud patient record hub feeding regional hospital EHR interfaces and patient mobile apps[cite: 3, 4]. Created Draft ADD[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 9">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 9 Action: Define Value Propositions & KPIs</h5>
-            <p>Established value metrics: $14M annual savings in eliminated duplicate lab testing, 40% reduction in patient intake wait times, and 99.99% telehealth service availability.</p>
+            <p>Established value metrics: $14M annual savings in eliminated duplicate lab testing, 40% reduction in patient intake wait times, and 99.99% telehealth service availability[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 10">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 10 Action: Identify Transformation Risks & Mitigation</h5>
-            <p>Identified catastrophic risk: potential EHR downtime during hospital cutover. Formulated mitigation strategy: phased parallel-run rollout starting with 2 pilot regional clinics before full network migration.</p>
+            <p>Identified catastrophic risk: potential EHR downtime during hospital cutover. Formulated mitigation strategy: phased parallel-run rollout starting with 2 pilot regional clinics before full network migration[cite: 3, 4].</p>
           </div>
 
           <div x-show="csStep === 11">
             <h5 class="text-blue-900 font-bold m-0 text-sm">Step 11 Action: Secure Approved Statement of Architecture Work</h5>
-            <p>Consolidated project schedule, budget ($45M), deliverables, and governance RACI into the formal Statement of Architecture Work. Secured executive signatures from CMO, CIO, and CFO.</p>
+            <p>Consolidated project schedule, budget ($45M), deliverables, and governance RACI into the formal Statement of Architecture Work[cite: 3, 4]. Secured executive signatures from CMO, CIO, and CFO[cite: 3, 4].</p>
           </div>
 
         </div>
@@ -782,7 +959,7 @@
         </h4>
         <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs md:text-sm space-y-2">
           <strong class="text-blue-950 font-bold block text-sm">Business Scenario Title: Telehealth Remote Patient Onboarding</strong>
-          <p class="text-slate-700">Applied during Step 8 to derive architecture requirements from clinical user needs:</p>
+          <p class="text-slate-700">Applied during Step 8 to derive architecture requirements from clinical user needs[cite: 3, 4]:</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2">
             <div class="bg-white p-3 rounded-lg border border-slate-200">
               <strong class="text-blue-900 block text-xs">Human Actors:</strong>
@@ -827,14 +1004,14 @@
 
     </div>
 
-    <!-- TAB 5: TOGAF 10 EXAM REVISION -->
+    <!-- TAB 6: TOGAF 10 EXAM REVISION -->
     <div x-show="activeTab === 'exam'" x-cloak class="space-y-6">
       
       <!-- HIGH YIELD CALLOUT BOX -->
       <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-xl shadow-sm flex items-start gap-3">
         <span class="text-xl">🎯</span>
         <div class="text-xs md:text-sm text-blue-950">
-          <strong class="font-bold">High-Yield Exam Focus:</strong> The Statement of Architecture Work is a <strong>CONTRACT</strong> between the sponsoring organization and the architecture organization. It defines the scope, schedule, budget, and responsibilities for the architecture project. Approval of this document is required before moving to Phase B.
+          <strong class="font-bold">High-Yield Exam Focus:</strong> The Statement of Architecture Work is a <strong>CONTRACT</strong> between the sponsoring organization and the architecture organization[cite: 3, 4]. It defines the scope, schedule, budget, and responsibilities for the architecture project[cite: 3, 4]. Approval of this document is required before moving to Phase B[cite: 3, 4].
         </div>
       </div>
 
@@ -848,18 +1025,18 @@
           </h3>
           <div class="space-y-2 text-xs">
             <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-950">
-              <strong class="block font-bold">Mnemonic: SMART Outcomes (Business Scenarios)</strong>
-              <strong>S</strong>pecific, <strong>M</strong>easurable, <strong>A</strong>ctionable, <strong>R</strong>ealistic, <strong>T</strong>ime-bound.
+              <strong class="block font-bold">Mnemonic: SMART Outcomes (Business Scenarios)[cite: 3, 4]</strong>
+              <strong>S</strong>pecific, <strong>M</strong>easurable, <strong>A</strong>ctionable, <strong>R</strong>ealistic, <strong>T</strong>ime-bound[cite: 3, 4].
             </div>
             <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-800">
-              <strong class="block font-bold">Rule: ADD vs. Requirements Spec</strong>
-              <strong>Architecture Definition Document (ADD):</strong> Qualitative view of the solution.<br>
-              <strong>Architecture Requirements Specification:</strong> Quantitative view of compliance criteria.
+              <strong class="block font-bold">Rule: ADD vs. Requirements Spec[cite: 3, 4]</strong>
+              <strong>Architecture Definition Document (ADD):</strong> Qualitative view of the solution[cite: 3, 4].<br>
+              <strong>Architecture Requirements Specification:</strong> Quantitative view of compliance criteria[cite: 3, 4].
             </div>
             <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-800">
-              <strong class="block font-bold">Rule: Input vs. Output Contract</strong>
-              <strong>Trigger Input:</strong> Request for Architecture Work (sent to architects).<br>
-              <strong>Governing Output:</strong> Statement of Architecture Work (signed contract).
+              <strong class="block font-bold">Rule: Input vs. Output Contract[cite: 3, 4]</strong>
+              <strong>Trigger Input:</strong> Request for Architecture Work (sent to architects)[cite: 3, 4].<br>
+              <strong>Governing Output:</strong> Statement of Architecture Work (signed contract)[cite: 3, 4].
             </div>
           </div>
         </div>
@@ -871,12 +1048,12 @@
           </h3>
           <div class="space-y-2 text-xs">
             <div class="p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-950">
-              <strong class="block font-bold">Modular Structure Integration:</strong>
-              Phase A specifically leverages the <strong>TOGAF Series Guides</strong> for practical advice on Digital Transformation, Business Scenarios, and Agile Integration.
+              <strong class="block font-bold">Modular Structure Integration[cite: 3, 4]:</strong>
+              Phase A specifically leverages the <strong>TOGAF Series Guides</strong> for practical advice on Digital Transformation, Business Scenarios, and Agile Integration[cite: 3, 4].
             </div>
             <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-800">
-              <strong class="block font-bold">Agile Sprint Backlog Touchpoints:</strong>
-              Statements of Architecture Work now explicitly accommodate iterative backlog definitions and SAFe architecture epics within the project scope.
+              <strong class="block font-bold">Agile Sprint Backlog Touchpoints[cite: 3, 4]:</strong>
+              Statements of Architecture Work now explicitly accommodate iterative backlog definitions and SAFe architecture epics within the project scope[cite: 3, 4].
             </div>
           </div>
         </div>
