@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOGAF_10_ADM_Preliminary_Phase</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col antialiased" x-data="{ 
+    activeDoc: 'doc1', 
+    activeTab: 'overview',
+    accordion: {},
+    quizAnswers: {},
+    toggleAccordion(id) { this.accordion[id] = !this.accordion[id]; },
+    toggleQuiz(id) { this.quizAnswers[id] = !this.quizAnswers[id]; }
+}">
+
+    <!-- HEADER BANNER -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <!-- Title & Core Value Proposition -->
+                <div class="flex items-center space-x-4">
+                    <div class="p-3 bg-blue-600 text-white rounded-xl shadow-md">
+                        <i data-lucide="compass" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">TOGAF Standard, 10th Edition</span>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">Foundation & Practitioner Prep</span>
+                        </div>
+                        <h1 class="text-2xl font-bold text-gray-900 tracking-tight mt-1">TOGAF_10_ADM_Preliminary_Phase</h1>
+                        <p class="text-sm text-gray-600">Enterprise Architecture Capability Initialization, Framework Tailoring & Architecture Principles</p>
+                    </div>
+                </div>
+
+                <!-- ADM Wheel Diagram Highlighting Preliminary Phase -->
+                <div class="flex items-center bg-gray-50 p-3 rounded-xl border border-gray-200">
+                    <div class="relative w-32 h-32 flex items-center justify-center">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <!-- Outer Wheel Base -->
+                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#E2E8F0" stroke-width="12" />
+                            <!-- Preliminary Phase Arc Highlight -->
+                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#2563EB" stroke-width="14" stroke-dasharray="25 226" stroke-dashoffset="12" />
+                            <!-- Other ADM Phases Base -->
+                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#94A3B8" stroke-width="10" stroke-dasharray="190 60" stroke-dashoffset="-18" opacity="0.35" />
+                            <!-- Core REQ MGMT Center -->
+                            <circle cx="50" cy="50" r="18" fill="#3B82F6" />
+                            <text x="50" y="52" text-anchor="middle" fill="white" font-size="6.5" font-weight="bold" transform="rotate(90 50 50)">REQ MGMT</text>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                            <span class="text-[10px] font-black text-blue-700 uppercase tracking-tight mt-1">PRELIMINARY</span>
+                            <span class="text-[8px] text-gray-500 font-semibold">Phase 0</span>
+                        </div>
+                    </div>
+                    <div class="ml-3 hidden lg:block text-xs space-y-1 text-gray-600">
+                        <div class="flex items-center gap-1.5 font-bold text-blue-700">
+                            <span class="w-2 h-2 rounded-full bg-blue-600"></span> Preliminary: Capability & Tailoring
+                        </div>
+                        <div class="flex items-center gap-1.5 text-gray-400">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span> Phase A: Architecture Vision
+                        </div>
+                        <div class="flex items-center gap-1.5 text-gray-400">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span> Phases B, C, D: BDAT Architecture
+                        </div>
+                        <div class="flex items-center gap-1.5 text-gray-400">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span> Phases E, F, G, H: Transition & Ops
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- DASHBOARD CONTAINER -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- SIDEBAR DOCUMENT MODULE NAVIGATION -->
+            <nav class="lg:col-span-3 space-y-3">
+                <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                    <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 px-2">Source Documents</h2>
+                    
+                    <button @click="activeDoc = 'doc1'" 
+                            :class="activeDoc === 'doc1' ? 'bg-blue-50 text-blue-700 border-blue-500 font-semibold' : 'text-gray-700 hover:bg-gray-50 border-transparent'"
+                            class="w-full text-left px-3 py-3 rounded-lg border-l-4 transition-all flex items-start space-x-3">
+                        <i data-lucide="file-text" class="w-5 h-5 mt-0.5 flex-shrink-0" :class="activeDoc === 'doc1' ? 'text-blue-600' : 'text-gray-400'"></i>
+                        <div>
+                            <div class="text-sm font-medium leading-tight">01_Preliminary_Phase_Overview_and_Steps.md</div>
+                            <div class="text-xs text-gray-500 mt-1">Core ADM Steps & Scoping</div>
+                        </div>
+                    </button>
+
+                    <button @click="activeDoc = 'doc2'" 
+                            :class="activeDoc === 'doc2' ? 'bg-blue-50 text-blue-700 border-blue-500 font-semibold' : 'text-gray-700 hover:bg-gray-50 border-transparent'"
+                            class="w-full text-left px-3 py-3 rounded-lg border-l-4 transition-all flex items-start space-x-3 mt-1">
+                        <i data-lucide="shield-check" class="w-5 h-5 mt-0.5 flex-shrink-0" :class="activeDoc === 'doc2' ? 'text-blue-600' : 'text-gray-400'"></i>
+                        <div>
+                            <div class="text-sm font-medium leading-tight">02_Architecture_Principles.md</div>
+                            <div class="text-xs text-gray-500 mt-1">5 Criteria, Structure & Catalog</div>
+                        </div>
+                    </button>
+
+                    <button @click="activeDoc = 'doc3'" 
+                            :class="activeDoc === 'doc3' ? 'bg-blue-50 text-blue-700 border-blue-500 font-semibold' : 'text-gray-700 hover:bg-gray-50 border-transparent'"
+                            class="w-full text-left px-3 py-3 rounded-lg border-l-4 transition-all flex items-start space-x-3 mt-1">
+                        <i data-lucide="sliders" class="w-5 h-5 mt-0.5 flex-shrink-0" :class="activeDoc === 'doc3' ? 'text-blue-600' : 'text-gray-400'"></i>
+                        <div>
+                            <div class="text-sm font-medium leading-tight">03_Tailoring_TOGAF_and_Capability_Maturity.md</div>
+                            <div class="text-xs text-gray-500 mt-1">Customization & Boundaries</div>
+                        </div>
+                    </button>
+
+                    <button @click="activeDoc = 'doc4'" 
+                            :class="activeDoc === 'doc4' ? 'bg-blue-50 text-blue-700 border-blue-500 font-semibold' : 'text-gray-700 hover:bg-gray-50 border-transparent'"
+                            class="w-full text-left px-3 py-3 rounded-lg border-l-4 transition-all flex items-start space-x-3 mt-1">
+                        <i data-lucide="building" class="w-5 h-5 mt-0.5 flex-shrink-0" :class="activeDoc === 'doc4' ? 'text-blue-600' : 'text-gray-400'"></i>
+                        <div>
+                            <div class="text-sm font-medium leading-tight">04_EA_Governance_and_Organizational_Model.md</div>
+                            <div class="text-xs text-gray-500 mt-1">EA Team Setup & Governance</div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-xs space-y-2">
+                    <div class="flex items-center space-x-2 text-emerald-900 font-bold">
+                        <i data-lucide="award" class="w-4 h-4 text-emerald-600"></i>
+                        <span>TOGAF 10 Exam Scope</span>
+                    </div>
+                    <p class="text-emerald-800 leading-relaxed">
+                        <strong>Part 1 (Foundation):</strong> Objectives, purpose, principles criteria, enterprise definition.<br>
+                        <strong>Part 2 (Practitioner):</strong> Detailed 6 steps, framework tailoring decisions & governance execution.
+                    </p>
+                </div>
+            </nav>
+
+            <!-- MAIN CONTENT AREA -->
+            <main class="lg:col-span-9 space-y-6">
+
+                <!-- MAIN TAB CONTAINER -->
+                <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                    
+                    <!-- 5 TABS HEADER -->
+                    <div class="flex border-b border-gray-200 bg-gray-50/80 overflow-x-auto custom-scrollbar">
+                        <button @click="activeTab = 'overview'" 
+                                :class="activeTab === 'overview' ? 'border-blue-600 text-blue-600 bg-white font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100/50'"
+                                class="flex items-center gap-2 px-4 py-3 border-b-2 text-xs transition-colors whitespace-nowrap">
+                            <i data-lucide="book-open" class="w-4 h-4"></i> Overview & Objectives
+                        </button>
+                        <button @click="activeTab = 'workflow'" 
+                                :class="activeTab === 'workflow' ? 'border-blue-600 text-blue-600 bg-white font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100/50'"
+                                class="flex items-center gap-2 px-4 py-3 border-b-2 text-xs transition-colors whitespace-nowrap">
+                            <i data-lucide="git-merge" class="w-4 h-4"></i> Phase Steps & Workflow
+                        </button>
+                        <button @click="activeTab = 'inputs'" 
+                                :class="activeTab === 'inputs' ? 'border-blue-600 text-blue-600 bg-white font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100/50'"
+                                class="flex items-center gap-2 px-4 py-3 border-b-2 text-xs transition-colors whitespace-nowrap">
+                            <i data-lucide="layers" class="w-4 h-4"></i> Inputs, Outputs & Templates
+                        </button>
+                        <button @click="activeTab = 'casestudy'" 
+                                :class="activeTab === 'casestudy' ? 'border-blue-600 text-blue-600 bg-white font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100/50'"
+                                class="flex items-center gap-2 px-4 py-3 border-b-2 text-xs transition-colors whitespace-nowrap">
+                            <i data-lucide="briefcase" class="w-4 h-4"></i> Real-World Case Study
+                        </button>
+                        <button @click="activeTab = 'examprep'" 
+                                :class="activeTab === 'examprep' ? 'border-blue-600 text-blue-600 bg-white font-semibold' : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100/50'"
+                                class="flex items-center gap-2 px-4 py-3 border-b-2 text-xs transition-colors whitespace-nowrap">
+                            <i data-lucide="check-circle-2" class="w-4 h-4"></i> TOGAF 10 Exam Revision
+                        </button>
+                    </div>
+
+                    <!-- TAB CONTENT VIEW -->
+                    <div class="p-6">
+
+                        <!-- ==================================================== -->
+                        <!-- DOCUMENT 1: Preliminary Phase Overview & Steps -->
+                        <!-- ==================================================== -->
+                        <div x-show="activeDoc === 'doc1'">
+                            <div class="mb-4 pb-3 border-b border-gray-100 flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs font-bold text-blue-600 tracking-wider uppercase">Document Module 01</span>
+                                    <h2 class="text-lg font-bold text-gray-900">01_Preliminary_Phase_Overview_and_Steps.md</h2>
+                                </div>
+                                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-semibold">ADM Phase: Preliminary</span>
+                            </div>
+
+                            <!-- TAB 1: OVERVIEW & OBJECTIVES -->
+                            <div x-show="activeTab === 'overview'" class="space-y-5">
+                                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-900 p-4 rounded-r shadow-sm">
+                                    <div class="flex items-center gap-2 font-bold mb-1 text-sm">
+                                        <i data-lucide="lightbulb" class="w-4 h-4 text-blue-600"></i> Core Purpose & Scope
+                                    </div>
+                                    <p class="text-xs leading-relaxed">
+                                        The Preliminary Phase prepares the enterprise to undertake successful EA initiatives[cite: 1, 4]. It defines where, what, why, who, and how architecture is conducted in the organization[cite: 1]. It establishes the <strong>Architecture Capability</strong> (roles, processes, budget, tools)[cite: 1, 4], scopes affected enterprise units[cite: 1, 4], defines <strong>Architecture Principles</strong>[cite: 1, 2, 4], and tailors the <strong>TOGAF 10 Framework</strong>[cite: 1, 3, 4].
+                                    </p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                                    <div class="border border-gray-200 rounded-lg p-4 bg-white shadow-sm space-y-2">
+                                        <div class="font-bold text-gray-900 flex items-center gap-1.5 text-sm">
+                                            <i data-lucide="target" class="w-4 h-4 text-emerald-600"></i> Objective 1: Determine Capability Desired
+                                        </div>
+                                        <ul class="space-y-1.5 list-disc pl-4 text-gray-700">
+                                            <li>Review organizational context, business goals, drivers, and culture[cite: 3, 4].</li>
+                                            <li>Identify & scope affected enterprise elements (**Core** vs. **Soft** units)[cite: 1, 4].</li>
+                                            <li>Identify intersecting frameworks (e.g., COBIT, ITIL, PMBOK)[cite: 3, 4].</li>
+                                            <li>Establish maturity target using Series Guide: <em>Architecture Maturity Models</em>[cite: 3, 4].</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg p-4 bg-white shadow-sm space-y-2">
+                                        <div class="font-bold text-gray-900 flex items-center gap-1.5 text-sm">
+                                            <i data-lucide="shield" class="w-4 h-4 text-blue-600"></i> Objective 2: Establish Capability
+                                        </div>
+                                        <ul class="space-y-1.5 list-disc pl-4 text-gray-700">
+                                            <li>Define & establish the organizational model for Enterprise Architecture[cite: 4].</li>
+                                            <li>Define detailed governance processes, structures, and Architecture Board[cite: 1, 4].</li>
+                                            <li>Select and implement supporting EA tools & repository structures[cite: 1, 4].</li>
+                                            <li>Define enduring Architecture Principles[cite: 1, 2, 4].</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-900 p-4 rounded-r shadow-sm">
+                                    <div class="flex items-center gap-2 font-bold mb-2 text-xs">
+                                        <i data-lucide="zap" class="w-4 h-4 text-amber-600"></i> Candidate 3-Bullet Elevator Pitch (Exam Anchor)
+                                    </div>
+                                    <ul class="text-xs space-y-1 list-disc pl-4 font-medium text-amber-950">
+                                        <li><strong>Where, What, Why, Who, How:</strong> The Preliminary Phase defines *where* architecture applies, *who* performs it, *why* it is needed, and *how* it is governed[cite: 1].</li>
+                                        <li><strong>Just Enough Capability:</strong> Build EA capability only to the maturity level required for current work; expand iteratively as needed[cite: 1, 4].</li>
+                                        <li><strong>Tailored Foundation:</strong> Customise TOGAF terminology, processes, and content before initiating Phase A[cite: 1, 3, 4].</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: PHASE STEPS & WORKFLOW -->
+                            <div x-show="activeTab === 'workflow'" class="space-y-5">
+                                <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-xs space-y-2">
+                                    <div class="font-bold text-emerald-900 uppercase tracking-wider">Condensed 3-Bullet Step Summary</div>
+                                    <ul class="list-disc pl-4 space-y-1 text-emerald-900">
+                                        <li><strong>Scope & Boundaries:</strong> Identify Core enterprise units (direct EA value) and Soft units (indirect capability change)[cite: 1].</li>
+                                        <li><strong>Governance & Organization:</strong> Allocate roles, set up the Architecture Board, and establish governance processes[cite: 1, 4].</li>
+                                        <li><strong>Tailoring & Tooling:</strong> Tailor TOGAF (terminology, processes, content) and implement EA repository tools[cite: 1, 4].</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-900 p-3 rounded text-xs flex items-center justify-between">
+                                    <span><strong>Step Acronym Mnemonic:</strong> <span class="font-mono bg-blue-200 px-2 py-0.5 rounded text-blue-900 font-bold">S-C-D-I-T-D</span> ("Smarter Enterprise EA Teams Execute Architecture Integration")</span>
+                                </div>
+
+                                <!-- Accordion for 6 Steps -->
+                                <div class="space-y-3">
+                                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                        <button @click="toggleAccordion('s1')" class="w-full px-4 py-3 bg-gray-50 text-left font-bold text-xs text-gray-800 flex justify-between items-center hover:bg-gray-100">
+                                            <span>Step 1: Scope the Enterprise Organizations Impacted</span>
+                                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                        </button>
+                                        <div x-show="accordion['s1']" class="p-4 bg-white border-t border-gray-100 text-xs text-gray-700 leading-relaxed space-y-2">
+                                            <p>Identify <strong>Core Enterprise Units</strong> (units receiving direct architecture attention and achieving most value) and <strong>Soft Enterprise Units</strong> (units seeing change to their capability, but not directly affected)[cite: 1].</p>
+                                            <p>Identify impacted stakeholders and governance bodies[cite: 1].</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                        <button @click="toggleAccordion('s2')" class="w-full px-4 py-3 bg-gray-50 text-left font-bold text-xs text-gray-800 flex justify-between items-center hover:bg-gray-100">
+                                            <span>Step 2: Confirm Governance and Support Frameworks</span>
+                                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                        </button>
+                                        <div x-show="accordion['s2']" class="p-4 bg-white border-t border-gray-100 text-xs text-gray-700 leading-relaxed space-y-2">
+                                            <p>Understand how architectural material (standards, guidelines, compliance reports) is brought under governance[cite: 1].</p>
+                                            <p>Determine ownership for artifacts and establish governance for implementation and change[cite: 1].</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                        <button @click="toggleAccordion('s3')" class="w-full px-4 py-3 bg-gray-50 text-left font-bold text-xs text-gray-800 flex justify-between items-center hover:bg-gray-100">
+                                            <span>Step 3: Define and Establish EA Team and Organization</span>
+                                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                        </button>
+                                        <div x-show="accordion['s3']" class="p-4 bg-white border-t border-gray-100 text-xs text-gray-700 leading-relaxed space-y-2">
+                                            <p>Assess budget requirements, allocate key roles & responsibilities, create EA processes, and form architecture teams[cite: 1, 4].</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                        <button @click="toggleAccordion('s4')" class="w-full px-4 py-3 bg-gray-50 text-left font-bold text-xs text-gray-800 flex justify-between items-center hover:bg-gray-100">
+                                            <span>Step 4: Identify and Establish Architecture Principles</span>
+                                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                        </button>
+                                        <div x-show="accordion['s4']" class="p-4 bg-white border-t border-gray-100 text-xs text-gray-700 leading-relaxed space-y-2">
+                                            <p>Develop enduring rules and guidelines across Business, Data, Application, and Technology domains in close cooperation with key stakeholders[cite: 1, 2].</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                        <button @click="toggleAccordion('s5')" class="w-full px-4 py-3 bg-gray-50 text-left font-bold text-xs text-gray-800 flex justify-between items-center hover:bg-gray-100">
+                                            <span>Step 5: Tailor the TOGAF Framework and Other Frameworks</span>
+                                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                        </button>
+                                        <div x-show="accordion['s5']" class="p-4 bg-white border-t border-gray-100 text-xs text-gray-700 leading-relaxed space-y-2">
+                                            <p>Adapt three specific topics: <strong>Terminology</strong>, <strong>Processes</strong>, and <strong>Content</strong>[cite: 1]. Integrate TOGAF with existing management frameworks[cite: 3, 4].</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                        <button @click="toggleAccordion('s6')" class="w-full px-4 py-3 bg-gray-50 text-left font-bold text-xs text-gray-800 flex justify-between items-center hover:bg-gray-100">
+                                            <span>Step 6: Develop Strategy & Implementation Plan for Tools & Techniques</span>
+                                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                        </button>
+                                        <div x-show="accordion['s6']" class="p-4 bg-white border-t border-gray-100 text-xs text-gray-700 leading-relaxed space-y-2">
+                                            <p>Implement tools (ranging from simple file repositories to professional EA management software) and techniques (decision-making, workshops, modeling) aligned to target maturity[cite: 1].</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 3: INPUTS, OUTPUTS & TEMPLATES -->
+                            <div x-show="activeTab === 'inputs'" class="space-y-5">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                                    <div class="border border-gray-200 rounded-lg p-4 bg-white shadow-sm space-y-3">
+                                        <div class="font-bold text-gray-900 border-b pb-2 flex justify-between items-center">
+                                            <span>Phase Inputs</span>
+                                            <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-normal">Contextual</span>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-blue-700 block mb-1">Mandatory Inputs:</span>
+                                            <ul class="list-disc pl-4 space-y-1 text-gray-700">
+                                                <li>TOGAF Standard, 10th Edition Reference Material[cite: 1]</li>
+                                                <li>Enterprise business mission, strategic plans, and goals[cite: 2, 4]</li>
+                                                <li>Existing governance & organizational context[cite: 3, 4]</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-gray-600 block mb-1">Optional Inputs:</span>
+                                            <ul class="list-disc pl-4 space-y-1 text-gray-600">
+                                                <li>Legacy architectural models & repository assets[cite: 2]</li>
+                                                <li>Intersecting framework specifications (COBIT, ITIL)[cite: 3, 4]</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg p-4 bg-white shadow-sm space-y-3">
+                                        <div class="font-bold text-gray-900 border-b pb-2 flex justify-between items-center">
+                                            <span>Phase Outputs & Deliverables</span>
+                                            <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Approved State</span>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-emerald-700 block mb-1">Core Deliverables:</span>
+                                            <ul class="list-disc pl-4 space-y-1 text-gray-700">
+                                                <li><strong>Organizational Model for EA</strong> (Roles, scope, budget)[cite: 1, 4]</li>
+                                                <li><strong>Tailored Architecture Framework</strong>[cite: 1, 3]</li>
+                                                <li><strong>Approved Architecture Principles</strong> (Principles Catalog)[cite: 2]</li>
+                                                <li><strong>Architecture Governance Framework</strong>[cite: 1, 4]</li>
+                                                <li><strong>Architecture Repository Setup</strong> (Capability Layer)[cite: 1]</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-xs space-y-2">
+                                    <div class="font-bold text-gray-900">TOGAF 10 Structural Concepts Mapping:</div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                        <div class="bg-white p-3 rounded border border-gray-200">
+                                            <span class="font-bold text-blue-700 block">Repository Layer</span>
+                                            Architecture Capability Layer (Stores governance logs, Principles Catalog, and EA Organizational Model).
+                                        </div>
+                                        <div class="bg-white p-3 rounded border border-gray-200">
+                                            <span class="font-bold text-blue-700 block">Building Blocks</span>
+                                            Focuses on establishing initial <strong>Architecture Building Blocks (ABBs)</strong> for EA tooling and governance processes.
+                                        </div>
+                                        <div class="bg-white p-3 rounded border border-gray-200">
+                                            <span class="font-bold text-blue-700 block">Series Guide References</span>
+                                            <em>TOGAF Leader's Guide to Establishing and Evolving an EA Capability</em>[cite: 4] & <em>Architecture Maturity Models</em>[cite: 4].
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 4: REAL-WORLD CASE STUDY -->
+                            <div x-show="activeTab === 'casestudy'" class="space-y-4 text-xs">
+                                <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm space-y-4">
+                                    <div class="border-b border-gray-200 pb-3">
+                                        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Case Study Scenario</span>
+                                        <h3 class="text-base font-bold text-gray-900">European Retail Bank Core Transformation</h3>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                                        <div class="bg-blue-50 border border-blue-200 p-3 rounded">
+                                            <div class="font-bold text-blue-900 mb-1">1. Business Trigger</div>
+                                            <p class="text-blue-800">Legacy core banking platform failures and Open Banking compliance mandates required initiating an enterprise EA discipline[cite: 1].</p>
+                                        </div>
+                                        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded">
+                                            <div class="font-bold text-emerald-900 mb-1">2. Artifacts Produced</div>
+                                            <p class="text-emerald-800">Organizational Model for EA, Principles Catalog (Cloud First, API-Centric), EA Governance Framework[cite: 1, 2, 4].</p>
+                                        </div>
+                                        <div class="bg-purple-50 border border-purple-200 p-3 rounded">
+                                            <div class="font-bold text-purple-900 mb-1">3. Deliverable Excerpt</div>
+                                            <p class="text-purple-800 font-mono text-[11px]">
+                                                "Core Units: Core Banking, Payments.<br>Soft Units: Branch Operations, Legal Compliance."[cite: 1]
+                                            </p>
+                                        </div>
+                                        <div class="bg-amber-50 border border-amber-200 p-3 rounded">
+                                            <div class="font-bold text-amber-900 mb-1">4. Governance Challenge</div>
+                                            <p class="text-amber-800">Bypassing of EA reviews by project teams resolved by mandating Architecture Board sign-off prior to project funding[cite: 1, 2].</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 5: EXAM REVISION & QUIZ -->
+                            <div x-show="activeTab === 'examprep'" class="space-y-5">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                                    <div class="bg-red-50 border-l-4 border-red-500 text-red-900 p-4 rounded shadow-sm">
+                                        <div class="font-bold flex items-center gap-1.5 mb-1">
+                                            <i data-lucide="alert-triangle" class="w-4 h-4 text-red-600"></i> Exam Trap: Foundation vs. Practitioner
+                                        </div>
+                                        <p class="leading-relaxed">
+                                            <strong>Foundation (Part 1):</strong> Phase steps are NOT tested in Part 1! Focus on objectives, purpose, and principles[cite: 1].<br>
+                                            <strong>Practitioner (Part 2):</strong> Phase steps ARE tested in Part 2 exam scenarios[cite: 1].
+                                        </p>
+                                    </div>
+                                    <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-900 p-4 rounded shadow-sm">
+                                        <div class="font-bold flex items-center gap-1.5 mb-1">
+                                            <i data-lucide="target" class="w-4 h-4 text-amber-600"></i> High-Yield Fact: Enterprise Boundary
+                                        </div>
+                                        <p class="leading-relaxed">
+                                            An enterprise is the highest level of description used to set the boundary for EA work. It can be a whole corporation, a business unit (e.g., R&D), or a coalition of multiple organizations[cite: 3].
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- 3-Column Comparison Table -->
+                                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm text-xs">
+                                    <div class="px-4 py-3 bg-gray-50 border-b border-gray-200 font-bold text-gray-800">
+                                        TOGAF 9.2 vs TOGAF 10 Comparison Table: Preliminary Phase
+                                    </div>
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-left border-collapse">
+                                            <thead>
+                                                <tr class="bg-gray-100/80 text-gray-700 font-semibold border-b">
+                                                    <th class="p-3 border-r">Concept</th>
+                                                    <th class="p-3 border-r">TOGAF 9.2</th>
+                                                    <th class="p-3">TOGAF Standard, 10th Edition</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-200 text-gray-700">
+                                                <tr>
+                                                    <td class="p-3 font-bold border-r bg-gray-50/50">Structure & Library</td>
+                                                    <td class="p-3 border-r">Single monolithic specification document.</td>
+                                                    <td class="p-3 bg-blue-50/30">Modular structure with Fundamental Content & TOGAF Series Guides[cite: 4].</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-3 font-bold border-r bg-gray-50/50">Capability Guidance</td>
+                                                    <td class="p-3 border-r">Embedded in main ADM text.</td>
+                                                    <td class="p-3 bg-blue-50/30">Dedicated <em>TOGAF Leader's Guide to Establishing and Evolving an EA Capability</em>[cite: 4].</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-3 font-bold border-r bg-gray-50/50">EA Maturity Assessment</td>
+                                                    <td class="p-3 border-r">Generic ADM appendix content.</td>
+                                                    <td class="p-3 bg-blue-50/30">Dedicated TOGAF Series Guide: <em>Architecture Maturity Models</em>[cite: 4].</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-3 font-bold border-r bg-gray-50/50">Agile ADM Tailoring</td>
+                                                    <td class="p-3 border-r">High-level mention of iteration.</td>
+                                                    <td class="p-3 bg-blue-50/30">Explicit guidance for tailoring ADM for Agile delivery and sprint structures.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-3 font-bold border-r bg-gray-50/50">Repository Structure</td>
+                                                    <td class="p-3 border-r">General Architecture Repository model.</td>
+                                                    <td class="p-3 bg-blue-50/30">Explicit Architecture Capability layer in the Architecture Repository[cite: 1].</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Quick Quiz -->
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm space-y-3 text-xs">
+                                    <h3 class="font-bold text-gray-900 text-sm">Quick-Fire Quiz</h3>
+                                    <div class="border border-gray-200 rounded-lg p-3 bg-gray-50/50 space-y-2">
+                                        <p class="font-bold text-gray-900">1. Which units seeing change to their capability are identified during enterprise scoping in the Preliminary Phase?</p>
+                                        <div class="space-y-1 text-gray-700">
+                                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1d1"> <span>A) Core Enterprise Units</span></label>
+                                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1d1"> <span>B) Soft Enterprise Units</span></label>
+                                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1d1"> <span>C) External Strategic Vendors</span></label>
+                                        </div>
+                                        <button @click="toggleQuiz('q1d1')" class="text-xs text-blue-600 font-semibold mt-1">Toggle Answer & Explanation</button>
+                                        <div x-show="quizAnswers['q1d1']" class="p-2 bg-emerald-50 text-emerald-900 rounded border border-emerald-200 mt-2">
+                                            <strong>Correct Answer: B (Soft Enterprise Units)</strong><br>
+                                            <em>Explanation:</em> Soft units experience indirect capability changes, whereas Core units directly receive EA focus and achieve most value[cite: 1].
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==================================================== -->
+                        <!-- DOCUMENT 2: Architecture Principles -->
+                        <!-- ==================================================== -->
+                        <div x-show="activeDoc === 'doc2'">
+                            <div class="mb-4 pb-3 border-b border-gray-100 flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs font-bold text-blue-600 tracking-wider uppercase">Document Module 02</span>
+                                    <h2 class="text-lg font-bold text-gray-900">02_Architecture_Principles.md</h2>
+                                </div>
+                                <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-semibold">ADM Technique: Principles</span>
+                            </div>
+
+                            <!-- TAB 1: OVERVIEW & OBJECTIVES -->
+                            <div x-show="activeTab === 'overview'" class="space-y-5">
+                                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-900 p-4 rounded-r shadow-sm">
+                                    <div class="flex items-center gap-2 font-bold mb-1 text-sm">
+                                        <i data-lucide="shield" class="w-4 h-4 text-blue-600"></i> Principles Definition & Purpose
+                                    </div>
+                                    <p class="text-xs leading-relaxed">
+                                        Architecture principles represent general rules and guidelines for the use of resources and assets across the enterprise[cite: 2]. They provide the foundation for making future architecture decisions, reflecting consensus among stakeholders[cite: 2]. They are intended to be enduring and seldom amended[cite: 2].
+                                    </p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                                    <div class="border border-gray-200 rounded-lg p-4 bg-white shadow-sm space-y-2">
+                                        <div class="font-bold text-gray-900 text-sm">Enterprise vs Architecture Principles</div>
+                                        <p class="text-gray-700"><strong>Enterprise Principles:</strong> Provide a basis for decision-making throughout the enterprise and support overall mission[cite: 2].</p>
+                                        <p class="text-gray-700"><strong>Architecture Principles:</strong> Govern architecture work (development, maintenance, and use of EA across BDAT domains)[cite: 2].</p>
+                                    </div>
+
+                                    <div class="border border-gray-200 rounded-lg p-4 bg-white shadow-sm space-y-2">
+                                        <div class="font-bold text-gray-900 text-sm">Standard 4-Part Structure</div>
+                                        <ul class="list-disc pl-4 space-y-1 text-gray-700">
+                                            <li><strong>Name:</strong> Easy to remember identifier[cite: 2].</li>
+                                            <li><strong>Statement:</strong> Short, crisp fundamental rule[cite: 2].</li>
+                                            <li><strong>Rationale:</strong> Business benefit of adherence[cite: 2].</li>
+                                            <li><strong>Implications:</strong> Specific impact on resources, costs, activities[cite: 2].</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: PHASE STEPS & WORKFLOW -->
+                            <div x-show="activeTab === 'workflow'" class="space-y-5">
+                                <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-xs space-y-2">
+                                    <div class="font-bold text-emerald-900 uppercase tracking-wider">5 Criteria of a Good Principle (HIGH YIELD EXAM TOPIC)</div>
+                                    <div class="font-mono bg-white p-2 rounded border border-emerald-300 font-bold text-emerald-900 text-center text-sm">
+                                        C - C - S - U - R
+                                    </div>
+                                    <p class="text-center text-emerald-800 text-[11px]">("Can Computer Science Understand Reasoning?")[cite: 2]</p>
+                                </div>
+
+                                <div class="space-y-3 text-xs">
+                                    <div class="border border-gray-200 rounded-lg p-3 bg-white">
+                                        <span class="font-bold text-gray-900">1. Complete:</span> Each principle is defined and every perceived situation is covered[cite: 2].
+                                    </div>
+                                    <div class="border border-gray-200 rounded-lg p-3 bg-white">
+                                        <span class="font-bold text-gray-900">2. Consistent:</span> Expressed without contradictions to allow balanced interpretations[cite: 2].
+                                    </div>
+                                    <div class="border border-gray-200 rounded-lg p-3 bg-white">
+                                        <span class="font-bold text-gray-900">3. Stable:</span> Enduring over time, yet accommodates environmental changes[cite: 2].
+                                    </div>
+                                    <div class="border border-gray-200 rounded-lg p-3 bg-white">
+                                        <span class="font-bold text-gray-900">4. Understandable:</span> Clear, unambiguous intentions that minimize violations[cite: 2].
+                                    </div>
+                                    <div class="border border-gray-200 rounded-lg p-3 bg-white">
+                                        <span class="font-bold text-gray-900">5. Robust:</span> Enables consistent quality decisions even in complex situations[cite: 2].
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 3: INPUTS, OUTPUTS & TEMPLATES -->
+                            <div x-show="activeTab === 'inputs'" class="space-y-5">
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm text-xs space-y-2">
+                                    <div class="font-bold text-gray-900 text-sm">Standard Principle Example: Compliance with Law</div>
+                                    <div class="bg-gray-50 p-3 rounded border border-gray-200 space-y-1">
+                                        <p><strong>Name:</strong> Compliance with Law[cite: 2]</p>
+                                        <p><strong>Statement:</strong> Information management processes comply with all relevant laws and policies[cite: 2].</p>
+                                        <p><strong>Rationale:</strong> Abiding by legal mandates prevents penalties and reputational damage[cite: 2].</p>
+                                        <p><strong>Implications:</strong> Enterprise must implement data retention controls, audit access, and track legal changes[cite: 2].</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB 4: REAL-WORLD CASE STUDY -->
+                            <div x-show="activeTab === 'casestudy'" class="space-y-5">
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm text-xs space-y-2">
+                                    <div class="font-bold text-gray-900 text-sm">Principle Lifecycle in Trade-Off Governance</div>
+                                    <p class="text-gray-700 leading-relaxed">
+                                        When a project team proposed storing customer financial data in an unencrypted public cloud storage bucket to meet a tight release deadline, the Architecture Board cited the principle <strong>Compliance with Law</strong> and <strong>Data Security</strong> to override the project team, requiring mandatory encryption at rest[cite: 2].
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- TAB 5: EXAM REVISION & QUIZ -->
+                            <div x-show="activeTab === 'examprep'" class="space-y-5">
+                                <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-900 p-4 rounded text-xs space-y-1">
+                                    <div class="font-bold">ADM Lifecycle of Principles</div>
+                                    <p><strong>Preliminary Phase:</strong> Identified and established[cite: 2].</p>
+                                    <p><strong>Phase A:</strong> Reviewed and confirmed[cite: 2].</p>
+                                    <p><strong>Phases B, C, D:</strong> Applied and fulfilled during architecture development[cite: 2].</p>
+                                </div>
+
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm space-y-3 text-xs">
+                                    <h3 class="font-bold text-gray-900 text-sm">Principles Exam Quiz</h3>
+                                    <div class="border border-gray-200 rounded-lg p-3 bg-gray-50/50 space-y-2">
+                                        <p class="font-bold text-gray-900">Which criteria ensures that an architecture principle is expressed without contradictions?</p>
+                                        <div class="space-y-1 text-gray-700">
+                                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="qp2"> <span>A) Stable</span></label>
+                                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="qp2"> <span>B) Consistent</span></label>
+                                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="qp2"> <span>C) Robust</span></label>
+                                        </div>
+                                        <button @click="toggleQuiz('qp2')" class="text-xs text-blue-600 font-semibold mt-1">Toggle Answer</button>
+                                        <div x-show="quizAnswers['qp2']" class="p-2 bg-emerald-50 text-emerald-900 rounded border border-emerald-200 mt-2">
+                                            <strong>Correct Answer: B (Consistent)</strong><br>
+                                            <em>Explanation:</em> Consistency ensures the principle is expressed without internal contradictions[cite: 2].
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==================================================== -->
+                        <!-- DOCUMENT 3: Tailoring TOGAF & Capability Maturity -->
+                        <!-- ==================================================== -->
+                        <div x-show="activeDoc === 'doc3'">
+                            <div class="mb-4 pb-3 border-b border-gray-100 flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs font-bold text-blue-600 tracking-wider uppercase">Document Module 03</span>
+                                    <h2 class="text-lg font-bold text-gray-900">03_Tailoring_TOGAF_and_Capability_Maturity.md</h2>
+                                </div>
+                                <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-semibold">Framework Customization</span>
+                            </div>
+
+                            <!-- TAB 1: OVERVIEW & OBJECTIVES -->
+                            <div x-show="activeTab === 'overview'" class="space-y-5">
+                                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-900 p-4 rounded-r shadow-sm">
+                                    <div class="flex items-center gap-2 font-bold mb-1 text-sm">
+                                        <i data-lucide="sliders" class="w-4 h-4 text-blue-600"></i> Framework Tailoring Basics
+                                    </div>
+                                    <p class="text-xs leading-relaxed">
+                                        TOGAF must be adapted to organizational needs[cite: 1, 3, 4]. Tailoring adapts three main topics: <strong>Terminology</strong>, <strong>Processes</strong>, and <strong>Content</strong>[cite: 1].
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: PHASE STEPS & WORKFLOW -->
+                            <div x-show="activeTab === 'workflow'" class="space-y-5">
+                                <div class="bg-white border border-gray-200 rounded-lg p-4 text-xs space-y-2">
+                                    <div class="font-bold text-gray-900 text-sm">Maturity Assessment & Scaling Rule</div>
+                                    <p class="text-gray-700 leading-relaxed">
+                                        Regularly evaluate current EA capability with an enterprise EA maturity assessment[cite: 3, 4]. <em>Important rule:</em> Only build up EA capability to the level of maturity needed for current architecture work[cite: 4].
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- TAB 3: INPUTS, OUTPUTS & TEMPLATES -->
+                            <div x-show="activeTab === 'inputs'" class="space-y-5">
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm text-xs space-y-2">
+                                    <div class="font-bold text-gray-900 text-sm">Series Guides for Capability</div>
+                                    <ul class="list-disc pl-4 space-y-1 text-gray-700">
+                                        <li><em>Architecture Maturity Models</em> — Techniques for evaluating EA maturity[cite: 4].</li>
+                                        <li><em>TOGAF Leader's Guide to Establishing and Evolving an EA Capability</em> — Practices for EA management[cite: 4].</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- TAB 4: REAL-WORLD CASE STUDY -->
+                            <div x-show="activeTab === 'casestudy'" class="space-y-5">
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm text-xs space-y-2">
+                                    <div class="font-bold text-gray-900 text-sm">Case Study: Tailoring TOGAF for Agile Teams</div>
+                                    <p class="text-gray-700">
+                                        A fintech enterprise integrated TOGAF ADM with Scrum/SAFe frameworks[cite: 3], creating two-week architecture sprints for Phase B/C modeling to align with product development cycles.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- TAB 5: EXAM REVISION & QUIZ -->
+                            <div x-show="activeTab === 'examprep'" class="space-y-5">
+                                <div class="bg-red-50 border-l-4 border-red-500 text-red-900 p-4 rounded text-xs">
+                                    <strong>Exam Rule:</strong> Do not aim for maximum maturity (Level 5) automatically. Build only what is needed for current work[cite: 4].
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ==================================================== -->
+                        <!-- DOCUMENT 4: EA Governance & Organizational Model -->
+                        <!-- ==================================================== -->
+                        <div x-show="activeDoc === 'doc4'">
+                            <div class="mb-4 pb-3 border-b border-gray-100 flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs font-bold text-blue-600 tracking-wider uppercase">Document Module 04</span>
+                                    <h2 class="text-lg font-bold text-gray-900">04_EA_Governance_and_Organizational_Model.md</h2>
+                                </div>
+                                <span class="px-3 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-semibold">Governance & Organization</span>
+                            </div>
+
+                            <!-- TAB 1: OVERVIEW & OBJECTIVES -->
+                            <div x-show="activeTab === 'overview'" class="space-y-5">
+                                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-900 p-4 rounded-r shadow-sm">
+                                    <div class="flex items-center gap-2 font-bold mb-1 text-sm">
+                                        <i data-lucide="building" class="w-4 h-4 text-blue-600"></i> Governance Setup Purpose
+                                    </div>
+                                    <p class="text-xs leading-relaxed">
+                                        Establish governance and support frameworks, define ownership for artifacts, assign key EA roles, and setup an Enterprise Architecture Board[cite: 1, 4].
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: PHASE STEPS & WORKFLOW -->
+                            <div x-show="activeTab === 'workflow'" class="space-y-5">
+                                <div class="bg-white border border-gray-200 rounded-lg p-4 text-xs space-y-2">
+                                    <div class="font-bold text-gray-900 text-sm">Governance Questions to Answer</div>
+                                    <ul class="list-disc pl-4 space-y-1 text-gray-700">
+                                        <li>Who has ownership for which architectural artifact?[cite: 1]</li>
+                                        <li>How do we govern implementation and change?[cite: 1]</li>
+                                        <li>How does EA interact with project management and ITIL?[cite: 3, 4]</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- TAB 3: INPUTS, OUTPUTS & TEMPLATES -->
+                            <div x-show="activeTab === 'inputs'" class="space-y-5">
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm text-xs space-y-2">
+                                    <div class="font-bold text-gray-900 text-sm">Key Artifact: Organizational Model for EA</div>
+                                    <p class="text-gray-700">
+                                        Includes EA budget requirements, key role allocations, architecture process definitions, and Architecture Board charters[cite: 1, 4].
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- TAB 4: REAL-WORLD CASE STUDY -->
+                            <div x-show="activeTab === 'casestudy'" class="space-y-5">
+                                <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm text-xs space-y-2">
+                                    <div class="font-bold text-gray-900 text-sm">Architecture Board Setup in Healthcare</div>
+                                    <p class="text-gray-700 leading-relaxed">
+                                        A healthcare enterprise established an Architecture Board meeting bi-weekly to resolve architectural compliance waivers and maintain repository integrity[cite: 1, 2, 4].
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- TAB 5: EXAM REVISION & QUIZ -->
+                            <div x-show="activeTab === 'examprep'" class="space-y-5">
+                                <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-900 p-4 rounded text-xs">
+                                    <strong>High-Yield Fact:</strong> Governance structure must be established or modified in the Preliminary Phase to support EA management[cite: 1, 4].
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500">
+            <p>TOGAF_10_ADM_Preliminary_Phase — Single-Page Dashboard | Prepared for TOGAF 10th Edition Exam Revision</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
