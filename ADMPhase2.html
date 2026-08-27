@@ -1,1094 +1,736 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TOGAF 10 ADM: Phase A - Architecture Vision Dashboard</title>
-  <!-- Tailwind CSS with Typography Plugin via CDN -->
-  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-  <!-- Alpine.js CDN -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADM Phase 2 - Business Architecture</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#111827",
+            body: "#1F2937",
+            accent: "#3B82F6",
+            ok: "#10B981"
+          }
+        }
+      }
+    };
+  </script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <!-- FontAwesome Icons CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     [x-cloak] { display: none !important; }
-    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: #F1F5F9; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+    .adm-wheel text { font-family: ui-sans-serif, system-ui, sans-serif; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col custom-scrollbar">
-
-  <!-- MAIN DASHBOARD CONTAINER -->
-  <div x-data="{ 
-    activeTab: 'overview',
-    selectedStep: 1,
-    csStep: 1,
-    selectedTemplate: 'saw',
-    activeBrainNode: 'triggers',
-    flashcards: [
-      { q: 'What formally triggers the start of Phase A (Architecture Vision)?', a: 'Receipt of a formal Request for Architecture Work sent from the sponsoring organization to the architecture organization[cite: 3, 4].', open: false },
-      { q: 'What is the primary output contract that governs the architecture development project?', a: 'The approved Statement of Architecture Work, signed by the sponsoring organization[cite: 3, 4].', open: false },
-      { q: 'What is the key difference between the Architecture Definition Document and the Architecture Requirements Specification?', a: 'The Architecture Definition Document provides the qualitative view of the solution, while the Architecture Requirements Specification provides the quantitative view[cite: 3, 4].', open: false },
-      { q: 'What technique is used in Phase A to discover and document business needs?', a: 'Business Scenarios, which derive requirements from business value, outcomes, and SMART objectives[cite: 3, 4].', open: false },
-      { q: 'What are the 5 SMART criteria required for outcomes in a Business Scenario?', a: 'Specific, Measurable, Actionable, Realistic, and Time-bound (SMART)[cite: 3, 4].', open: false },
-      { q: 'How many detailed steps are defined in TOGAF ADM Phase A?', a: '11 detailed steps, beginning with establishing the project and ending with securing approval for the Statement of Architecture Work[cite: 3, 4].', open: false }
-    ]
-  }" class="flex-1 flex flex-col max-w-7xl w-full mx-auto p-4 md:p-6 gap-6">
-
-    <!-- HEADER BANNER -->
-    <header class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-        <div class="flex items-center gap-4">
-          <div class="w-14 h-14 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 text-2xl shadow-sm">
-            <i class="fa-solid fa-eye"></i>
+<body class="bg-[#F9FAFB] text-ink antialiased" x-data="dashboard()" x-init="init()">
+  <header class="bg-white border-b border-gray-200">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-5 flex flex-col lg:flex-row lg:items-start gap-6">
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-3">
+          <div class="h-11 w-11 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0">
+            <i data-lucide="briefcase" class="w-6 h-6 text-accent"></i>
           </div>
-          <div>
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">TOGAF® Standard, 10th Edition</span>
-              <span class="text-xs text-slate-500"><i class="fa-solid fa-book-open text-blue-500 mr-1"></i> Foundation & Practitioner Study Guide</span>
-            </div>
-            <h1 class="text-2xl md:text-3xl font-bold text-slate-900 mt-1">Phase A: Architecture Vision</h1>
+          <div class="min-w-0">
+            <p class="text-xs font-semibold tracking-wide text-accent uppercase">TOGAF Standard, 10th Edition · Foundation Exam Prep</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-ink break-words">ADM Phase 2 - Business Architecture</h1>
           </div>
         </div>
-        <div class="flex items-center gap-3 bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-amber-900">
-          <i class="fa-solid fa-compass-drafting text-amber-600 text-xl"></i>
-          <div>
-            <p class="font-bold text-amber-950">Core Value Proposition</p>
-            <p class="text-amber-800">Sets the aspirational target vision, defines scope, and secures formal mandate to execute[cite: 3, 4].</p>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- NAVIGATION TABS -->
-    <nav class="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
-      <button @click="activeTab = 'overview'" :class="activeTab === 'overview' ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'" class="px-4 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-chart-pie"></i> Overview & Purpose
-      </button>
-      <button @click="activeTab = 'brainmap'" :class="activeTab === 'brainmap' ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'" class="px-4 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-sitemap text-amber-300"></i> Phase A Brainmap
-      </button>
-      <button @click="activeTab = 'steps'" :class="activeTab === 'steps' ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'" class="px-4 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-list-check"></i> 11 Steps & Workflow
-      </button>
-      <button @click="activeTab = 'artifacts'" :class="activeTab === 'artifacts' ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'" class="px-4 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-box-archive"></i> Inputs, Outputs & Templates
-      </button>
-      <button @click="activeTab = 'casestudy'" :class="activeTab === 'casestudy' ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'" class="px-4 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-building-columns"></i> Real-World Case Study
-      </button>
-      <button @click="activeTab = 'exam'" :class="activeTab === 'exam' ? 'bg-blue-600 text-white shadow-sm font-semibold' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'" class="px-4 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2">
-        <i class="fa-solid fa-graduation-cap"></i> TOGAF 10 Exam Revision
-      </button>
-    </nav>
-
-    <!-- TAB 1: OVERVIEW & PURPOSE -->
-    <div x-show="activeTab === 'overview'" x-cloak class="space-y-6">
-      
-      <!-- CALLOUT: MUST KNOW FOUNDATION FACT -->
-      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl shadow-sm flex items-start gap-3">
-        <span class="text-xl">💡</span>
-        <div class="text-xs md:text-sm text-blue-950">
-          <strong class="font-bold">Must-Know Foundation Fact:</strong> Phase A represents the formal start of an architecture development cycle[cite: 3, 4]. It builds directly on the capability established in the Preliminary Phase and begins upon receipt of a formal <strong>Request for Architecture Work</strong>[cite: 3, 4]. Its core output is an approved <strong>Statement of Architecture Work</strong> that serves as the governing contract for the project[cite: 3, 4].
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Primary Purpose Card -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
-          <div>
-            <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center mb-3">
-              <i class="fa-solid fa-bullseye text-lg"></i>
-            </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">Core Purpose</h3>
-            <div class="prose prose-slate max-w-none text-xs">
-              <p>
-                Establish the architecture project, define its boundaries, identify key stakeholders and concerns, and develop a high-level aspirational vision across all BDAT domains (Business, Data, Application, Technology) to solve a business problem and secure executive approval[cite: 3, 4].
-              </p>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 flex items-center gap-1.5">
-            <i class="fa-solid fa-circle-info text-blue-500"></i> Serves as an aspirational vision and boundary for downstream phases[cite: 3, 4].
-          </div>
-        </div>
-
-        <!-- Strategic Context Card -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm lg:col-span-2">
-          <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-arrows-to-dot text-blue-600"></i> Phase A Strategic Focus Areas
-          </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-              <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">1. Aspirational Vision</span>
-              <p class="text-xs font-medium text-slate-800 mt-1">Develop a first-cut, high-level description of Baseline and Target states across all BDAT domains[cite: 3, 4].</p>
-            </div>
-            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-              <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">2. Project Governance Contract</span>
-              <p class="text-xs font-medium text-slate-800 mt-1">Consolidate scope, schedule, budget, and responsibilities into an approved Statement of Architecture Work[cite: 3, 4].</p>
-            </div>
-            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-              <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">3. Business Transformation Readiness</span>
-              <p class="text-xs font-medium text-slate-800 mt-1">Assess the enterprise's willingness, workforce skills, and cultural readiness to accept change[cite: 3, 4].</p>
-            </div>
-            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-              <span class="text-xs font-bold text-blue-700 uppercase tracking-wider block">4. Scope Definition</span>
-              <p class="text-xs font-medium text-slate-800 mt-1">Specify what is in-scope and out-of-scope across breadth, depth, time horizon, and architecture levels[cite: 3, 4].</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Core Alignment Prose -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm prose prose-slate max-w-none">
-        <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
-          <i class="fa-solid fa-align-left text-blue-600"></i> TOGAF 10 Fundamental Content Alignment
-        </h3>
-        <p class="text-xs md:text-sm text-slate-700">
-          In TOGAF 10, Phase A acts as the bridge between enterprise strategy and detailed domain architecture modeling[cite: 3, 4]. By translating high-level business goals and strategic drivers into an overarching Architecture Vision, the architect establishes clear guardrails for subsequent BDAT development in Phases B, C, and D[cite: 3, 4]. It creates the initial draft of the Architecture Definition Document and Architecture Requirements Specification, initializing qualitative and quantitative tracking for the entire ADM cycle[cite: 3, 4].
+        <p class="mt-3 text-body max-w-3xl">
+          <strong>Core value:</strong> Phase B develops the <strong>Business Architecture</strong> that supports the agreed Architecture Vision. It is the first of the BDAT domain phases and the prerequisite for data, application, and technology work (business–IT alignment). You expose gaps, candidate roadmap work, and value vs effort vs risk — then get stakeholders to approve.
         </p>
-      </div>
-
-      <!-- Objectives Summary Table -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-        <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-crosshairs text-blue-600"></i> Primary Objectives of Phase A[cite: 3, 4]
-        </h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-xs md:text-sm">
-            <thead>
-              <tr class="border-b border-slate-200 font-semibold text-slate-600 uppercase tracking-wider bg-slate-50">
-                <th class="py-3 px-4">Objective Focus</th>
-                <th class="py-3 px-4">Key Architectural Activities</th>
-                <th class="py-3 px-4">Primary Output / Outcome</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200 text-slate-700">
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">1. Aspirational Vision</td>
-                <td class="py-3 px-4">Formulate high-level summary of Baseline and Target BDAT architectures and business value[cite: 3, 4].</td>
-                <td class="py-3 px-4 text-slate-600">Architecture Vision Document[cite: 3, 4]</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">2. Formal Mandate & Contract</td>
-                <td class="py-3 px-4">Define program of work, budget, resources, schedule, and secure sponsor approval[cite: 3, 4].</td>
-                <td class="py-3 px-4 text-slate-600">Approved Statement of Architecture Work[cite: 3, 4]</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">3. Stakeholder Alignment</td>
-                <td class="py-3 px-4">Map stakeholders, concerns, business drivers, requirements, and communication needs[cite: 3, 4].</td>
-                <td class="py-3 px-4 text-slate-600">Communications Plan & Stakeholder Map[cite: 3, 4]</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">4. Capability & Readiness</td>
-                <td class="py-3 px-4">Evaluate organizational readiness for change and baseline capability maturity[cite: 3, 4].</td>
-                <td class="py-3 px-4 text-slate-600">Capability Assessment & Transformation Readiness[cite: 3, 4]</td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">5. Initial Containers</td>
-                <td class="py-3 px-4">Create qualitative container (ADD) and quantitative criteria container (Requirements Spec)[cite: 3, 4].</td>
-                <td class="py-3 px-4 text-slate-600">Draft ADD & Draft Architecture Requirements Spec[cite: 3, 4]</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="mt-3 flex flex-wrap gap-2 text-sm">
+          <span class="px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 font-medium">Phase B highlighted on the ADM wheel</span>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-medium">4 source documents</span>
+          <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-900 font-medium">BCD share the same gap-analysis steps</span>
         </div>
       </div>
-
-    </div>
-
-    <!-- TAB 2: BRAINMAP (MIND MAP VISUALIZATION) -->
-    <div x-show="activeTab === 'brainmap'" x-cloak class="space-y-6">
-      
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
-        
-        <!-- BRAINMAP HEADER -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
-          <div>
-            <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <i class="fa-solid fa-sitemap text-blue-600"></i> Phase A Concept Brainmap
-            </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Interactive mental structure mapping triggers, activities, deliverables, and techniques for Phase A[cite: 3, 4].</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-slate-600">Click a branch node to inspect detail:</span>
-          </div>
-        </div>
-
-        <!-- VISUAL MIND MAP GRAPH LAYOUT -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 items-start">
-          
-          <!-- CENTRAL CORE NODE -->
-          <div class="lg:col-span-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white rounded-2xl p-5 text-center shadow-md border border-blue-400 relative overflow-hidden">
-            <span class="text-xs font-extrabold uppercase tracking-widest bg-white/20 px-3 py-1 rounded-full text-blue-100">TOGAF 10 ADM</span>
-            <h2 class="text-2xl font-black text-white mt-1">PHASE A: ARCHITECTURE VISION</h2>
-            <p class="text-xs text-blue-100 max-w-2xl mx-auto mt-1">Initiates the ADM cycle, defines scope, builds consensus across BDAT domains, and secures approval for the Statement of Architecture Work[cite: 3, 4].</p>
-          </div>
-
-          <!-- BRANCH 1: TRIGGERS & CONTRACTS -->
-          <div @click="activeBrainNode = 'triggers'" 
-               :class="activeBrainNode === 'triggers' ? 'border-blue-600 bg-blue-50/60 shadow-md ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-blue-300'"
-               class="p-4 rounded-xl border transition-all cursor-pointer space-y-2 relative">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-xs uppercase tracking-wider">
-              <i class="fa-solid fa-file-signature text-base"></i> 1. Triggers & Contracts
-            </div>
-            <h4 class="text-sm font-bold text-slate-900">Initiation & Mandate</h4>
-            <p class="text-xs text-slate-600">Begins with Request for Architecture Work; ends with approved Statement of Architecture Work[cite: 3, 4].</p>
-            <div class="pt-2 text-[11px] text-blue-700 font-semibold flex items-center justify-between">
-              <span>View details & concepts</span>
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
-          </div>
-
-          <!-- BRANCH 2: 11 ACTIVITY STEPS -->
-          <div @click="activeBrainNode = 'steps'" 
-               :class="activeBrainNode === 'steps' ? 'border-blue-600 bg-blue-50/60 shadow-md ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-blue-300'"
-               class="p-4 rounded-xl border transition-all cursor-pointer space-y-2 relative">
-            <div class="flex items-center gap-2 text-amber-800 font-bold text-xs uppercase tracking-wider">
-              <i class="fa-solid fa-list-ol text-base"></i> 2. 11 Activity Steps
-            </div>
-            <h4 class="text-sm font-bold text-slate-900">Execution Workflow</h4>
-            <p class="text-xs text-slate-600">Systematic process from project establishment to risk identification and contract sign-off[cite: 3, 4].</p>
-            <div class="pt-2 text-[11px] text-amber-700 font-semibold flex items-center justify-between">
-              <span>View step groupings</span>
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
-          </div>
-
-          <!-- BRANCH 3: CORE CONTAINERS -->
-          <div @click="activeBrainNode = 'containers'" 
-               :class="activeBrainNode === 'containers' ? 'border-blue-600 bg-blue-50/60 shadow-md ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-blue-300'"
-               class="p-4 rounded-xl border transition-all cursor-pointer space-y-2 relative">
-            <div class="flex items-center gap-2 text-emerald-800 font-bold text-xs uppercase tracking-wider">
-              <i class="fa-solid fa-box-archive text-base"></i> 3. Deliverable Containers
-            </div>
-            <h4 class="text-sm font-bold text-slate-900">ADD vs. Requirements Spec</h4>
-            <p class="text-xs text-slate-600">Qualitative container (ADD) paired with quantitative criteria (Requirements Spec)[cite: 3, 4].</p>
-            <div class="pt-2 text-[11px] text-emerald-700 font-semibold flex items-center justify-between">
-              <span>View deliverable models</span>
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
-          </div>
-
-          <!-- BRANCH 4: CORE TECHNIQUES -->
-          <div @click="activeBrainNode = 'techniques'" 
-               :class="activeBrainNode === 'techniques' ? 'border-blue-600 bg-blue-50/60 shadow-md ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-blue-300'"
-               class="p-4 rounded-xl border transition-all cursor-pointer space-y-2 relative">
-            <div class="flex items-center gap-2 text-indigo-800 font-bold text-xs uppercase tracking-wider">
-              <i class="fa-solid fa-wand-magic-sparkles text-base"></i> 4. ADM Techniques
-            </div>
-            <h4 class="text-sm font-bold text-slate-900">Business Scenarios & Readiness</h4>
-            <p class="text-xs text-slate-600">Deriving SMART outcomes and evaluating human/workforce readiness for change[cite: 3, 4].</p>
-            <div class="pt-2 text-[11px] text-indigo-700 font-semibold flex items-center justify-between">
-              <span>View technique rules</span>
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- BRAINMAP NODE DETAIL EXPANSION PANEL -->
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-xs md:text-sm">
-          
-          <!-- NODE 1 DETAILS -->
-          <div x-show="activeBrainNode === 'triggers'" class="space-y-3 prose prose-slate max-w-none">
-            <h4 class="text-blue-900 font-bold m-0 text-base">Branch 1: Triggers & Contractual Deliverables</h4>
-            <p class="m-0 text-slate-700">Phase A is framed by two critical documents that mark the transition into and out of vision development[cite: 3, 4]:</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 not-prose mt-2">
-              <div class="bg-white p-3 rounded-lg border border-slate-200">
-                <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold text-[10px]">TRIGGERING INPUT</span>
-                <strong class="block text-slate-900 font-bold text-xs mt-1">Request for Architecture Work</strong>
-                <p class="text-xs text-slate-600 mt-1">Sent from the sponsoring organization to the architecture team. Triggers Phase A initiation[cite: 3, 4].</p>
-              </div>
-              <div class="bg-white p-3 rounded-lg border border-slate-200">
-                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]">GOVERNING CONTRACT</span>
-                <strong class="block text-slate-900 font-bold text-xs mt-1">Statement of Architecture Work</strong>
-                <p class="text-xs text-slate-600 mt-1">Approved contract detailing scope, budget, schedule, deliverables, and RACI responsibilities[cite: 3, 4].</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- NODE 2 DETAILS -->
-          <div x-show="activeBrainNode === 'steps'" class="space-y-3 prose prose-slate max-w-none">
-            <h4 class="text-amber-900 font-bold m-0 text-base">Branch 2: 11 Activity Steps Logical Grouping</h4>
-            <p class="m-0 text-slate-700">The 11 detailed steps of Phase A follow a logical progression[cite: 3, 4]:</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 not-prose mt-2">
-              <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
-                <strong class="text-blue-800 block">Initiation (1-3)</strong>
-                <span class="text-slate-600">Establish project, identify stakeholders/concerns, confirm goals & drivers[cite: 3, 4].</span>
-              </div>
-              <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
-                <strong class="text-blue-800 block">Evaluation (4-6)</strong>
-                <span class="text-slate-600">Evaluate capabilities, assess transformation readiness, define scope[cite: 3, 4].</span>
-              </div>
-              <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
-                <strong class="text-blue-800 block">Vision (7-9)</strong>
-                <span class="text-slate-600">Confirm principles, develop Architecture Vision, set value & KPIs[cite: 3, 4].</span>
-              </div>
-              <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
-                <strong class="text-blue-800 block">Approval (10-11)</strong>
-                <span class="text-slate-600">Identify transformation risks, secure approved Statement of Architecture Work[cite: 3, 4].</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- NODE 3 DETAILS -->
-          <div x-show="activeBrainNode === 'containers'" class="space-y-3 prose prose-slate max-w-none">
-            <h4 class="text-emerald-900 font-bold m-0 text-base">Branch 3: Qualitative vs. Quantitative Deliverable Containers</h4>
-            <p class="m-0 text-slate-700">Phase A creates draft versions of two companion containers that are refined in subsequent phases[cite: 3, 4]:</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 not-prose mt-2">
-              <div class="bg-white p-3 rounded-lg border border-slate-200">
-                <strong class="text-emerald-900 block font-bold text-xs">Architecture Definition Document (ADD)</strong>
-                <span class="text-xs text-slate-600 mt-1 block">Provides the <strong>QUALITATIVE</strong> view of the solution. Contains architecture models across BDAT domains for Baseline, Transition, and Target states[cite: 3, 4].</span>
-              </div>
-              <div class="bg-white p-3 rounded-lg border border-slate-200">
-                <strong class="text-emerald-900 block font-bold text-xs">Architecture Requirements Specification</strong>
-                <span class="text-xs text-slate-600 mt-1 block">Provides the <strong>QUANTITATIVE</strong> view of the solution. Contains measurable compliance criteria, service contracts, and performance constraints[cite: 3, 4].</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- NODE 4 DETAILS -->
-          <div x-show="activeBrainNode === 'techniques'" class="space-y-3 prose prose-slate max-w-none">
-            <h4 class="text-indigo-900 font-bold m-0 text-base">Branch 4: Essential ADM Techniques in Phase A</h4>
-            <p class="m-0 text-slate-700">Two foundational techniques drive information gathering in Phase A[cite: 3, 4]:</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 not-prose mt-2">
-              <div class="bg-white p-3 rounded-lg border border-slate-200">
-                <strong class="text-indigo-900 block font-bold text-xs">Business Scenarios</strong>
-                <span class="text-xs text-slate-600 mt-1 block">Identifies business needs and derives architecture characteristics. Requires <strong>SMART</strong> target outcomes (Specific, Measurable, Actionable, Realistic, Time-bound)[cite: 3, 4].</span>
-              </div>
-              <div class="bg-white p-3 rounded-lg border border-slate-200">
-                <strong class="text-indigo-900 block font-bold text-xs">Business Transformation Readiness Assessment</strong>
-                <span class="text-xs text-slate-600 mt-1 block">Joint effort between HR, corporate staff, and IT planners to evaluate cultural, workforce, and operational readiness to accept change[cite: 3, 4].</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- TAB 3: 11 STEPS & WORKFLOW -->
-    <div x-show="activeTab === 'steps'" x-cloak class="space-y-6">
-      
-      <!-- CALLOUT: STEP EXAM TRAP -->
-      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-sm flex items-start gap-3">
-        <span class="text-xl">⚠️</span>
-        <div class="text-xs md:text-sm text-amber-950">
-          <strong class="font-bold">Exam Pitfall:</strong> Remember the sequence! Phase A officially begins upon receipt of a <strong>Request for Architecture Work</strong> (which is generated in Preliminary or Phase F/H)[cite: 3, 4]. Phase A ends with the approval of the <strong>Statement of Architecture Work</strong>[cite: 3, 4]. Do not confuse the triggering input document with the final approved contract deliverable!
-        </div>
-      </div>
-
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-        <h3 class="text-base font-bold text-slate-900 mb-2">The 11 Detailed Steps of Phase A[cite: 3, 4]</h3>
-        <p class="text-xs text-slate-500 mb-6">Click on any step below to view activities, inputs, outputs, and high-yield exam takeaways.</p>
-        
-        <!-- Workflow Step Tracker Buttons -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 mb-6">
-          <template x-for="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]">
-            <button @click="selectedStep = i" 
-                    :class="selectedStep === i ? 'bg-blue-600 text-white border-blue-600 font-bold' : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'"
-                    class="p-2.5 rounded-xl border text-center transition-all flex flex-col items-center gap-1">
-              <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-800 text-xs font-bold flex items-center justify-center" :class="selectedStep === i ? 'bg-white text-blue-600' : ''" x-text="i"></span>
-              <span class="text-[11px] line-clamp-1" x-text="[
-                '1. Establish Project', '2. Stakeholders', '3. Goals & Drivers', '4. Capabilities', 
-                '5. Readiness', '6. Define Scope', '7. Principles', '8. Vision', 
-                '9. Value & KPIs', '10. Risks', '11. Secure SAW'
-              ][i-1]"></span>
-            </button>
-          </template>
-        </div>
-
-        <!-- Step Details Display Box -->
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
-          
-          <!-- Step 1 -->
-          <div x-show="selectedStep === 1" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-folder-plus"></i> Step 1: Establish the Architecture Project[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Formally set up the architecture project structure, establish project governance mechanisms, allocate architect resources, and initialize tracking steps upon receiving the formal Request for Architecture Work[cite: 3, 4].</p>
-              <ul>
-                <li>Review the Request for Architecture Work sent from the sponsoring organization[cite: 3, 4].</li>
-                <li>Conduct preliminary compliance and resource checks[cite: 3, 4].</li>
-                <li>Set up project monitoring tools and repository partitions[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: The Request for Architecture Work is the initiating input created in Preliminary, Phase F, or Phase H[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 2 -->
-          <div x-show="selectedStep === 2" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-users"></i> Step 2: Identify Stakeholders, Concerns, and Business Requirements[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Identify key individuals, teams, or organizations with an interest in the system, document their concerns, and develop a Communications Plan using stakeholder mapping techniques[cite: 3, 4].</p>
-              <ul>
-                <li>Analyze stakeholder power, influence, and interest dimensions[cite: 3, 4].</li>
-                <li>Identify key concerns (e.g., security, cost, performance, compliance)[cite: 3, 4].</li>
-                <li>Develop the Communications Plan defining who, what, when, and how information is shared[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Stakeholders' concerns directly shape the architecture viewpoints selected in downstream phases[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 3 -->
-          <div x-show="selectedStep === 3" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-bullseye"></i> Step 3: Confirm and Elaborate Business Goals, Drivers, and Constraints[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Review the broader enterprise context to confirm business principles, goals, and strategic drivers. Identify enterprise constraints such as budget, timeframes, and regulatory boundaries[cite: 3, 4].</p>
-              <ul>
-                <li>Elaborate business strategy and market drivers prompting change[cite: 3, 4].</li>
-                <li>Identify external and internal constraints impacting architecture execution[cite: 3, 4].</li>
-                <li>Re-evaluate refined Statements of Business Principles, Goals, and Drivers[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Business drivers explain WHY the change is necessary; constraints set strict boundaries on HOW it can be delivered[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 4 -->
-          <div x-show="selectedStep === 4" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-chart-bar"></i> Step 4: Evaluate Capabilities[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Assess the baseline business and IT capabilities of the organization to understand current performance levels and identify gaps required to support the proposed transformation[cite: 3, 4].</p>
-              <ul>
-                <li>Review baseline Business Capabilities and IT capability maturity[cite: 3, 4].</li>
-                <li>Examine architecture maturity and re-use potential[cite: 3, 4].</li>
-                <li>Document baseline capability gaps in the Capability Assessment deliverable[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Capability Assessment spans business capabilities, IT function maturity, and EA team capability[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 5 -->
-          <div x-show="selectedStep === 5" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-person-running"></i> Step 5: Assess Readiness for Business Transformation[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Evaluate the organization's cultural, workforce, and operational readiness to undergo change using Business Transformation Readiness Assessment techniques[cite: 3, 4].</p>
-              <ul>
-                <li>Identify transformation readiness factors (e.g., vision, leadership, culture, skills)[cite: 3, 4].</li>
-                <li>Assign maturity ratings and identify readiness risks[cite: 3, 4].</li>
-                <li>Formulate preliminary risk mitigation actions to be incorporated into implementation plans[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Joint effort between HR, corporate staff, business lines, and IT planners to address human change factors[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 6 -->
-          <div x-show="selectedStep === 6" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-crop-simple"></i> Step 6: Define Scope[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Establish what is inside and outside the scope of the architecture effort. Define the breadth, depth, time horizon, and level of the Architecture Landscape to be covered[cite: 3, 4].</p>
-              <ul>
-                <li>Define enterprise breadth (affected organizations and business units)[cite: 3, 4].</li>
-                <li>Define architecture domains to be addressed (Business, Data, Application, Technology)[cite: 3, 4].</li>
-                <li>Specify planning horizon (e.g., 3-5 years) and level of detail (Strategic, Segment, or Capability)[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Scoping prevents "scope creep" and ensures architecture effort matches available budget and authority[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 7 -->
-          <div x-show="selectedStep === 7" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-scale-balanced"></i> Step 7: Confirm and Elaborate Architecture Principles[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Review, clarify, and elaborate existing Architecture Principles (including Business Principles) established in the Preliminary Phase to ensure alignment with the specific project scope[cite: 3, 4].</p>
-              <ul>
-                <li>Verify principles against project goals and resolve ambiguities[cite: 3, 4].</li>
-                <li>Confirm alignment between target architecture direction and principles[cite: 3, 4].</li>
-                <li>Document any necessary principle clarifications or extensions[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Principles defined in Preliminary are confirmed and clarified in Phase A for project applicability[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 8 -->
-          <div x-show="selectedStep === 8" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-lightbulb"></i> Step 8: Develop Architecture Vision[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Formulate a first-cut, high-level aspirational description of the Baseline and Target Architectures across Business, Data, Application, and Technology domains using Business Scenarios[cite: 3, 4].</p>
-              <ul>
-                <li>Apply Business Scenarios to uncover core business needs and SMART outcomes[cite: 3, 4].</li>
-                <li>Create high-level architecture views (e.g., Value Chain diagram, Solution Concept diagram)[cite: 3, 4].</li>
-                <li>Draft initial qualitative container (ADD) and quantitative container (Requirements Spec)[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Creates the Architecture Vision document and initializes the Draft Architecture Definition Document[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 9 -->
-          <div x-show="selectedStep === 9" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-gem"></i> Step 9: Define Target Architecture Value Propositions and KPIs[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Outline the direct business value, return on investment, and Key Performance Indicators (KPIs) that the Target Architecture must deliver to satisfy stakeholder expectations[cite: 3, 4].</p>
-              <ul>
-                <li>Define business value metrics (e.g., cost reduction, revenue growth, risk mitigation)[cite: 3, 4].</li>
-                <li>Establish quantitative KPIs for measuring solution success[cite: 3, 4].</li>
-                <li>Assess candidate trade-offs and alternative target states[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Demonstrating business value is critical for securing stakeholder buy-in and funding[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 10 -->
-          <div x-show="selectedStep === 10" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-shield-halved"></i> Step 10: Identify Business Transformation Risks and Mitigation[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Uncover potential implementation, cultural, and technical risks associated with the transformation and establish preliminary mitigation plans[cite: 3, 4].</p>
-              <ul>
-                <li>Identify initial risk triggers and classify business vs. technical risks[cite: 3, 4].</li>
-                <li>Assess initial risk levels (effect and frequency) prior to mitigation[cite: 3, 4].</li>
-                <li>Formulate mitigation activities to reduce residual risk to acceptable levels[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: Risk management activities initiated in Phase A carry forward into Phases E, F, and G[cite: 3, 4].</p>
-            </div>
-          </div>
-
-          <!-- Step 11 -->
-          <div x-show="selectedStep === 11" class="space-y-3">
-            <div class="flex items-center gap-2 text-blue-800 font-bold text-sm md:text-base">
-              <i class="fa-solid fa-file-signature"></i> Step 11: Develop Statement of Architecture Work and Secure Approval[cite: 3, 4]
-            </div>
-            <div class="prose prose-slate max-w-none text-xs md:text-sm">
-              <p>Consolidate project scope, workplan, schedule, resource requirements, acceptance criteria, and budget into a formal contract, and obtain formal signature from the sponsoring organization[cite: 3, 4].</p>
-              <ul>
-                <li>Draft the formal Statement of Architecture Work based on all Phase A findings[cite: 3, 4].</li>
-                <li>Conduct formal sponsor review and resolve scope or budget trade-offs[cite: 3, 4].</li>
-                <li>Secure formal signature to authorize proceeding to Phase B (Business Architecture)[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 text-xs text-slate-600">
-              <p class="text-blue-800 font-semibold">🎯 Exam Note: A signed Statement of Architecture Work is the formal contract allowing the team to begin Phase B[cite: 3, 4].</p>
-            </div>
-          </div>
-
-        </div>
+      <div class="shrink-0 bg-[#F9FAFB] border border-gray-200 rounded-xl p-3">
+        <p class="text-xs font-semibold text-gray-500 mb-1 text-center">ADM cycle · Phase B in focus</p>
+        <svg class="adm-wheel w-[280px] h-[280px] mx-auto" viewBox="0 0 320 320" role="img" aria-label="TOGAF ADM cycle with Phase B Business Architecture highlighted">
+          <circle cx="160" cy="160" r="148" fill="#FFFFFF" stroke="#E5E7EB" />
+          <g font-size="8" text-anchor="middle">
+            <path d="M160 160 L160 22 A138 138 0 0 1 250.7 55.3 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="205" y="58" fill="#111827" font-weight="700">A Vision</text>
+            <text x="205" y="68" fill="#4B5563">Agree what &amp; why</text>
+            <path d="M160 160 L250.7 55.3 A138 138 0 0 1 297.3 160 Z" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"></path>
+            <text x="255" y="108" fill="#1D4ED8" font-weight="700">B Business</text>
+            <text x="255" y="118" fill="#1E40AF">How the business works</text>
+            <path d="M160 160 L297.3 160 A138 138 0 0 1 250.7 264.7 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="252" y="198" fill="#111827" font-weight="700">C IS Arch</text>
+            <text x="252" y="208" fill="#4B5563">Data + applications</text>
+            <path d="M160 160 L250.7 264.7 A138 138 0 0 1 160 298 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="205" y="268" fill="#111827" font-weight="700">D Technology</text>
+            <text x="205" y="278" fill="#4B5563">Platforms &amp; infra</text>
+            <path d="M160 160 L160 298 A138 138 0 0 1 69.3 264.7 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="115" y="268" fill="#111827" font-weight="700">E Opps &amp; Sol</text>
+            <text x="115" y="278" fill="#4B5563">Work packages</text>
+            <path d="M160 160 L69.3 264.7 A138 138 0 0 1 22.7 160 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="68" y="198" fill="#111827" font-weight="700">F Migration</text>
+            <text x="68" y="208" fill="#4B5563">Roadmap &amp; plan</text>
+            <path d="M160 160 L22.7 160 A138 138 0 0 1 69.3 55.3 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="68" y="108" fill="#111827" font-weight="700">G Impl Gov</text>
+            <text x="68" y="118" fill="#4B5563">Conform implementations</text>
+            <path d="M160 160 L69.3 55.3 A138 138 0 0 1 160 22 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="115" y="58" fill="#111827" font-weight="700">H Change Mgmt</text>
+            <text x="115" y="68" fill="#4B5563">Govern change</text>
+          </g>
+          <circle cx="160" cy="160" r="46" fill="#ECFDF5" stroke="#10B981" stroke-width="2"></circle>
+          <text x="160" y="154" text-anchor="middle" font-size="9" font-weight="700" fill="#065F46">Req. Mgmt</text>
+          <text x="160" y="166" text-anchor="middle" font-size="7" fill="#047857">Continuous hub</text>
+          <text x="160" y="14" text-anchor="middle" font-size="8" font-weight="700" fill="#6B7280">Prelim (before cycle): EA capability</text>
+        </svg>
       </div>
     </div>
+  </header>
 
-    <!-- TAB 4: INPUTS, OUTPUTS & TEMPLATES -->
-    <div x-show="activeTab === 'artifacts'" x-cloak class="space-y-6">
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <!-- Mandatory & Optional Inputs -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-file-import text-blue-600"></i> Phase A Inputs[cite: 3, 4]
-          </h3>
-          <div class="space-y-2 text-xs text-slate-700">
-            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <strong class="text-blue-900 block mb-1">Triggering & Strategic Inputs[cite: 3, 4]:</strong>
-              <ul class="list-disc list-inside space-y-1 text-slate-600">
-                <li><strong>Request for Architecture Work:</strong> Official triggering document sent by sponsoring organization[cite: 3, 4].</li>
-                <li><strong>Business principles, goals, and strategic drivers:</strong> Contextual guidelines[cite: 3, 4].</li>
-                <li><strong>Organizational Model for EA:</strong> Scoped team structure and governance resources[cite: 3, 4].</li>
-              </ul>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <strong class="text-blue-900 block mb-1">Framework & Repository Inputs[cite: 3, 4]:</strong>
-              <ul class="list-disc list-inside space-y-1 text-slate-600">
-                <li><strong>Tailored Architecture Framework:</strong> Customized ADM and methods[cite: 3, 4].</li>
-                <li><strong>Architecture Principles:</strong> Business, Data, Application, and Technology principles[cite: 3, 4].</li>
-                <li><strong>Enterprise Continuum & Standards Library:</strong> Existing architectural assets and reference models[cite: 3, 4].</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Key Outputs & Deliverables -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-file-export text-emerald-600"></i> Phase A Outputs & Deliverables[cite: 3, 4]
-          </h3>
-          <div class="space-y-2 text-xs text-slate-700">
-            <div class="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 flex items-start gap-2">
-              <span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">APPROVED</span>
-              <div>
-                <strong class="text-emerald-950">Statement of Architecture Work:</strong> Official project contract governing scope, budget, and schedule[cite: 3, 4].
-              </div>
-            </div>
-            <div class="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 flex items-start gap-2">
-              <span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">APPROVED</span>
-              <div>
-                <strong class="text-emerald-950">Architecture Vision Document:</strong> Qualitative aspirational summary of BDAT changes and value[cite: 3, 4].
-              </div>
-            </div>
-            <div class="p-2.5 rounded-lg bg-blue-50 border border-blue-200 flex items-start gap-2">
-              <span class="px-2 py-0.5 rounded bg-blue-600 text-white text-[10px] font-bold">DRAFT</span>
-              <div>
-                <strong class="text-blue-950">Draft Architecture Definition Document:</strong> Qualitative container for core architectural models[cite: 3, 4].
-              </div>
-            </div>
-            <div class="p-2.5 rounded-lg bg-blue-50 border border-blue-200 flex items-start gap-2">
-              <span class="px-2 py-0.5 rounded bg-blue-600 text-white text-[10px] font-bold">DRAFT</span>
-              <div>
-                <strong class="text-blue-950">Draft Architecture Requirements Specification:</strong> Quantitative view and compliance criteria[cite: 3, 4].
-              </div>
-            </div>
-            <div class="p-2.5 rounded-lg bg-slate-100 border border-slate-200 flex items-start gap-2">
-              <span class="px-2 py-0.5 rounded bg-slate-600 text-white text-[10px] font-bold">OUTPUT</span>
-              <div>
-                <strong class="text-slate-900">Communications Plan & Capability Assessment:</strong> Stakeholder map and transformation readiness ratings[cite: 3, 4].
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Interactive Deliverable Template Structure Viewer -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-file-code text-amber-600"></i> Phase A Deliverable Template Structures[cite: 3, 4]
-          </h3>
-          <span class="text-xs text-slate-500">Toggle template views below</span>
-        </div>
-
-        <!-- Template Selector Buttons -->
-        <div class="flex flex-wrap gap-2 mb-4">
-          <button @click="selectedTemplate = 'saw'" :class="selectedTemplate === 'saw' ? 'bg-blue-600 text-white font-semibold' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-3 py-1.5 rounded-lg text-xs transition-all">
-            Statement of Architecture Work
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-[minmax(16rem,20rem)_minmax(0,1fr)] gap-6">
+    <aside class="lg:sticky lg:top-4 h-fit bg-white border border-gray-200 rounded-xl p-3 min-w-0 overflow-hidden">
+      <p class="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">Documents in this folder</p>
+      <nav class="flex flex-col gap-1 min-w-0">
+        <template x-for="doc in docs" :key="doc.id">
+          <button type="button" @click="select(doc.id)"
+            class="w-full min-w-0 max-w-full text-left px-3 py-2 rounded-lg text-sm border overflow-hidden"
+            :class="active === doc.id ? 'bg-blue-50 border-blue-300 text-blue-800 font-semibold' : 'bg-white border-transparent text-body hover:bg-gray-50'">
+            <span class="block leading-snug break-words" x-text="doc.nav"></span>
+            <span class="block text-[11px] font-normal text-gray-500 leading-snug break-words mt-0.5" x-text="doc.phase"></span>
           </button>
-          <button @click="selectedTemplate = 'vision'" :class="selectedTemplate === 'vision' ? 'bg-blue-600 text-white font-semibold' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-3 py-1.5 rounded-lg text-xs transition-all">
-            Architecture Vision Document
-          </button>
-          <button @click="selectedTemplate = 'scenario'" :class="selectedTemplate === 'scenario' ? 'bg-blue-600 text-white font-semibold' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" class="px-3 py-1.5 rounded-lg text-xs transition-all">
-            Business Scenario (SMART)
-          </button>
-        </div>
+        </template>
+      </nav>
+    </aside>
 
-        <!-- Template Content Display Box -->
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-3">
-          <template x-if="selectedTemplate === 'saw'">
-            <div class="space-y-3">
-              <div class="border-b border-slate-200 pb-2">
-                <span class="font-bold text-blue-900 uppercase tracking-wider block">Deliverable: Statement of Architecture Work (Approved Contract)[cite: 3, 4]</span>
-                <p class="text-slate-600 mt-0.5">Forms the contractual agreement between the architecture organization and the sponsoring organization[cite: 3, 4].</p>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-700">
-                <div><strong>1. Architecture Project Request:</strong> Background & purpose[cite: 3, 4].</div>
-                <div><strong>2. Project Description & Scope:</strong> BDAT boundaries & breadth[cite: 3, 4].</div>
-                <div><strong>3. Architecture Vision Summary:</strong> High-level target state[cite: 3, 4].</div>
-                <div><strong>4. Project Plan & Schedule:</strong> Milestones & work breakdown[cite: 3, 4].</div>
-                <div><strong>5. Acceptance Criteria & Procedures:</strong> Sign-off rules[cite: 3, 4].</div>
-                <div><strong>6. Roles & Responsibilities:</strong> Governance & team RACI[cite: 3, 4].</div>
-              </div>
+    <main class="min-w-0">
+      <template x-for="doc in docs" :key="doc.id">
+        <section x-show="active === doc.id" x-cloak>
+          <div class="bg-white border border-gray-200 rounded-xl p-5 mb-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-accent">Section heading = source filename</p>
+            <h2 class="text-2xl font-bold mt-1 break-words" x-text="doc.filename"></h2>
+            <p class="mt-2 text-body" x-text="doc.lede"></p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="text-xs px-2 py-1 rounded bg-blue-50 text-blue-800 font-medium break-words" x-text="doc.phase"></span>
+              <span class="text-xs px-2 py-1 rounded bg-gray-100 text-gray-700 break-words" x-text="doc.series"></span>
             </div>
-          </template>
+          </div>
 
-          <template x-if="selectedTemplate === 'vision'">
-            <div class="space-y-3">
-              <div class="border-b border-slate-200 pb-2">
-                <span class="font-bold text-blue-900 uppercase tracking-wider block">Deliverable: Architecture Vision Document[cite: 3, 4]</span>
-                <p class="text-slate-600 mt-0.5">Aspirational qualitative summary of the capabilities delivered by the Target Architecture[cite: 3, 4].</p>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-700">
-                <div><strong>1. Problem Description:</strong> Business issue & stakeholder concerns[cite: 3, 4].</div>
-                <div><strong>2. Value Propositions:</strong> Business benefits & ROI[cite: 3, 4].</div>
-                <div><strong>3. High-Level Summary Views:</strong> Value Chain & Solution Concept diagrams[cite: 3, 4].</div>
-                <div><strong>4. Target Architecture KPIs:</strong> Quantitative success metrics[cite: 3, 4].</div>
-                <div><strong>5. Reference to ADD:</strong> Link to qualitative container models[cite: 3, 4].</div>
-                <div><strong>6. Risk Mitigation Summary:</strong> Preliminary transformation risk strategy[cite: 3, 4].</div>
-              </div>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <template x-for="tab in tabs" :key="tab.id">
+              <button type="button" @click="tabId = tab.id; $nextTick(() => lucide.createIcons())"
+                class="px-3 py-2 rounded-lg text-sm font-medium border"
+                :class="tabId === tab.id ? 'bg-accent text-white border-accent' : 'bg-white text-body border-gray-200 hover:border-blue-300'">
+                <span x-text="tab.label"></span>
+              </button>
+            </template>
+          </div>
+
+          <div x-show="tabId === 'overview'" class="space-y-4">
+            <div class="grid md:grid-cols-3 gap-3">
+              <article class="bg-white border border-gray-200 rounded-xl p-4">
+                <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-500">Scope</h3>
+                <p class="mt-2 text-sm" x-html="doc.overview.scope"></p>
+              </article>
+              <article class="bg-white border border-gray-200 rounded-xl p-4">
+                <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-500">Core purpose</h3>
+                <p class="mt-2 text-sm" x-html="doc.overview.purpose"></p>
+              </article>
+              <article class="bg-white border border-gray-200 rounded-xl p-4">
+                <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-500">TOGAF 10 concepts</h3>
+                <p class="mt-2 text-sm" x-html="doc.overview.concepts"></p>
+              </article>
             </div>
-          </template>
-
-          <template x-if="selectedTemplate === 'scenario'">
-            <div class="space-y-3">
-              <div class="border-b border-slate-200 pb-2">
-                <span class="font-bold text-blue-900 uppercase tracking-wider block">Technique: Business Scenario Structure (SMART Criteria)[cite: 3, 4]</span>
-                <p class="text-slate-600 mt-0.5">Used in Phase A to derive architecture characteristics from high-level business requirements[cite: 3, 4].</p>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-center">
-                <div class="bg-white p-2 rounded border border-slate-200">
-                  <strong class="text-blue-800 block">S - Specific</strong>
-                  <span class="text-[10px] text-slate-600">Defines clearly what needs to be done[cite: 3, 4].</span>
-                </div>
-                <div class="bg-white p-2 rounded border border-slate-200">
-                  <strong class="text-blue-800 block">M - Measurable</strong>
-                  <span class="text-[10px] text-slate-600">Clear metrics for success and metrics[cite: 3, 4].</span>
-                </div>
-                <div class="bg-white p-2 rounded border border-slate-200">
-                  <strong class="text-blue-800 block">A - Actionable</strong>
-                  <span class="text-[10px] text-slate-600">Segments problem for solution plans[cite: 3, 4].</span>
-                </div>
-                <div class="bg-white p-2 rounded border border-slate-200">
-                  <strong class="text-blue-800 block">R - Realistic</strong>
-                  <span class="text-[10px] text-slate-600">Solvable within physical/cost limits[cite: 3, 4].</span>
-                </div>
-                <div class="bg-white p-2 rounded border border-slate-200">
-                  <strong class="text-blue-800 block">T - Time-bound</strong>
-                  <span class="text-[10px] text-slate-600">Clear solution expiration window[cite: 3, 4].</span>
-                </div>
-              </div>
+            <div class="bg-white border border-gray-200 rounded-xl p-4">
+              <h3 class="font-bold text-lg">Elevator pitch (exam recall)</h3>
+              <ol class="mt-3 space-y-2 list-decimal list-inside text-sm">
+                <template x-for="(b,i) in doc.overview.elevator" :key="i">
+                  <li x-html="b"></li>
+                </template>
+              </ol>
             </div>
-          </template>
-        </div>
-      </div>
+            <template x-for="(c,i) in doc.overview.callouts" :key="'oc'+i">
+              <div class="rounded-lg p-4 border-l-4" :class="boxClass(c.type)">
+                <p class="font-semibold text-sm" x-text="c.title"></p>
+                <p class="text-sm mt-1" x-html="c.body"></p>
+              </div>
+            </template>
+          </div>
 
-    </div>
-
-    <!-- TAB 5: REAL-WORLD CASE STUDY (COMPREHENSIVE DEEP-DIVE) -->
-    <div x-show="activeTab === 'casestudy'" x-cloak class="space-y-6">
-      
-      <!-- CASE STUDY HEADER BANNER -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl">
-              <i class="fa-solid fa-hospital"></i>
+          <div x-show="tabId === 'steps'" class="space-y-4">
+            <div class="rounded-lg p-4 border-l-4 bg-amber-50 border-amber-500">
+              <p class="font-semibold text-sm">🎯 Chunked summary (3 bullets)</p>
+              <ul class="mt-2 list-disc list-inside text-sm space-y-1">
+                <template x-for="(b,i) in doc.steps.chunked" :key="i"><li x-html="b"></li></template>
+              </ul>
             </div>
+            <p class="text-sm text-gray-600" x-show="doc.steps.mnemonic" x-html="doc.steps.mnemonic"></p>
+            <div class="space-y-2">
+              <template x-for="(step, idx) in doc.steps.items" :key="idx">
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                  <button type="button" class="w-full text-left px-4 py-3 font-semibold flex justify-between gap-3"
+                    @click="toggleStep(doc.id, idx)">
+                    <span class="min-w-0"><span class="text-accent mr-2" x-text="(idx+1)+'.'"></span><span x-text="step.title"></span></span>
+                    <span class="text-gray-400 text-sm shrink-0" x-text="openStep[doc.id]===idx ? '–' : '+'"></span>
+                  </button>
+                  <div class="px-4 pb-4 text-sm border-t border-gray-100" x-show="openStep[doc.id]===idx" x-cloak>
+                    <p class="mt-3" x-html="step.body"></p>
+                    <p class="mt-2 text-accent font-medium" x-show="step.hook" x-html="step.hook"></p>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <div x-show="tabId === 'io'" class="space-y-4">
+            <div class="flex flex-wrap gap-3 text-xs">
+              <span class="px-2 py-1 rounded bg-emerald-50 text-emerald-800 font-semibold">Mandatory = green badge</span>
+              <span class="px-2 py-1 rounded bg-gray-100 text-gray-700 font-semibold">Optional = gray badge</span>
+            </div>
+            <div class="grid md:grid-cols-2 gap-3">
+              <template x-for="(item,i) in doc.io" :key="i">
+                <article class="bg-white border border-gray-200 rounded-xl p-4 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h3 class="font-bold break-words" x-text="item.name"></h3>
+                    <span class="text-[11px] px-2 py-0.5 rounded font-semibold shrink-0"
+                      :class="item.mandatory ? 'bg-emerald-50 text-emerald-800' : 'bg-gray-100 text-gray-600'"
+                      x-text="item.mandatory ? 'Mandatory' : 'Optional'"></span>
+                  </div>
+                  <p class="text-xs text-gray-500 mt-1" x-text="item.kind"></p>
+                  <p class="text-sm mt-2" x-html="item.detail"></p>
+                  <dl class="mt-3 text-xs space-y-1">
+                    <div class="flex gap-2 min-w-0"><dt class="font-semibold w-28 shrink-0">Repository</dt><dd class="break-words" x-text="item.repo"></dd></div>
+                    <div class="flex gap-2 min-w-0"><dt class="font-semibold w-28 shrink-0">ABB / SBB</dt><dd class="break-words" x-text="item.bb"></dd></div>
+                    <div class="flex gap-2 min-w-0" x-show="item.template"><dt class="font-semibold w-28 shrink-0">Template</dt><dd class="break-words" x-html="item.template"></dd></div>
+                  </dl>
+                </article>
+              </template>
+            </div>
+          </div>
+
+          <div x-show="tabId === 'case'" class="space-y-4">
+            <article class="bg-white border border-gray-200 rounded-xl p-5">
+              <h3 class="text-xl font-bold" x-text="doc.kase.title"></h3>
+              <p class="text-sm text-gray-500 mt-1">Through-line enterprise: Helvetia Retail Bank (EU) — Phase B after signed SoAW for core-banking consolidation onto regulated cloud.</p>
+              <div class="mt-4 space-y-4">
+                <div class="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-r-lg">
+                  <h4 class="font-bold text-sm">1. Business Trigger</h4>
+                  <p class="text-sm mt-1" x-html="doc.kase.trigger"></p>
+                </div>
+                <div class="border-l-4 border-emerald-500 bg-emerald-50 p-4 rounded-r-lg">
+                  <h4 class="font-bold text-sm">2. Artifacts Produced (and by whom)</h4>
+                  <p class="text-sm mt-1" x-html="doc.kase.artifacts"></p>
+                </div>
+                <div class="border-l-4 border-amber-500 bg-amber-50 p-4 rounded-r-lg">
+                  <h4 class="font-bold text-sm">3. Sample Deliverable Excerpt</h4>
+                  <div class="text-sm mt-1 overflow-x-auto" x-html="doc.kase.excerpt"></div>
+                </div>
+                <div class="border border-gray-300 rounded-lg bg-white p-5" x-show="doc.kase.sampleDoc" x-cloak>
+                  <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">Sample document (exam-style, complete)</p>
+                  <div class="text-sm" x-html="doc.kase.sampleDoc"></div>
+                </div>
+                <div class="border-l-4 border-red-400 bg-red-50 p-4 rounded-r-lg">
+                  <h4 class="font-bold text-sm">4. Governance Challenge &amp; Resolution</h4>
+                  <p class="text-sm mt-1" x-html="doc.kase.gov"></p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div x-show="tabId === 'exam'" class="space-y-6">
             <div>
-              <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-200">Comprehensive Deep-Dive Scenario</span>
-              <h3 class="text-xl font-bold text-slate-900 mt-0.5">HealthFirst Global Hospital Network: Phase A Execution</h3>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 bg-slate-100 p-2.5 rounded-lg border border-slate-200 text-xs">
-            <i class="fa-solid fa-notes-medical text-blue-600"></i>
-            <span class="font-medium text-slate-700">Enterprise: 35 Hospitals | 12,000 Staff | 4M Patients Annually</span>
-          </div>
-        </div>
-        <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
-          This scenario illustrates how HealthFirst Global executed Phase A (Architecture Vision) to initiate a $45M enterprise transformation migrating legacy hospital Electronic Health Record (EHR) systems to a unified cloud-native Telehealth and Patient Analytics platform[cite: 3, 4].
-        </p>
-      </div>
-
-      <!-- SECTION 1: PROBLEM STATEMENT & STRATEGIC DRIVERS -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-        <h4 class="text-base font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-triangle-exclamation text-red-500"></i> 1. Baseline Problem Statement & Strategic Drivers
-        </h4>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-red-50/50 p-4 rounded-xl border border-red-100 text-xs space-y-1.5">
-            <strong class="text-red-950 font-bold block text-sm"><i class="fa-solid fa-server mr-1"></i> Fragmented Legacy Systems</strong>
-            <p class="text-slate-700">35 regional hospitals operated 14 incompatible EHR software versions, preventing real-time patient record sharing and causing duplicate diagnostic testing.</p>
-          </div>
-          <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100 text-xs space-y-1.5">
-            <strong class="text-amber-950 font-bold block text-sm"><i class="fa-solid fa-user-shield mr-1"></i> Compliance & Security Risks</strong>
-            <p class="text-slate-700">Unencrypted legacy data flows exposed the network to severe HIPAA and GDPR compliance penalties and potential ransomware threats.</p>
-          </div>
-          <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100 text-xs space-y-1.5">
-            <strong class="text-blue-950 font-bold block text-sm"><i class="fa-solid fa-laptop-medical mr-1"></i> Telehealth Channel Demands</strong>
-            <p class="text-slate-700">Patient demand for remote consultations surged by 300%, but legacy infrastructure could not scale or integrate with mobile health applications.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECTION 2: OBJECTIVES & TARGET DELIVERABLES MAPPING TABLE -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-        <h4 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
-          <i class="fa-solid fa-table-list text-blue-600"></i> 2. Phase A Objectives & Specific Target Deliverables Produced at HealthFirst
-        </h4>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-xs md:text-sm">
-            <thead>
-              <tr class="border-b border-slate-200 font-semibold text-slate-600 uppercase tracking-wider bg-slate-50">
-                <th class="py-3 px-4">Phase A Objective</th>
-                <th class="py-3 px-4">Action Taken at HealthFirst</th>
-                <th class="py-3 px-4">Target Deliverable Produced</th>
-                <th class="py-3 px-4">Status & Approval</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200 text-slate-700">
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">1. Receive Triggering Request</td>
-                <td class="py-3 px-4">Received formal mandate from Executive Board triggering cloud EHR & telehealth initiative.</td>
-                <td class="py-3 px-4 text-slate-600">Request for Architecture Work[cite: 3, 4]</td>
-                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-bold">CONSUMED</span></td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">2. Stakeholder Engagement</td>
-                <td class="py-3 px-4">Mapped Chief Medical Officer, CIO, regional clinic heads, and patient advocacy representatives.</td>
-                <td class="py-3 px-4 text-slate-600">Communications Plan & Stakeholder Map[cite: 3, 4]</td>
-                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">APPROVED</span></td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">3. Develop Aspirational Vision</td>
-                <td class="py-3 px-4">Formulated high-level summary of Cloud EHR, unified patient data layer, and secure API gateways.</td>
-                <td class="py-3 px-4 text-slate-600">Architecture Vision Document[cite: 3, 4]</td>
-                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">APPROVED</span></td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">4. Initialize Architecture Containers</td>
-                <td class="py-3 px-4">Created draft containers for qualitative BDAT models and quantitative HL7/FHIR interoperability criteria.</td>
-                <td class="py-3 px-4 text-slate-600">Draft ADD & Draft Architecture Requirements Spec[cite: 3, 4]</td>
-                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-bold">DRAFT</span></td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">5. Transformation Readiness</td>
-                <td class="py-3 px-4">Assessed medical staff digital literacy, clinical workflow disruption risks, and change management needs.</td>
-                <td class="py-3 px-4 text-slate-600">Business Transformation Readiness Assessment[cite: 3, 4]</td>
-                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">COMPLETED</span></td>
-              </tr>
-              <tr>
-                <td class="py-3 px-4 font-semibold text-blue-900">6. Secure Formal Contract</td>
-                <td class="py-3 px-4">Drafted 2-year project schedule, $45M budget, RACI matrix, and secured Chief Medical Officer & CIO signatures.</td>
-                <td class="py-3 px-4 text-slate-600">Approved Statement of Architecture Work[cite: 3, 4]</td>
-                <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">APPROVED</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- SECTION 3: STEP-BY-STEP ARCHITECTURAL EXECUTION IN CASE STUDY -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-        <h4 class="text-base font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-list-check text-blue-600"></i> 3. Detailed Step-by-Step Execution Workflow at HealthFirst
-        </h4>
-        <p class="text-xs text-slate-500">Click each step below to see how the Enterprise Architect executed the 11 Phase A steps in practice[cite: 3, 4].</p>
-
-        <!-- Interactive Step Selector for Case Study -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
-          <template x-for="s in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]">
-            <button @click="csStep = s" 
-                    :class="csStep === s ? 'bg-blue-600 text-white font-bold' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'" 
-                    class="p-2 rounded-xl border text-xs transition-all text-center">
-              <span x-text="'Step ' + s"></span>
-            </button>
-          </template>
-        </div>
-
-        <!-- Case Study Step Detail Box -->
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-xs md:text-sm prose prose-slate max-w-none">
-          
-          <div x-show="csStep === 1">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 1 Action: Establish the Architecture Project</h5>
-            <p>The Lead Architect reviewed the formal Request for Architecture Work submitted by the Board[cite: 3, 4]. Initialized project tracking in Jira, set up the Architecture Repository partition, and assigned 4 dedicated domain architects[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 2">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 2 Action: Identify Stakeholders, Concerns, & Requirements</h5>
-            <p>Mapped key stakeholders: Chief Medical Officer (concerned with clinical accuracy), Chief Information Security Officer (HIPAA compliance), Chief Financial Officer (ROI), and Head of Nursing (workflow complexity)[cite: 3, 4]. Published the Communications Plan[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 3">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 3 Action: Confirm Business Goals, Drivers, & Constraints</h5>
-            <p>Confirmed strategic goal: "360-degree patient view across all care locations". Identified strict regulatory constraints: data residency mandates requiring in-region health data storage[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 4">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 4 Action: Evaluate Capabilities</h5>
-            <p>Evaluated baseline IT capabilities[cite: 3, 4]. Identified severe capability gaps in real-time streaming data processing, cloud security management, and API gateway operations[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 5">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 5 Action: Assess Business Transformation Readiness</h5>
-            <p>Conducted readiness assessment across 35 hospitals[cite: 3, 4]. Found high leadership commitment but low digital readiness among senior clinical staff, prompting a dedicated clinical change management program[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 6">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 6 Action: Define Scope</h5>
-            <p>Specified scope boundaries: In-scope = all 35 acute care hospitals, outpatient clinics, and mobile telehealth apps. Out-of-scope = long-term research labs and third-party supplier IT systems. Time horizon = 3 years[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 7">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 7 Action: Confirm Architecture Principles</h5>
-            <p>Confirmed principles established in Preliminary: "Patient Data Privacy First", "Zero Trust Cloud Security", and "Interoperability via Open FHIR APIs"[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 8">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 8 Action: Develop Architecture Vision</h5>
-            <p>Formulated the aspirational vision document featuring the Solution Concept Diagram: a centralized hybrid-cloud patient record hub feeding regional hospital EHR interfaces and patient mobile apps[cite: 3, 4]. Created Draft ADD[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 9">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 9 Action: Define Value Propositions & KPIs</h5>
-            <p>Established value metrics: $14M annual savings in eliminated duplicate lab testing, 40% reduction in patient intake wait times, and 99.99% telehealth service availability[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 10">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 10 Action: Identify Transformation Risks & Mitigation</h5>
-            <p>Identified catastrophic risk: potential EHR downtime during hospital cutover. Formulated mitigation strategy: phased parallel-run rollout starting with 2 pilot regional clinics before full network migration[cite: 3, 4].</p>
-          </div>
-
-          <div x-show="csStep === 11">
-            <h5 class="text-blue-900 font-bold m-0 text-sm">Step 11 Action: Secure Approved Statement of Architecture Work</h5>
-            <p>Consolidated project schedule, budget ($45M), deliverables, and governance RACI into the formal Statement of Architecture Work[cite: 3, 4]. Secured executive signatures from CMO, CIO, and CFO[cite: 3, 4].</p>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- SECTION 4: HEALTHFIRST BUSINESS SCENARIO ANALYSIS -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-        <h4 class="text-base font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-file-contract text-blue-600"></i> 4. HealthFirst Business Scenario & SMART Outcomes Analysis
-        </h4>
-        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs md:text-sm space-y-2">
-          <strong class="text-blue-950 font-bold block text-sm">Business Scenario Title: Telehealth Remote Patient Onboarding</strong>
-          <p class="text-slate-700">Applied during Step 8 to derive architecture requirements from clinical user needs[cite: 3, 4]:</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2">
-            <div class="bg-white p-3 rounded-lg border border-slate-200">
-              <strong class="text-blue-900 block text-xs">Human Actors:</strong>
-              <span class="text-xs text-slate-600">Patients, On-call Physicians, Triage Nurses.</span>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200">
-              <strong class="text-blue-900 block text-xs">Computer Actors:</strong>
-              <span class="text-xs text-slate-600">Mobile Health Portal, Identity Verifier, Cloud EHR Engine.</span>
-            </div>
-            <div class="bg-white p-3 rounded-lg border border-slate-200 sm:col-span-2 lg:col-span-1">
-              <strong class="text-blue-900 block text-xs">SMART Target Outcome:</strong>
-              <span class="text-xs text-slate-600">Enable 100% remote identity verification and EHR sync within 60 seconds.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECTION 5: MEASURABLE BUSINESS RESULTS & KPIS -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-        <h4 class="text-base font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-chart-pie text-emerald-600"></i> 5. Measurable Business Outcomes Achieved
-        </h4>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-          <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-            <span class="text-xl font-extrabold text-emerald-800 block">$14.2M</span>
-            <span class="text-[11px] text-emerald-950 font-medium">Annual Lab Test Savings</span>
-          </div>
-          <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-            <span class="text-xl font-extrabold text-emerald-800 block">40%</span>
-            <span class="text-[11px] text-emerald-950 font-medium">Reduction in Patient Wait Times</span>
-          </div>
-          <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-            <span class="text-xl font-extrabold text-emerald-800 block">99.99%</span>
-            <span class="text-[11px] text-emerald-950 font-medium">Telehealth Service Availability</span>
-          </div>
-          <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-            <span class="text-xl font-extrabold text-emerald-800 block">100%</span>
-            <span class="text-[11px] text-emerald-950 font-medium">HIPAA & GDPR Compliance Pass Rate</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- TAB 6: TOGAF 10 EXAM REVISION -->
-    <div x-show="activeTab === 'exam'" x-cloak class="space-y-6">
-      
-      <!-- HIGH YIELD CALLOUT BOX -->
-      <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-xl shadow-sm flex items-start gap-3">
-        <span class="text-xl">🎯</span>
-        <div class="text-xs md:text-sm text-blue-950">
-          <strong class="font-bold">High-Yield Exam Focus:</strong> The Statement of Architecture Work is a <strong>CONTRACT</strong> between the sponsoring organization and the architecture organization[cite: 3, 4]. It defines the scope, schedule, budget, and responsibilities for the architecture project[cite: 3, 4]. Approval of this document is required before moving to Phase B[cite: 3, 4].
-        </div>
-      </div>
-
-      <!-- High Yield Cards & Mnemonics -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <!-- Mnemonics & Exam Rules -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
-          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-brain text-amber-600"></i> Key Mnemonics & High-Yield Rules
-          </h3>
-          <div class="space-y-2 text-xs">
-            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-950">
-              <strong class="block font-bold">Mnemonic: SMART Outcomes (Business Scenarios)[cite: 3, 4]</strong>
-              <strong>S</strong>pecific, <strong>M</strong>easurable, <strong>A</strong>ctionable, <strong>R</strong>ealistic, <strong>T</strong>ime-bound[cite: 3, 4].
-            </div>
-            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-800">
-              <strong class="block font-bold">Rule: ADD vs. Requirements Spec[cite: 3, 4]</strong>
-              <strong>Architecture Definition Document (ADD):</strong> Qualitative view of the solution[cite: 3, 4].<br>
-              <strong>Architecture Requirements Specification:</strong> Quantitative view of compliance criteria[cite: 3, 4].
-            </div>
-            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-800">
-              <strong class="block font-bold">Rule: Input vs. Output Contract[cite: 3, 4]</strong>
-              <strong>Trigger Input:</strong> Request for Architecture Work (sent to architects)[cite: 3, 4].<br>
-              <strong>Governing Output:</strong> Statement of Architecture Work (signed contract)[cite: 3, 4].
-            </div>
-          </div>
-        </div>
-
-        <!-- TOGAF 10 vs TOGAF 9.2 Terminology Updates -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3">
-          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-arrows-rotate text-blue-600"></i> TOGAF 10th Edition Key Terminology Callouts
-          </h3>
-          <div class="space-y-2 text-xs">
-            <div class="p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-950">
-              <strong class="block font-bold">Modular Structure Integration[cite: 3, 4]:</strong>
-              Phase A specifically leverages the <strong>TOGAF Series Guides</strong> for practical advice on Digital Transformation, Business Scenarios, and Agile Integration[cite: 3, 4].
-            </div>
-            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-800">
-              <strong class="block font-bold">Agile Sprint Backlog Touchpoints[cite: 3, 4]:</strong>
-              Statements of Architecture Work now explicitly accommodate iterative backlog definitions and SAFe architecture epics within the project scope[cite: 3, 4].
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Interactive Flashcards Grid -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-        <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-layer-group text-emerald-600"></i> Interactive Exam Flashcards (Click to Flip)
-        </h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <template x-for="(card, index) in flashcards" :key="index">
-            <div @click="card.open = !card.open" 
-                 class="bg-slate-50 p-4 rounded-xl border border-slate-200 cursor-pointer hover:border-blue-400 transition-all flex flex-col justify-between min-h-[130px]">
-              <div>
-                <span class="text-[10px] font-bold text-blue-700 uppercase tracking-wider block mb-1" x-text="'Question ' + (index + 1)"></span>
-                <p class="text-xs font-semibold text-slate-900" x-text="card.q"></p>
-              </div>
-              <div class="mt-3 pt-2 border-t border-slate-200">
-                <template x-if="!card.open">
-                  <span class="text-[11px] text-slate-500 flex items-center gap-1"><i class="fa-solid fa-eye"></i> Click to reveal answer</span>
-                </template>
-                <template x-if="card.open">
-                  <p class="text-xs font-medium text-emerald-700" x-text="card.a"></p>
+              <h3 class="font-bold text-lg mb-3">High-yield knowledge cards</h3>
+              <div class="grid md:grid-cols-2 gap-3">
+                <template x-for="(card,i) in doc.exam.cards" :key="i">
+                  <article class="bg-white border border-gray-200 rounded-xl p-4">
+                    <h4 class="font-semibold text-accent text-sm" x-text="card.h"></h4>
+                    <p class="text-sm mt-1" x-html="card.b"></p>
+                  </article>
                 </template>
               </div>
             </div>
-          </template>
-        </div>
-      </div>
-
-    </div>
-
+            <div class="bg-white border border-gray-200 rounded-xl p-4 overflow-x-auto">
+              <h3 class="font-bold text-lg mb-3">TOGAF 9.2 vs TOGAF 10 (this topic)</h3>
+              <table class="w-full text-sm min-w-[640px]">
+                <thead>
+                  <tr class="text-left border-b border-gray-200">
+                    <th class="py-2 pr-3 font-semibold">Concept</th>
+                    <th class="py-2 pr-3 font-semibold">TOGAF 9.2</th>
+                    <th class="py-2 font-semibold">TOGAF 10</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template x-for="(row,i) in doc.exam.compare" :key="i">
+                    <tr class="border-b border-gray-100 align-top">
+                      <td class="py-2 pr-3 font-medium" x-html="row[0]"></td>
+                      <td class="py-2 pr-3 text-gray-600" x-html="row[1]"></td>
+                      <td class="py-2" x-html="row[2]"></td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-xl p-4">
+              <h3 class="font-bold text-lg">Mnemonics &amp; memory aids</h3>
+              <ul class="mt-2 space-y-2 text-sm list-disc list-inside">
+                <template x-for="(m,i) in doc.exam.mnemonics" :key="i"><li x-html="m"></li></template>
+              </ul>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-xl p-4">
+              <div class="flex items-center justify-between gap-3 flex-wrap">
+                <h3 class="font-bold text-lg">Quick-fire quiz</h3>
+                <button type="button" class="px-3 py-1.5 text-sm rounded-lg border border-blue-300 text-blue-800 bg-blue-50 font-medium"
+                  @click="showAns[doc.id] = !showAns[doc.id]"
+                  x-text="showAns[doc.id] ? 'Hide answers' : 'Show answers'"></button>
+              </div>
+              <ol class="mt-4 space-y-4 list-decimal list-inside">
+                <template x-for="(q, qi) in doc.exam.quiz" :key="qi">
+                  <li class="text-sm">
+                    <span class="font-medium" x-html="q.q"></span>
+                    <ul class="mt-2 ml-5 space-y-1">
+                      <template x-for="(opt, oi) in q.opts" :key="oi">
+                        <li>
+                          <span class="font-semibold" x-text="String.fromCharCode(65+oi)+') '"></span>
+                          <span x-html="opt"></span>
+                        </li>
+                      </template>
+                    </ul>
+                    <div class="mt-2 ml-5 rounded-lg p-3 bg-emerald-50 border-l-4 border-emerald-500" x-show="showAns[doc.id]" x-cloak>
+                      <p><strong>Answer:</strong> <span x-text="q.a"></span></p>
+                      <p class="mt-1"><strong>Trap:</strong> <span x-html="q.trap"></span></p>
+                    </div>
+                  </li>
+                </template>
+              </ol>
+            </div>
+          </div>
+        </section>
+      </template>
+    </main>
   </div>
 
+  <footer class="max-w-[1600px] mx-auto px-4 sm:px-6 py-8 text-xs text-gray-500">
+    Study dashboard generated from folder notes plus TOGAF Standard, 10th Edition Fundamental Content. Not a substitute for The Open Group official documentation.
+  </footer>
+
+  <script>
+    function dashboard() {
+      const box = (type, title, body) => ({ type, title, body });
+      const sampleShell = (title, meta, inner) =>
+        '<article class="border border-gray-200 rounded-md overflow-hidden">' +
+        '<header class="bg-blue-50 border-b border-blue-200 px-4 py-3">' +
+        '<p class="text-[11px] font-semibold uppercase tracking-wide text-blue-800">' + meta + '</p>' +
+        '<h5 class="text-lg font-bold text-ink mt-1">' + title + '</h5></header>' +
+        '<div class="p-4 space-y-3 text-xs leading-relaxed text-body">' + inner + '</div></article>';
+      const docs = [
+        {
+          id: "34",
+          nav: "34 Purpose and Objectives",
+          filename: "34 Purpose and Objectives.docx",
+          phase: "Phase B: Business Architecture",
+          series: "Fundamental Content ADM; Business Architecture Series Guide (capability, value stream, organization)",
+          lede: "Phase B is the second ADM-cycle phase and the first of the three BDAT domain phases. You develop a Business Architecture that supports the agreed Architecture Vision — the prerequisite for data, application, and technology work.",
+          overview: {
+            scope: "How the enterprise must operate to achieve Vision goals and strategic drivers, addressing the SoAW and stakeholder concerns. Identify gaps (where current enterprise fails stakeholder preferences) and work packages to realize change.",
+            purpose: "Develop a <strong>Business Architecture to support an agreed Architecture Vision</strong>. Same purpose pattern as C and D, swapping the domain. Output: stakeholder-approved BA with gaps and work to close them understood.",
+            concepts: "Business–IT alignment: C and D must enable B. Work package = set of actions to achieve one or more business objectives; always weigh added value vs effort. Manage stakeholder priority vs value, effort, and risk. TOGAF 10: capability maps, value streams, organization maps are first-class BA models.",
+            elevator: [
+              "<strong>B before C/D.</strong> Business Architecture is the prerequisite; that is business–IT alignment.",
+              "Two objectives: (1) target BA for how the enterprise needs to operate; (2) candidate Architecture Roadmap components from baseline–target gaps.",
+              "BCD exam shortcut: purpose is always develop that domain’s architecture to support the agreed Vision."
+            ],
+            callouts: [
+              box("tip", "💡 Work package", "A set of actions identified to achieve one or more objectives for the business — the required work to realize necessary changes. Check that added value is in relation to implementation effort."),
+              box("yield", "🎯 High-yield BCD pattern", "Purpose of B, C, and D is the same sentence with a different domain: develop [Business / Information Systems / Technology] Architecture to support an agreed Architecture Vision."),
+              box("trap", "⚠️ Exam trap", "Do not start data/application/technology definition before BA. Do not treat Phase B as ‘just process maps’ — objectives include target operating model and roadmap candidates. Phase A already agreed the Vision; B supports it, it does not replace it.")
+            ]
+          },
+          steps: {
+            mnemonic: "<strong>Story-hook:</strong> “Vision said why; B shows how the business must run, what is missing, and whether the work is worth the risk.”",
+            chunked: [
+              "Develop target BA aligned to Vision, SoAW, and concerns.",
+              "Show gaps vs baseline (preferences not met) and candidate work to close them.",
+              "Get stakeholders to approve the BA with eyes open on value, effort, and risk."
+            ],
+            items: [
+              { title: "Place Phase B in the cycle", body: "Second ADM-cycle phase; first of B, C, D domain phases. Prerequisite for other domains.", hook: "" },
+              { title: "Develop target Business Architecture", body: "Describe how the enterprise needs to operate to achieve business goals and respond to strategic drivers in the Architecture Vision, addressing the SoAW and stakeholder concerns.", hook: "" },
+              { title: "Identify gaps", body: "Show how the current enterprise fails to meet stakeholder preferences and what must change.", hook: "" },
+              { title: "Define work packages and manage trade-offs", body: "Work packages realize change. Manage stakeholder priority/preference when value, effort, or risk make a change unattractive.", hook: "Trade-off trio: <strong>VER</strong> — Value, Effort, Risk." },
+              { title: "Identify candidate roadmap components", body: "Second objective: based on gaps between baseline and target BA.", hook: "" },
+              { title: "Obtain stakeholder approval", body: "Approved BA for the problem being addressed; gaps and work understood — not a private opinion.", hook: "" }
+            ]
+          },
+          io: [
+            { name: "Architecture Vision (agreed)", kind: "Input from Phase A", mandatory: true, repo: "Architecture Landscape", bb: "Aspirational ABBs to elaborate", detail: "Phase B supports this; it does not rewrite the Vision from scratch.", template: "See Phase 1 document 30" },
+            { name: "Statement of Architecture Work", kind: "Input / constraint", mandatory: true, repo: "Governance Repository", bb: "N/A", detail: "Target BA must address the SoAW.", template: "See Phase 1 document 32" },
+            { name: "Target Business Architecture", kind: "Deliverable content in ADD", mandatory: true, repo: "Architecture Landscape", bb: "Business ABBs (capability, process, org)", detail: "How the enterprise needs to operate. Draft in B; grows through cycle.", template: "Capability map · value streams · org map · processes" },
+            { name: "Gap analysis (business)", kind: "Matrix / technique output", mandatory: true, repo: "Landscape / governance", bb: "Compare baseline vs target ABBs — not SBBs", detail: "See document 36.", template: "Target ABBs across; baseline down; New row; Eliminated column" },
+            { name: "Candidate Architecture Roadmap components", kind: "Output toward E", mandatory: true, repo: "Opportunities (later consolidated in E)", bb: "Work to develop/procure ABBs; SBBs come later", detail: "Second Phase B objective.", template: "Gap | work package | value | cost | priority" }
+          ],
+          kase: {
+            title: "Helvetia — BA before anyone picks a core product",
+            trigger: "After SoAW sign-off, the CIO still wanted a vendor bake-off. Phase B was used to show how Retail/SME must operate (one customer truth, two-day onboarding) and which capability gaps exist — before C/D or SBBs.",
+            artifacts: "<strong>Business architects</strong> drafted target capability map and value stream for onboarding. <strong>COO</strong> owned approval. <strong>EA</strong> listed work packages (KYC industrialization, customer-master unification) with value vs effort. <strong>Risk</strong> flagged DORA-related process gaps.",
+            excerpt: "<p class='text-xs'><strong>Approved outcome:</strong> Target BA for Retail/SME operating model; gaps understood; candidate roadmap components listed. C/D must enable this BA.</p>",
+            sampleDoc: sampleShell("Phase B Objectives and Approval Record", "BA-HRB-B-2026 · Draft pending stakeholder review · supports AV-HRB-2026-01", `
+              <h6 class="font-bold text-sm">Objective 1 — Target Business Architecture</h6>
+              <p>Describe how Helvetia Retail/SME needs to operate to achieve Vision goals (one customer, one ledger capability set, two-day onboarding) and SoAW constraints (no product lock-in in A; EU-region; COTS preference).</p>
+              <h6 class="font-bold text-sm">Objective 2 — Candidate roadmap components</h6>
+              <table class="w-full border">
+                <tr class="bg-gray-50"><th class="border p-2 text-left">Gap</th><th class="border p-2 text-left">Work package</th><th class="border p-2 text-left">Value vs effort</th></tr>
+                <tr><td class="border p-2">Split customer masters</td><td class="border p-2">Unify Customer capability (ABB)</td><td class="border p-2">High value; high effort — proceed</td></tr>
+                <tr><td class="border p-2">Paper KYC</td><td class="border p-2">Industrialize onboarding value stream</td><td class="border p-2">High value; medium effort — proceed</td></tr>
+                <tr><td class="border p-2">Unique Corporate ledger</td><td class="border p-2">Out of SoAW breadth</td><td class="border p-2">Park via RM</td></tr>
+              </table>
+              <p><strong>Trade-off:</strong> a 90-day all-bank process redesign was dropped — effort and change risk (BTRA) exceeded value for this cycle.</p>
+              <p>Stakeholders must understand gaps, work, value, and risk before approval. Without approval this is only a documented opinion.</p>`),
+            gov: "<strong>Challenge:</strong> Vendor offered SBBs (named cores) as the BA. <strong>Resolution:</strong> Architecture Board: Phase B describes business ABBs and gaps. SBBs wait for later continuum moves. C and D must enable this BA, not the reverse."
+          },
+          exam: {
+            cards: [
+              { h: "Purpose", b: "Develop a Business Architecture to support an agreed Architecture Vision." },
+              { h: "Two objectives", b: "Target BA (operate to achieve Vision goals/drivers, SoAW, concerns) + candidate roadmap components from gaps." },
+              { h: "Prerequisite", b: "BA before data, application, technology — business–IT alignment." },
+              { h: "BCD shortcut", b: "Same purpose sentence for B, C, and D with a different domain name." }
+            ],
+            compare: [
+              ["Purpose wording", "Support the Architecture Vision", "Unchanged; TOGAF 10 still tests ‘agreed Architecture Vision’"],
+              ["Business models", "Process-heavy in many 9.2 courses", "Series Guides: capability map, value stream, organization map as core BA views"],
+              ["Agile B", "Big-bang BA", "Iterate BA with the Vision; still a stakeholder-approved domain architecture"],
+              ["Roadmap candidates", "Toward Phase E", "Same: B identifies candidates; E consolidates across domains"],
+              ["Work packages", "Change actions", "Still defined as work to realize change; value vs effort is explicit in Foundation notes"]
+            ],
+            mnemonics: [
+              "<strong>BCD = Vision support.</strong> Develop domain architecture to support agreed Vision.",
+              "<strong>VER</strong> — Value, Effort, Risk when managing stakeholder preference.",
+              "Order: <strong>B then C then D</strong> for alignment (not D first)."
+            ],
+            quiz: [
+              { q: "The purpose of Phase B is to:", opts: ["Select SBBs for core banking", "Develop a Business Architecture to support an agreed Architecture Vision", "Build the EA capability", "Finalize the Implementation and Migration Plan"], a: "B", trap: "C is Preliminary. D is Phase F." },
+              { q: "Business Architecture is a prerequisite for other domains because:", opts: ["TOGAF forbids data models", "Data, application, and technology architectures should align to / enable the BA (business–IT alignment)", "Phase C does not exist in TOGAF 10", "The SoAW is written in B"], a: "B", trap: "C is false; D is Phase A." },
+              { q: "Phase B’s second objective is to:", opts: ["Sign the RFAW", "Identify candidate Architecture Roadmap components based on baseline–target BA gaps", "Approve change requests in H", "Write source code"], a: "B", trap: "A is the cycle trigger into A." },
+              { q: "A work package is:", opts: ["A Zoom license", "A set of actions to achieve one or more business objectives", "The Principles catalog", "Phase G only"], a: "B", trap: "A is an SBB example." },
+              { q: "The purpose pattern for Phases B, C, and D is:", opts: ["Entirely different in each phase", "The same: develop that domain architecture to support an agreed Architecture Vision", "Only used in Preliminary", "Replaced by Series Guides"], a: "B", trap: "A — notes call this an exam shortcut." },
+              { q: "Without stakeholder approval of the target architecture you have:", opts: ["Automatic implementation governance", "Only a documented opinion", "A signed SoAW replacement", "An SBB catalogue"], a: "B", trap: "A — notes: no approval, no governance." }
+            ]
+          }
+        },
+        {
+          id: "35",
+          nav: "35 Steps",
+          filename: "35 Steps.docx",
+          phase: "Phase B: Business Architecture (same step pattern as C and D)",
+          series: "ADM steps: Foundation does not require memorizing steps; Practitioner does. Gap approach applies to B, C, and D.",
+          lede: "Phase B steps are essentially baseline vs target plus gap analysis, then roadmap candidates, landscape impacts, stakeholder review, finalize, and document in the ADD.",
+          overview: {
+            scope: "Select models/viewpoints/tools first to avoid rework. Develop baseline and target BA, gap analysis, candidate roadmap, resolve landscape impacts, formal stakeholder review, finalize BA, document in ADD.",
+            purpose: "Create a comparable baseline and target, find what must change, define work, check impacts, and obtain approval so implementation governance is possible.",
+            concepts: "Three best practices: (1) baseline only as far as needed for alignment and gaps; (2) same technique and same level of detail for baseline and target; (3) focus on landscape that will change and needs traceability. EA is accountable for guarding value (cost vs value of reaching the target).",
+            elevator: [
+              "<strong>Same steps in B, C, and D</strong> — the gap approach is not B-only.",
+              "Plan information first (reference models, viewpoints, tools); reuse the repository.",
+              "No stakeholder approval = no architecture governance and no implementation governance."
+            ],
+            callouts: [
+              box("tip", "💡 Select viewpoints first", "Given stakeholders and concerns: what information do you need (and no more)? How will you model it? Which reference models skip inventing? What is already in the landscape?"),
+              box("yield", "🎯 Three modeling best practices", "Thin baseline; same technique/detail for baseline and target; focus on what will change and needs traceability."),
+              box("trap", "⚠️ Exam trap", "Steps are not required for Part 1, but ‘B/C/D use the same steps’ is high-yield. Do not describe baseline and target with different techniques or you cannot see gaps.")
+            ]
+          },
+          steps: {
+            mnemonic: "<strong>SVT-G-R-I-R-F-D</strong> — Select (models/viewpoints/tools), (baseline/target), Gap, Roadmap candidates, Impacts, Review, Finalize, Document. Story: “Choose the lens, draw as-is/to-be, find holes, name the work, check the landscape, get a yes, lock it, file it.” Same in C and D.",
+            chunked: [
+              "Choose reference models, viewpoints, and tools; reuse the repository; elicit only what is needed.",
+              "Baseline + target at the same technique/detail; gap analysis; candidate roadmap (cost and value).",
+              "Resolve landscape impacts; formal stakeholder review; finalize; document in the ADD."
+            ],
+            items: [
+              { title: "Select reference models, viewpoints, and tools", body: "Plan the information, how you gather it, and how you use it. Reuse industry reference models and the EA landscape. Avoid rework from choosing tools too late.", hook: "Four questions: information needed, how to model, which reference models, what is missing in the landscape." },
+              { title: "Develop baseline Business Architecture", body: "As-is, only to the extent needed for stakeholder alignment and to determine gaps.", hook: "Best practice 1: thin baseline." },
+              { title: "Develop target Business Architecture", body: "To-be operating model supporting the Vision. Use the same technique and level of detail as baseline.", hook: "Best practice 2: comparable models." },
+              { title: "Perform gap analysis", body: "Identify changes and missing pieces. Technique in document 36. Focus on landscape that will change and needs traceability.", hook: "Best practice 3: change + traceability." },
+              { title: "Define candidate roadmap components", body: "Work required to reach the target. Business roadmap and priorities. Guard value: effort, value, and cost of the target must be understood or stakeholders will not be satisfied.", hook: "EA guards value: <strong>EVC</strong> — Effort, Value, Cost." },
+              { title: "Resolve impacts across the Architecture Landscape", body: "Impact on other candidate architectures, transition states, target states, ongoing implementations, enterprise risk, planned and in-progress projects. Needs a working repository. Without this you cannot be confident the target best serves the enterprise. Keep information volume to the minimum set of concerns that visibly support value.", hook: "Impact questions (4+): preexisting architectures, recent changes, leverage opportunities, other projects (planned/in progress) impacting or impacted." },
+              { title: "Conduct formal stakeholder review", body: "Review baseline, target, gaps, roadmap candidates, and impacts. Obtain approval of the target. Without approval: no architecture governance, no implementation governance — only a documented opinion. SMEs, implementers, and decision makers must confirm where the company develops, advantages and disadvantages included.", hook: "" },
+              { title: "Finalize the Business Architecture", body: "Lock the approved BA for this cycle’s problem.", hook: "" },
+              { title: "Document in the Architecture Definition Document", body: "BA artifacts live in the ADD (qualitative container).", hook: "" }
+            ]
+          },
+          io: [
+            { name: "Viewpoints and tools selection record", kind: "Plan", mandatory: true, repo: "Governance / method", bb: "Which ABB types you will model", detail: "Done first to avoid rework.", template: "Stakeholder concern | information needed | viewpoint | tool | reuse source" },
+            { name: "Baseline &amp; target BA descriptions", kind: "ADD chapters", mandatory: true, repo: "Architecture Landscape", bb: "Business ABBs", detail: "Same technique and detail.", template: "Capability / value stream / org / process views" },
+            { name: "Candidate roadmap", kind: "Toward Architecture Roadmap", mandatory: true, repo: "Later E consolidates", bb: "Work on ABBs", detail: "Prioritized work considering cost and value.", template: "See purpose doc" },
+            { name: "Landscape impact assessment", kind: "Analysis", mandatory: true, repo: "Landscape + risk", bb: "Cross-ABB impacts", detail: "Other architectures, projects, transition states.", template: "Impact | cost | break? | resolution" }
+          ],
+          kase: {
+            title: "Helvetia — same lens for as-is and to-be",
+            trigger: "A consultancy delivered a lush target capability map and a shallow baseline spreadsheet. Gaps were untrustworthy. Phase B was reset to one technique at one level of detail.",
+            artifacts: "<strong>EA</strong> selected BIZBOK-style capability map + value stream (onboarding) + org map, reusing Phase A Vision and repository ABBs. <strong>Business architects</strong> modeled baseline and target. <strong>PMO</strong> listed in-flight channel projects for impact. <strong>Board</strong> ran formal review.",
+            excerpt: "<p class='text-xs'><strong>Best-practice check:</strong> thin baseline for alignment; same capability-map technique; only changing Customer/Payments/Ledger landscape with traceability to SoAW.</p>",
+            sampleDoc: sampleShell("Phase B Step Record", "Helvetia · B-STEPS-HRB-2026 · same pattern will be reused in C and D", `
+              <ol class="list-decimal list-inside space-y-1">
+                <li><strong>Select:</strong> Capability map, onboarding value stream, org map. Reuse AV-HRB-2026-01 and repository Customer ABB. Tool: ArchiMate in governed repo.</li>
+                <li><strong>Baseline:</strong> Three product factories; split masters; paper KYC — only enough to see gaps.</li>
+                <li><strong>Target:</strong> Same maps; Customer/Payments/Ledger capabilities; two-day onboarding stream.</li>
+                <li><strong>Gap:</strong> GAP-HRB-B-2026 (document 36 sample).</li>
+                <li><strong>Roadmap candidates:</strong> Unify customer ABB; industrialize KYC; retire paper factory. Guard value: unique Corporate ledger out of breadth.</li>
+                <li><strong>Impacts:</strong> In-flight mobile app must consume future Customer ABB; Markets (soft unit) not redesigned; DORA evidence pack needs process owners.</li>
+                <li><strong>Stakeholder review:</strong> COO, Risk, Retail, Board. Advantages/disadvantages confirmed.</li>
+                <li><strong>Finalize + ADD:</strong> ADD-HRB-2026-01 Business chapter updated (still Draft until F).</li>
+              </ol>`),
+            gov: "<strong>Challenge:</strong> Delivery wanted to skip stakeholder review ‘because SoAW was already signed.’ <strong>Resolution:</strong> SoAW authorizes the project; Phase B still needs approval of the target BA. Without it there is no implementation governance — only opinion."
+          },
+          exam: {
+            cards: [
+              { h: "B = C = D steps", b: "Gap approach applies to Business, IS, and Technology phases." },
+              { h: "Comparable models", b: "Same technique and same level of detail for baseline and target." },
+              { h: "Thin baseline", b: "Only far enough for alignment and to determine gaps." },
+              { h: "Approval", b: "Without it: no architecture or implementation governance." }
+            ],
+            compare: [
+              ["Step examinability", "Not Part 1", "TOGAF 10 Foundation still phase-purpose focused; Part 2 still steps"],
+              ["Repository reuse", "Enterprise Continuum / landscape", "TOGAF 10: reuse landscape and industry models in step 1"],
+              ["Agile increments", "One giant BA", "Thin, iterative BA still uses the same step pattern"],
+              ["Impact analysis", "Landscape states", "Unchanged: candidates, transitions, implementations, risk"],
+              ["Value guarding", "Cost vs benefit", "Notes: EA accountable for guarding value"]
+            ],
+            mnemonics: [
+              "B/C/D: <strong>Select, draw two states, gap, roadmap, impacts, review, finalize, document.</strong>",
+              "Best practices: <strong>Thin / Same / Changing</strong> (baseline depth, technique, focus).",
+              "Impact chase: <strong>minimum concerns that visibly support value.</strong>"
+            ],
+            quiz: [
+              { q: "The gap approach of Phase B also applies to:", opts: ["Only Preliminary", "Phases C and D", "Only Phase H", "Requirements Management exclusively"], a: "B", trap: "D — RM is the hub, not the gap-analysis domain phase." },
+              { q: "Baseline and target should be described:", opts: ["With different techniques to save time", "With the same technique at the same level of detail", "Target only; skip baseline", "Only as SBBs"], a: "B", trap: "A causes unreadable gaps." },
+              { q: "Describe the baseline:", opts: ["To infinite detail always", "Only to the extent needed for alignment and to determine gaps", "Never", "Only after Phase G"], a: "B", trap: "A is over-modeling." },
+              { q: "Without stakeholder approval of the target you cannot have:", opts: ["A Vision document from Phase A", "Architecture governance or implementation governance", "A Preliminary capability", "Requirements Management"], a: "B", trap: "A already exists; B approval is separate." },
+              { q: "Candidate roadmap components are defined to:", opts: ["Fill gaps between baseline and target, considering cost and value", "Replace the SoAW", "Select Zoom as a mandatory SBB", "Close Phase H"], a: "A", trap: "C confuses ABB capability with SBB." },
+              { q: "Select reference models and viewpoints:", opts: ["Last, after the ADD is finalized", "At the beginning, to avoid rework", "Only in Phase D", "Never; invent everything"], a: "B", trap: "A causes rework the notes warn about." }
+            ]
+          }
+        },
+        {
+          id: "36",
+          nav: "36 GAP Analysis",
+          filename: "36 GAP Analysis.docx",
+          phase: "Technique used in B, C, D (and later E, G, H)",
+          series: "ADM technique; Architecture Continuum (ABBs) vs Solutions Continuum (SBBs)",
+          lede: "A gap is what must change in the enterprise — an accidental, deliberate, or open shortfall between baseline and target. Ignored stakeholder concerns are the most critical source of gaps.",
+          overview: {
+            scope: "Used in almost all ADM phases. In B/C/D step 4 between baseline and target of that domain; step 5 defines roadmap components to close gaps. E reviews and consolidates. G may gap EA vs solutions/operations. H may gap current vs needed architecture capability.",
+            purpose: "Find ABBs included, new (develop or procure), intentionally eliminated, accidentally dropped, or potential matches where target requirements exceed baseline capability.",
+            concepts: "Matrix: target ABBs on the horizontal axis, baseline ABBs on the vertical; extra row New; extra column Eliminated. ABBs are capabilities not solutions (video conferencing vs Zoom/Teams/WebEx SBBs). Notes flag a TOGAF text error: new ABBs are developed or <strong>procured</strong>, not ‘produced’.",
+            elevator: [
+              "Gap = shortfall baseline vs target (accidental, deliberate, or open).",
+              "Matrix: Included / New / Intentionally eliminated / (fix accidental drops) / potential match.",
+              "Most critical source: ignored stakeholder concerns. ABBs ≠ SBBs."
+            ],
+            callouts: [
+              box("tip", "💡 ABB vs SBB", "Video conferencing services = ABB (capability). WebEx, Zoom, Teams + servers/network = SBBs implementing that capability."),
+              box("yield", "🎯 Matrix mechanics", "Both → Included. Baseline not in target → Eliminated column (intentional vs accident). Target not in baseline → New row (develop or procure). Target exceeds baseline → potential match / enhance."),
+              box("trap", "⚠️ Exam trap", "Do not put Zoom on the gap matrix as an ABB. Do not skip accidental elimination (shared screen example). ‘Produced’ in some TOGAF text is an error — say procured.")
+            ]
+          },
+          steps: {
+            mnemonic: "<strong>T-B-N-E</strong> — Target across, Baseline down, New row, Eliminated column. Then mark Included / New / Intentional / Accident / Potential match.",
+            chunked: [
+              "List target ABBs (horizontal) and baseline ABBs (vertical); add New and Eliminated.",
+              "Mark included, new (develop/procure), intentionally eliminated, accidental drops, potential matches.",
+              "Use results as roadmap candidates in B/C/D; consolidate in E."
+            ],
+            items: [
+              { title: "Define gap", body: "What must change: accidental, deliberate, or open shortfall between baseline and target. Can exist in all four domains (process/capability; data missing/late/unrelated; apps/tech impacted, eliminated, created).", hook: "Domain examples: business process/capability; data availability/relationships; application/technology created or ignored concerns." },
+              { title: "Build the matrix", body: "Target ABBs on X, baseline ABBs on Y. Final row New. Final column Eliminated. You may also list SBBs when comparing implementations, but training example uses ABBs as capabilities.", hook: "" },
+              { title: "Mark Included", body: "ABB in both baseline and target (e.g. video conferencing services).", hook: "" },
+              { title: "Mark Eliminated", body: "Baseline ABB missing in target: confirm intentional (broadcast services) vs accidental (shared screen — add back or document).", hook: "" },
+              { title: "Mark New", body: "Target ABB not in baseline: gap to fill by developing or procuring (mailing list services). Potential match if target requirements exceed baseline capabilities (enhanced telephony).", hook: "New = develop or procure (not ‘produced’)." },
+              { title: "Use through ADM", body: "B/C/D step 4 analyze, step 5 roadmap. E consolidate. G may compare EA vs solution/operations. H may assess architecture capability gaps.", hook: "Placement: <strong>BCD → E → (G/H as needed)</strong>." }
+            ]
+          },
+          io: [
+            { name: "Gap analysis matrix", kind: "Matrix artifact", mandatory: true, repo: "Architecture Landscape", bb: "ABBs on axes; SBBs only if comparing solutions later", detail: "Included / New / Eliminated (+ accidental vs intentional).", template: "See sample on Case Study tab" },
+            { name: "Governance / compliance gap view", kind: "Optional table viewpoint", mandatory: false, repo: "Governance", bb: "N/A", detail: "Baseline vs implementation project vs long-term roadmap against constraints, value, gaps (notes: baseline meets constraints but not value; project fills gaps but violates constraints; long-term roadmap delivers value but leaves gaps).", template: "State | constraints | value | gaps" }
+          ],
+          kase: {
+            title: "Helvetia — capabilities on the matrix, not Zoom",
+            trigger: "IT listed Zoom, Salesforce, and a core vendor on a ‘gap matrix.’ EA rebuilt it with ABBs so Phase B stayed on the Architecture Continuum.",
+            artifacts: "<strong>Business architect</strong> owned the matrix. <strong>Chief Architect</strong> challenged SBB rows. <strong>Board</strong> accepted intentional elimination of paper-KYC factory; required shared AML screening ABB restored after accidental drop.",
+            excerpt: "<p class='text-xs'>Training analogue: Video conferencing = Included; Broadcast = intentionally eliminated; Shared screen = accidental; Mailing list = New (develop/procure); Enhanced telephony = potential match.</p>",
+            sampleDoc: sampleShell("Business Architecture Gap Analysis Matrix", "GAP-HRB-B-2026 · ABBs (capabilities) not SBBs · Draft", `
+              <p>Target ABBs across the top; baseline ABBs down the side. Extra row <strong>New</strong>. Extra column <strong>Eliminated</strong>. Ignored stakeholder concerns (two-day onboarding) were the critical source of the onboarding gap.</p>
+              <table class="w-full border">
+                <tr class="bg-gray-50"><th class="border p-2 text-left">Baseline \\ Target</th><th class="border p-2">Customer 360 ABB</th><th class="border p-2">Two-day onboarding ABB</th><th class="border p-2">Payments hub ABB</th><th class="border p-2">Paper KYC factory</th><th class="border p-2">Eliminated</th></tr>
+                <tr><td class="border p-2 font-semibold">Split customer masters</td><td class="border p-2">Potential match (target exceeds baseline)</td><td class="border p-2"></td><td class="border p-2"></td><td class="border p-2"></td><td class="border p-2"></td></tr>
+                <tr><td class="border p-2 font-semibold">Paper KYC factory</td><td class="border p-2"></td><td class="border p-2"></td><td class="border p-2"></td><td class="border p-2"></td><td class="border p-2">Intentionally eliminated</td></tr>
+                <tr><td class="border p-2 font-semibold">AML screening ABB</td><td class="border p-2">Included</td><td class="border p-2">Included</td><td class="border p-2"></td><td class="border p-2"></td><td class="border p-2">Was accidentally dropped — restored to target</td></tr>
+                <tr><td class="border p-2 font-semibold">Fragmented payments</td><td class="border p-2"></td><td class="border p-2"></td><td class="border p-2">Potential match</td><td class="border p-2"></td><td class="border p-2"></td></tr>
+                <tr><td class="border p-2 font-semibold">New</td><td class="border p-2"></td><td class="border p-2">Develop/procure onboarding industrialization</td><td class="border p-2">Develop/procure payments hub ABB</td><td class="border p-2"></td><td class="border p-2"></td></tr>
+              </table>
+              <p><strong>Do not put on this matrix as ABBs:</strong> Zoom, Salesforce, named core products — those are SBBs for later.</p>
+              <p>Roadmap candidates (step 5): items in New + enhancements for potential matches. E will consolidate with C/D gaps.</p>`),
+            gov: "<strong>Challenge:</strong> A slide used ‘produced’ for new ABBs and implied the project team would write all software. <strong>Resolution:</strong> Board adopted the notes correction: new ABBs are developed or <em>procured</em>. COTS principle still applies."
+          },
+          exam: {
+            cards: [
+              { h: "Gap definition", b: "Accidental, deliberate, or open shortfall between baseline and target; what must change." },
+              { h: "Critical source", b: "Ignored stakeholder concerns." },
+              { h: "New cells", b: "Develop or procure (not ‘produced’)." },
+              { h: "ABB vs SBB", b: "Capability vs implementation components (Zoom et al.)." }
+            ],
+            compare: [
+              ["Technique placement", "B/C/D plus others in 9.2", "Same in TOGAF 10; E still consolidates"],
+              ["Continuum", "ABB vs SBB", "Unchanged; digital products still must not skip to SBBs in B"],
+              ["Procure vs produce", "Known erratum in some texts", "Teach procured — exam trap if ‘produced’ is offered"],
+              ["Capability language", "Process gaps", "TOGAF 10 BA: capability and value-stream gaps equally valid"],
+              ["H usage", "Capability of EA", "Still: H can gap current vs needed architecture capability"]
+            ],
+            mnemonics: [
+              "<strong>IN-EP</strong> marks — Included, New, Eliminated (intentional/accident), Potential match.",
+              "Axes: <strong>Target across, Baseline down, New row, Eliminated column.</strong>",
+              "Video conferencing ABB vs Zoom SBB."
+            ],
+            quiz: [
+              { q: "A gap is:", opts: ["Always an SBB price delta", "A shortfall between baseline and target (accidental, deliberate, or open)", "Only a technology defect", "The RFAW"], a: "B", trap: "A jumps to solutions." },
+              { q: "The most critical source of gaps is:", opts: ["CPU benchmarks", "Ignored stakeholder concerns", "Cloud discounts", "Phase F Gantt lag"], a: "B", trap: "A/C are tech/cost traps." },
+              { q: "On the matrix, an ABB in both baseline and target is marked:", opts: ["New", "Included", "Intentionally eliminated", "SBB"], a: "B", trap: "A is target-only." },
+              { q: "A new target ABB not in the baseline should be:", opts: ["Ignored", "Developed or procured", "Produced only as custom code", "Deleted from the Vision"], a: "B", trap: "C is the ‘produced’ erratum trap." },
+              { q: "Video conferencing services vs Zoom is:", opts: ["Both ABBs", "ABB (capability) vs SBB (solution)", "Both SBBs", "Neither used in TOGAF"], a: "B", trap: "A is the continuum trap." },
+              { q: "After B/C/D gap analysis, Phase E:", opts: ["Deletes all matrices", "Reviews and consolidates gap results", "Replaces ADM", "Is Preliminary"], a: "B", trap: "A — E uses the gaps." },
+              { q: "A baseline ABB missing from the target might be:", opts: ["Only a database index", "Intentionally eliminated or accidentally dropped", "Proof Phase A failed", "An enterprise principle"], a: "B", trap: "Shared-screen accidental drop is the teaching example." }
+            ]
+          }
+        },
+        {
+          id: "37",
+          nav: "37 Approach",
+          filename: "37 Approach.docx",
+          phase: "Phase B: Business Architecture (approach)",
+          series: "Business Architecture Series Guide models; Architecture Repository reuse",
+          lede: "Business Architecture is the first architecture activity. It demonstrates business value and ROI to key stakeholders and is the prerequisite for data, application, and technology architectures.",
+          overview: {
+            scope: "Two starting cases: (1) parts of BA already exist — verify/update strategy and plans; bridge high-level drivers/strategy/goals to this effort’s specific business requirements. (2) Little or no BA — research, verify, and gain buy-in to key objectives and processes. Business scenarios help in both cases.",
+            purpose: "Reuse Phase A Vision descriptions and existing ADDs; use proven models (capability map, value stream, organization map, process models, UML, industry techniques); pull industry reference models, standards, enterprise BA views, and building blocks from the Architecture Repository.",
+            concepts: "If the fundamental view of the business is not changing, reuse existing views to set scope, priorities, and relationships of this project to the rest of the enterprise. If descriptions are missing, gather information and develop them. Reuse saves time, consistency, and best practice.",
+            elevator: [
+              "BA first — C/D enable B; BA shows value/ROI.",
+              "Existing BA vs greenfield: verify-and-bridge vs research-and-buy-in; scenarios in both.",
+              "Reuse Vision, ADD, repository reference models; capability / value stream / org maps."
+            ],
+            callouts: [
+              box("tip", "💡 Two cases", "BA already done → verify, update, bridge drivers to this project’s requirements. Little/no BA → research, verify, gain buy-in to objectives and processes."),
+              box("yield", "🎯 Model set", "Business capability map, value stream model, organization map, business process models, plus industry techniques (e.g. UML)."),
+              box("trap", "⚠️ Exam trap", "Do not ignore Phase A high-level descriptions — they are the basis for BA. Do not rebuild the entire enterprise BA if the fundamental view of the business is not changing.")
+            ]
+          },
+          steps: {
+            mnemonic: "<strong>R-C-M-R</strong> — Reuse Vision/ADD, choose Case (exists vs none), Model (capability/value/org/process), Repository resources. Story: “Don’t redraw the company if the business has not fundamentally changed.”",
+            chunked: [
+              "Treat BA as first domain activity and the value/ROI story for stakeholders.",
+              "Pick the case: update-and-bridge vs research-and-buy-in; use business scenarios.",
+              "Reuse repository and Phase A; apply standard BA models; develop only what is missing."
+            ],
+            items: [
+              { title: "Start with Business Architecture", body: "First architecture activity; data/app/tech must enable and support it. Demonstrates business value and ROI.", hook: "" },
+              { title: "Case 1 — BA already exists", body: "Verify and update documented business strategy and plans. Bridge high-level drivers, strategy, and goals to specific requirements of this effort.", hook: "" },
+              { title: "Case 2 — little or no BA", body: "Research, verify, and gain buy-in to key business objectives and processes the architecture must support.", hook: "" },
+              { title: "Use business scenarios", body: "Illuminate key business requirements and implied technical requirements of IT architecture — in both cases.", hook: "" },
+              { title: "Reuse before inventing", body: "Existing ADDs; high-level descriptions from Phase A Vision as the basis. If the fundamental view of the business is not changing, use existing views for scope, priorities, relationships.", hook: "" },
+              { title: "Develop missing models", body: "If not available: capability map, value stream, organization map, process models, UML, industry techniques. Use Architecture Repository: industry reference models, standards, enterprise BA views, building blocks.", hook: "Four+ model types: <strong>CVOP</strong> — Capability, Value stream, Organization, Process." }
+            ]
+          },
+          io: [
+            { name: "Phase A Architecture Vision descriptions", kind: "Input (reuse)", mandatory: true, repo: "Landscape", bb: "High-level ABBs to detail", detail: "Basis for developing BA.", template: "AV-HRB-2026-01" },
+            { name: "Existing ADD / BA views", kind: "Input if present", mandatory: false, repo: "Landscape", bb: "Reuse ABBs", detail: "Verify and update rather than redraw.", template: "Prior ADM cycle ADD" },
+            { name: "Capability / value stream / org maps", kind: "Diagrams", mandatory: true, repo: "Landscape", bb: "Business ABBs", detail: "Proven models for BA in TOGAF 10 style.", template: "Map + heat or gap overlay" },
+            { name: "Architecture Repository resources", kind: "Reference", mandatory: false, repo: "Reference Library, SIB, Landscape, Continuum", bb: "Industry ABBs; later SBBs not the start", detail: "Industry reference models, standards, enterprise views, building blocks.", template: "Asset | source | reuse intent" }
+          ],
+          kase: {
+            title: "Helvetia — don’t redraw the bank",
+            trigger: "A team proposed a 200-page greenfield BA. The fundamental view of the business (universal retail/SME bank) was not changing — only cores and onboarding. Approach: reuse Vision + capability language; deepen only changing parts.",
+            artifacts: "<strong>Strategy office</strong> confirmed strategy still valid (case 1). <strong>Business architects</strong> bridged drivers to onboarding requirements via scenario BS-HRB-A-2026-ONB. <strong>EA</strong> pulled industry payments reference model from the repository. Org map reused; process models updated only for KYC.",
+            excerpt: "<p class='text-xs'><strong>Case 1 applied:</strong> verify strategy; bridge to this cycle’s requirements. Models: capability map, onboarding value stream, org map. Repository: industry payments ABB + bank Customer ABB.</p>",
+            sampleDoc: sampleShell("Phase B Approach Note", "BA-APPROACH-HRB-2026 · Case 1 (BA parts exist) · reuse first", `
+              <h6 class="font-bold text-sm">Starting case</h6>
+              <p>Parts of BA exist (Preliminary PGD, Phase A Vision, onboarding scenario). Verify and update; bridge merger/DORA drivers to this cycle’s requirements. Not a greenfield Case 2.</p>
+              <h6 class="font-bold text-sm">Fundamental view of the business</h6>
+              <p>Not changing (still a Retail/SME universal bank). Therefore existing views set scope, priorities, and relationship to the rest of the enterprise (Markets remains soft/out of SoAW).</p>
+              <h6 class="font-bold text-sm">Models used</h6>
+              <ul class="list-disc list-inside">
+                <li>Business capability map (Customer, Payments, Ledger heat for gaps)</li>
+                <li>Value stream: onboarding (from business scenario)</li>
+                <li>Organization map: Retail vs shared capabilities</li>
+                <li>Process models: KYC only (changing landscape)</li>
+              </ul>
+              <h6 class="font-bold text-sm">Repository reuse</h6>
+              <p>Industry payments reference model; enterprise Customer ABB; standards (AML). Saves time, keeps consistency, leverages best practice. C/D will enable this BA — not the reverse.</p>`),
+            gov: "<strong>Challenge:</strong> UML-only team wanted to skip capability maps. <strong>Resolution:</strong> Board: UML process models are allowed as industry technique, but TOGAF 10-style BA still needs capability, value stream, and organization views for stakeholder ROI. Scenarios remain the bridge to implied IT requirements."
+          },
+          exam: {
+            cards: [
+              { h: "First activity", b: "BA is the first architecture activity; other domains enable it." },
+              { h: "Two cases", b: "Exists → verify/bridge. None → research/buy-in. Scenarios in both." },
+              { h: "If business view unchanged", b: "Reuse existing views for scope, priorities, relationships." },
+              { h: "Repository", b: "Industry models, standards, enterprise views, building blocks." }
+            ],
+            compare: [
+              ["BA metamodel", "Process-centric teaching", "TOGAF 10 Series Guides: capability, value stream, organization"],
+              ["Reuse", "Vision as input", "Same: Phase A high-level descriptions are the basis"],
+              ["Agile BA", "Redraw everything", "If fundamental view unchanged, don’t rebuild the enterprise BA"],
+              ["Scenarios", "Phase A technique", "Still used in B to illuminate requirements and implied IT needs"],
+              ["ROI story", "IT architecture first", "BA demonstrates business value and ROI to key stakeholders"]
+            ],
+            mnemonics: [
+              "<strong>CVOP</strong> — Capability, Value stream, Organization, Process.",
+              "Cases: <strong>Update-and-bridge vs Research-and-buy-in.</strong>",
+              "Reuse: Vision, ADD, repository — then develop only the missing views."
+            ],
+            quiz: [
+              { q: "Business Architecture is:", opts: ["Optional if you have a cloud vendor", "The first architecture activity and prerequisite for data, application, and technology architectures", "Phase D", "Only a communications plan"], a: "B", trap: "A is the SBB-first trap." },
+              { q: "If little or no BA exists you should:", opts: ["Skip to Phase E", "Research, verify, and gain buy-in to key business objectives and processes", "Issue SBBs immediately", "Close Requirements Management"], a: "B", trap: "A skips domain work." },
+              { q: "If the fundamental view of the business is not changing:", opts: ["You must redraw all enterprise views", "Use existing views to determine scope, priorities, and relationships for this project", "You skip Phase B", "You delete the Vision"], a: "B", trap: "A wastes time the notes warn against." },
+              { q: "Business scenarios in Phase B:", opts: ["Are forbidden", "May illuminate key business requirements and implied technical requirements", "Replace the gap matrix", "Are only Preliminary tools"], a: "B", trap: "A — used in both BA cases." },
+              { q: "Proven BA models include:", opts: ["Only network diagrams", "Capability map, value stream model, organization map, and process models", "Only SBB price sheets", "Only Phase G PIRs"], a: "B", trap: "A is technology-first." },
+              { q: "High-level architecture descriptions from Phase A should be:", opts: ["Ignored", "Used and updated as a basis for developing the BA", "Converted to source code", "The finalized ADD"], a: "B", trap: "D — ADD is not finished in A or fully in B." }
+            ]
+          }
+        }
+      ];
+
+      return {
+        docs,
+        tabs: [
+          { id: "overview", label: "1. Overview & Objectives" },
+          { id: "steps", label: "2. Phase Steps & Workflow" },
+          { id: "io", label: "3. Inputs, Outputs & Templates" },
+          { id: "case", label: "4. Real-World Case Study" },
+          { id: "exam", label: "5. TOGAF 10 Exam Revision" }
+        ],
+        active: "34",
+        tabId: "overview",
+        openStep: {},
+        showAns: {},
+        init() {
+          this.docs.forEach(d => { this.openStep[d.id] = 0; this.showAns[d.id] = false; });
+          this.$nextTick(() => lucide.createIcons());
+        },
+        select(id) {
+          this.active = id;
+          this.tabId = "overview";
+          this.$nextTick(() => lucide.createIcons());
+        },
+        toggleStep(docId, idx) {
+          this.openStep[docId] = this.openStep[docId] === idx ? -1 : idx;
+        },
+        boxClass(type) {
+          if (type === "trap") return "bg-[#FEE2E2] border-[#EF4444]";
+          if (type === "yield") return "bg-[#FEF3C7] border-[#F59E0B]";
+          return "bg-[#DBEAFE] border-[#3B82F6]";
+        }
+      };
+    }
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => lucide.createIcons());
+  </script>
 </body>
 </html>
