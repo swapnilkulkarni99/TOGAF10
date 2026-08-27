@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADM Phase 0 - Prilimanary</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#111827",
+            body: "#1F2937",
+            accent: "#3B82F6",
+            ok: "#10B981"
+          }
+        }
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    .adm-wheel text { font-family: ui-sans-serif, system-ui, sans-serif; }
+  </style>
+</head>
+<body class="bg-[#F9FAFB] text-ink antialiased" x-data="dashboard()" x-init="init()">
+  <header class="bg-white border-b border-gray-200">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-5 flex flex-col lg:flex-row lg:items-start gap-6">
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-3">
+          <div class="h-11 w-11 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0">
+            <i data-lucide="settings" class="w-6 h-6 text-accent"></i>
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs font-semibold tracking-wide text-accent uppercase">TOGAF Standard, 10th Edition · Foundation Exam Prep</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-ink break-words">ADM Phase 0 - Prilimanary</h1>
+          </div>
+        </div>
+        <p class="mt-3 text-body max-w-3xl">
+          <strong>Core value:</strong> Preliminary sits <em>before</em> the ADM development cycle. You do not start an architecture project here — you stand up the <strong>architecture capability</strong> (people, governance, principles, tailored TOGAF, tools) so Phase A can begin with a Request for Architecture Work.
+        </p>
+        <div class="mt-3 flex flex-wrap gap-2 text-sm">
+          <span class="px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 font-medium">Preliminary highlighted (outside the cycle)</span>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-medium">4 source documents</span>
+          <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-900 font-medium">Fit-for-purpose maturity — do not over-build</span>
+        </div>
+      </div>
+      <div class="shrink-0 bg-[#F9FAFB] border border-gray-200 rounded-xl p-3">
+        <p class="text-xs font-semibold text-gray-500 mb-1 text-center">ADM cycle · Preliminary in focus</p>
+        <svg class="adm-wheel w-[280px] h-[280px] mx-auto" viewBox="0 0 320 320" role="img" aria-label="TOGAF ADM cycle with Preliminary Phase highlighted before the cycle">
+          <circle cx="160" cy="160" r="148" fill="#FFFFFF" stroke="#E5E7EB" />
+          <g font-size="8" text-anchor="middle">
+            <path d="M160 160 L160 22 A138 138 0 0 1 250.7 55.3 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="205" y="58" fill="#111827" font-weight="700">A Vision</text>
+            <text x="205" y="68" fill="#4B5563">Agree what &amp; why</text>
+            <path d="M160 160 L250.7 55.3 A138 138 0 0 1 297.3 160 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="255" y="108" fill="#111827" font-weight="700">B Business</text>
+            <text x="255" y="118" fill="#4B5563">How the business works</text>
+            <path d="M160 160 L297.3 160 A138 138 0 0 1 250.7 264.7 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="252" y="198" fill="#111827" font-weight="700">C IS Arch</text>
+            <text x="252" y="208" fill="#4B5563">Data + applications</text>
+            <path d="M160 160 L250.7 264.7 A138 138 0 0 1 160 298 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="205" y="268" fill="#111827" font-weight="700">D Technology</text>
+            <text x="205" y="278" fill="#4B5563">Platforms &amp; infra</text>
+            <path d="M160 160 L160 298 A138 138 0 0 1 69.3 264.7 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="115" y="268" fill="#111827" font-weight="700">E Opps &amp; Sol</text>
+            <text x="115" y="278" fill="#4B5563">Work packages</text>
+            <path d="M160 160 L69.3 264.7 A138 138 0 0 1 22.7 160 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="68" y="198" fill="#111827" font-weight="700">F Migration</text>
+            <text x="68" y="208" fill="#4B5563">Roadmap &amp; plan</text>
+            <path d="M160 160 L22.7 160 A138 138 0 0 1 69.3 55.3 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="68" y="108" fill="#111827" font-weight="700">G Impl Gov</text>
+            <text x="68" y="118" fill="#4B5563">Conform implementations</text>
+            <path d="M160 160 L69.3 55.3 A138 138 0 0 1 160 22 Z" fill="#F3F4F6" stroke="#D1D5DB"></path>
+            <text x="115" y="58" fill="#111827" font-weight="700">H Change Mgmt</text>
+            <text x="115" y="68" fill="#4B5563">Govern change</text>
+          </g>
+          <circle cx="160" cy="160" r="46" fill="#ECFDF5" stroke="#10B981" stroke-width="2"></circle>
+          <text x="160" y="154" text-anchor="middle" font-size="9" font-weight="700" fill="#065F46">Req. Mgmt</text>
+          <text x="160" y="166" text-anchor="middle" font-size="7" fill="#047857">Continuous hub</text>
+          <rect x="28" y="2" width="264" height="28" rx="6" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"></rect>
+          <text x="160" y="14" text-anchor="middle" font-size="9" font-weight="700" fill="#1D4ED8">PRELIMINARY (before cycle)</text>
+          <text x="160" y="24" text-anchor="middle" font-size="8" fill="#1E40AF">Build EA capability — not a project</text>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-[minmax(16rem,20rem)_minmax(0,1fr)] gap-6">
+    <aside class="lg:sticky lg:top-4 h-fit bg-white border border-gray-200 rounded-xl p-3 min-w-0 overflow-hidden">
+      <p class="px-2 pb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">Documents in this folder</p>
+      <nav class="flex flex-col gap-1 min-w-0">
+        <template x-for="doc in docs" :key="doc.id">
+          <button type="button" @click="select(doc.id)"
+            class="w-full min-w-0 max-w-full text-left px-3 py-2 rounded-lg text-sm border overflow-hidden"
+            :class="active === doc.id ? 'bg-blue-50 border-blue-300 text-blue-800 font-semibold' : 'bg-white border-transparent text-body hover:bg-gray-50'">
+            <span class="block leading-snug break-words" x-text="doc.nav"></span>
+            <span class="block text-[11px] font-normal text-gray-500 leading-snug break-words mt-0.5" x-text="doc.phase"></span>
+          </button>
+        </template>
+      </nav>
+    </aside>
+
+    <main class="min-w-0">
+      <template x-for="doc in docs" :key="doc.id">
+        <section x-show="active === doc.id" x-cloak>
+          <div class="bg-white border border-gray-200 rounded-xl p-5 mb-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-accent">Section heading = source filename</p>
+            <h2 class="text-2xl font-bold mt-1 break-words" x-text="doc.filename"></h2>
+            <p class="mt-2 text-body" x-text="doc.lede"></p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="text-xs px-2 py-1 rounded bg-blue-50 text-blue-800 font-medium break-words" x-text="doc.phase"></span>
+              <span class="text-xs px-2 py-1 rounded bg-gray-100 text-gray-700 break-words" x-text="doc.series"></span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-4">
+            <template x-for="tab in tabs" :key="tab.id">
+              <button type="button" @click="tabId = tab.id; $nextTick(() => lucide.createIcons())"
+                class="px-3 py-2 rounded-lg text-sm font-medium border"
+                :class="tabId === tab.id ? 'bg-accent text-white border-accent' : 'bg-white text-body border-gray-200 hover:border-blue-300'">
+                <span x-text="tab.label"></span>
+              </button>
+            </template>
+          </div>
+
+          <div x-show="tabId === 'overview'" class="space-y-4">
+            <div class="grid md:grid-cols-3 gap-3">
+              <article class="bg-white border border-gray-200 rounded-xl p-4">
+                <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-500">Scope</h3>
+                <p class="mt-2 text-sm" x-html="doc.overview.scope"></p>
+              </article>
+              <article class="bg-white border border-gray-200 rounded-xl p-4">
+                <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-500">Core purpose</h3>
+                <p class="mt-2 text-sm" x-html="doc.overview.purpose"></p>
+              </article>
+              <article class="bg-white border border-gray-200 rounded-xl p-4">
+                <h3 class="text-xs font-semibold uppercase tracking-wide text-gray-500">TOGAF 10 concepts</h3>
+                <p class="mt-2 text-sm" x-html="doc.overview.concepts"></p>
+              </article>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-xl p-4">
+              <h3 class="font-bold text-lg">Elevator pitch (exam recall)</h3>
+              <ol class="mt-3 space-y-2 list-decimal list-inside text-sm">
+                <template x-for="(b,i) in doc.overview.elevator" :key="i">
+                  <li x-html="b"></li>
+                </template>
+              </ol>
+            </div>
+            <template x-for="(c,i) in doc.overview.callouts" :key="'oc'+i">
+              <div class="rounded-lg p-4 border-l-4" :class="boxClass(c.type)">
+                <p class="font-semibold text-sm" x-text="c.title"></p>
+                <p class="text-sm mt-1" x-html="c.body"></p>
+              </div>
+            </template>
+          </div>
+
+          <div x-show="tabId === 'steps'" class="space-y-4">
+            <div class="rounded-lg p-4 border-l-4 bg-amber-50 border-amber-500">
+              <p class="font-semibold text-sm">🎯 Chunked summary (3 bullets)</p>
+              <ul class="mt-2 list-disc list-inside text-sm space-y-1">
+                <template x-for="(b,i) in doc.steps.chunked" :key="i"><li x-html="b"></li></template>
+              </ul>
+            </div>
+            <p class="text-sm text-gray-600" x-show="doc.steps.mnemonic" x-html="doc.steps.mnemonic"></p>
+            <div class="space-y-2">
+              <template x-for="(step, idx) in doc.steps.items" :key="idx">
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                  <button type="button" class="w-full text-left px-4 py-3 font-semibold flex justify-between gap-3"
+                    @click="toggleStep(doc.id, idx)">
+                    <span class="min-w-0"><span class="text-accent mr-2" x-text="(idx+1)+'.'"></span><span x-text="step.title"></span></span>
+                    <span class="text-gray-400 text-sm shrink-0" x-text="openStep[doc.id]===idx ? '–' : '+'"></span>
+                  </button>
+                  <div class="px-4 pb-4 text-sm border-t border-gray-100" x-show="openStep[doc.id]===idx" x-cloak>
+                    <p class="mt-3" x-html="step.body"></p>
+                    <p class="mt-2 text-accent font-medium" x-show="step.hook" x-html="step.hook"></p>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <div x-show="tabId === 'io'" class="space-y-4">
+            <div class="flex flex-wrap gap-3 text-xs">
+              <span class="px-2 py-1 rounded bg-emerald-50 text-emerald-800 font-semibold">Mandatory = green badge</span>
+              <span class="px-2 py-1 rounded bg-gray-100 text-gray-700 font-semibold">Optional = gray badge</span>
+            </div>
+            <div class="grid md:grid-cols-2 gap-3">
+              <template x-for="(item,i) in doc.io" :key="i">
+                <article class="bg-white border border-gray-200 rounded-xl p-4 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h3 class="font-bold break-words" x-text="item.name"></h3>
+                    <span class="text-[11px] px-2 py-0.5 rounded font-semibold shrink-0"
+                      :class="item.mandatory ? 'bg-emerald-50 text-emerald-800' : 'bg-gray-100 text-gray-600'"
+                      x-text="item.mandatory ? 'Mandatory' : 'Optional'"></span>
+                  </div>
+                  <p class="text-xs text-gray-500 mt-1" x-text="item.kind"></p>
+                  <p class="text-sm mt-2" x-html="item.detail"></p>
+                  <dl class="mt-3 text-xs space-y-1">
+                    <div class="flex gap-2 min-w-0"><dt class="font-semibold w-28 shrink-0">Repository</dt><dd class="break-words" x-text="item.repo"></dd></div>
+                    <div class="flex gap-2 min-w-0"><dt class="font-semibold w-28 shrink-0">ABB / SBB</dt><dd class="break-words" x-text="item.bb"></dd></div>
+                    <div class="flex gap-2 min-w-0" x-show="item.template"><dt class="font-semibold w-28 shrink-0">Template</dt><dd class="break-words" x-html="item.template"></dd></div>
+                  </dl>
+                </article>
+              </template>
+            </div>
+          </div>
+
+          <div x-show="tabId === 'case'" class="space-y-4">
+            <article class="bg-white border border-gray-200 rounded-xl p-5">
+              <h3 class="text-xl font-bold" x-text="doc.kase.title"></h3>
+              <p class="text-sm text-gray-500 mt-1">Through-line enterprise: Helvetia Retail Bank (EU) — standing up EA before core-banking consolidation onto regulated cloud.</p>
+              <div class="mt-4 space-y-4">
+                <div class="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-r-lg">
+                  <h4 class="font-bold text-sm">1. Business Trigger</h4>
+                  <p class="text-sm mt-1" x-html="doc.kase.trigger"></p>
+                </div>
+                <div class="border-l-4 border-emerald-500 bg-emerald-50 p-4 rounded-r-lg">
+                  <h4 class="font-bold text-sm">2. Artifacts Produced (and by whom)</h4>
+                  <p class="text-sm mt-1" x-html="doc.kase.artifacts"></p>
+                </div>
+                <div class="border-l-4 border-amber-500 bg-amber-50 p-4 rounded-r-lg">
+                  <h4 class="font-bold text-sm">3. Sample Deliverable Excerpt</h4>
+                  <div class="text-sm mt-1 overflow-x-auto" x-html="doc.kase.excerpt"></div>
+                </div>
+                <div class="border border-gray-300 rounded-lg bg-white p-5" x-show="doc.kase.sampleDoc" x-cloak>
+                  <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">Sample document (exam-style, complete)</p>
+                  <div class="text-sm" x-html="doc.kase.sampleDoc"></div>
+                </div>
+                <div class="border-l-4 border-red-400 bg-red-50 p-4 rounded-r-lg">
+                  <h4 class="font-bold text-sm">4. Governance Challenge &amp; Resolution</h4>
+                  <p class="text-sm mt-1" x-html="doc.kase.gov"></p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div x-show="tabId === 'exam'" class="space-y-6">
+            <div>
+              <h3 class="font-bold text-lg mb-3">High-yield knowledge cards</h3>
+              <div class="grid md:grid-cols-2 gap-3">
+                <template x-for="(card,i) in doc.exam.cards" :key="i">
+                  <article class="bg-white border border-gray-200 rounded-xl p-4">
+                    <h4 class="font-semibold text-accent text-sm" x-text="card.h"></h4>
+                    <p class="text-sm mt-1" x-html="card.b"></p>
+                  </article>
+                </template>
+              </div>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-xl p-4 overflow-x-auto">
+              <h3 class="font-bold text-lg mb-3">TOGAF 9.2 vs TOGAF 10 (this topic)</h3>
+              <table class="w-full text-sm min-w-[640px]">
+                <thead>
+                  <tr class="text-left border-b border-gray-200">
+                    <th class="py-2 pr-3 font-semibold">Concept</th>
+                    <th class="py-2 pr-3 font-semibold">TOGAF 9.2</th>
+                    <th class="py-2 font-semibold">TOGAF 10</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template x-for="(row,i) in doc.exam.compare" :key="i">
+                    <tr class="border-b border-gray-100 align-top">
+                      <td class="py-2 pr-3 font-medium" x-html="row[0]"></td>
+                      <td class="py-2 pr-3 text-gray-600" x-html="row[1]"></td>
+                      <td class="py-2" x-html="row[2]"></td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-xl p-4">
+              <h3 class="font-bold text-lg">Mnemonics &amp; memory aids</h3>
+              <ul class="mt-2 space-y-2 text-sm list-disc list-inside">
+                <template x-for="(m,i) in doc.exam.mnemonics" :key="i"><li x-html="m"></li></template>
+              </ul>
+            </div>
+            <div class="bg-white border border-gray-200 rounded-xl p-4">
+              <div class="flex items-center justify-between gap-3 flex-wrap">
+                <h3 class="font-bold text-lg">Quick-fire quiz</h3>
+                <button type="button" class="px-3 py-1.5 text-sm rounded-lg border border-blue-300 text-blue-800 bg-blue-50 font-medium"
+                  @click="showAns[doc.id] = !showAns[doc.id]"
+                  x-text="showAns[doc.id] ? 'Hide answers' : 'Show answers'"></button>
+              </div>
+              <ol class="mt-4 space-y-4 list-decimal list-inside">
+                <template x-for="(q, qi) in doc.exam.quiz" :key="qi">
+                  <li class="text-sm">
+                    <span class="font-medium" x-html="q.q"></span>
+                    <ul class="mt-2 ml-5 space-y-1">
+                      <template x-for="(opt, oi) in q.opts" :key="oi">
+                        <li>
+                          <span class="font-semibold" x-text="String.fromCharCode(65+oi)+') '"></span>
+                          <span x-html="opt"></span>
+                        </li>
+                      </template>
+                    </ul>
+                    <div class="mt-2 ml-5 rounded-lg p-3 bg-emerald-50 border-l-4 border-emerald-500" x-show="showAns[doc.id]" x-cloak>
+                      <p><strong>Answer:</strong> <span x-text="q.a"></span></p>
+                      <p class="mt-1"><strong>Trap:</strong> <span x-html="q.trap"></span></p>
+                    </div>
+                  </li>
+                </template>
+              </ol>
+            </div>
+          </div>
+        </section>
+      </template>
+    </main>
+  </div>
+
+  <footer class="max-w-[1600px] mx-auto px-4 sm:px-6 py-8 text-xs text-gray-500">
+    Study dashboard generated from folder notes plus TOGAF Standard, 10th Edition Fundamental Content. Folder title is used verbatim (including the source spelling “Prilimanary”). Not a substitute for The Open Group official documentation.
+  </footer>
+
+  <script>
+    function dashboard() {
+      const box = (type, title, body) => ({ type, title, body });
+      const sampleShell = (title, meta, inner) =>
+        '<article class="border border-gray-200 rounded-md overflow-hidden">' +
+        '<header class="bg-blue-50 border-b border-blue-200 px-4 py-3">' +
+        '<p class="text-[11px] font-semibold uppercase tracking-wide text-blue-800">' + meta + '</p>' +
+        '<h5 class="text-lg font-bold text-ink mt-1">' + title + '</h5></header>' +
+        '<div class="p-4 space-y-3 text-xs leading-relaxed text-body">' + inner + '</div></article>';
+      const docs = [
+        {
+          id: "17",
+          nav: "17 Purpose and Objectives",
+          filename: "17 Purpose and Objectives.docx",
+          phase: "Preliminary Phase (before the ADM cycle)",
+          series: "Series Guides: Architecture Maturity Models; Leader’s Guide to Establishing and Evolving an EA Capability",
+          lede: "The Preliminary Phase is preliminary to the ADM cycle. You create the architecture capability of the enterprise — you build the EA discipline so architecture work can later be performed.",
+          overview: {
+            scope: "Preparation and initiation of an <strong>architecture capability</strong>: goals of EA management, maturity target, roles/skills, teams and partitions, Architecture Board, processes, guidelines, tools. Not the first architecture project.",
+            purpose: "Three purposes in the notes: (1) create architecture capability, (2) <strong>customize the TOGAF framework</strong>, (3) <strong>define architecture principles</strong>. Two objectives: <strong>determine</strong> the desired capability, then <strong>establish</strong> it.",
+            concepts: "TOGAF 10 Fundamental Content still includes Preliminary as ADM. Capability is evolved iteratively (agile). Maturity is guided by the <strong>Architecture Maturity Models</strong> Series Guide. Do not over-invest: only the maturity needed for current architecture work; enhance later.",
+            elevator: [
+              "<strong>Before the cycle, not Phase A.</strong> Preliminary = stand up the EA practice; Phase A = start developing an architecture.",
+              "Two objectives: <strong>determine</strong> desired architecture capability (context, affected elements, intersecting frameworks, maturity target) then <strong>establish</strong> it (org model, governance, tools, principles).",
+              "Value is not from capability alone — build only what current work needs; you can raise maturity anytime."
+            ],
+            callouts: [
+              box("tip", "💡 Definition — architecture capability", "The people, skills, roles, teams, partitions, committees (e.g. Architecture Board), processes (budgeting, approval), guidelines, methods, and tools that let the enterprise develop and maintain EA."),
+              box("yield", "🎯 High-yield — two objectives", "1) Determine the architecture capability desired. 2) Establish that capability (org model, governance processes/resources, tools, principles)."),
+              box("trap", "⚠️ Exam trap", "Do not treat Preliminary as the first phase of the <em>architecture development cycle</em>. It is <strong>preliminary to</strong> the cycle. Also: do not confuse ‘determine capability’ (plan/assess) with ‘establish capability’ (implement).")
+            ]
+          },
+          steps: {
+            mnemonic: "<strong>Story-hook:</strong> “First decide <em>how mature</em> EA must be, then <em>install</em> the practice — don’t start drawing target architectures.”",
+            chunked: [
+              "Understand organizational context and who/what EA will affect.",
+              "Set a capability maturity target (Series Guide: Architecture Maturity Models).",
+              "Establish org model, governance, tools, and architecture principles — only to the maturity you need now."
+            ],
+            items: [
+              { title: "Place Preliminary relative to ADM", body: "It is preliminary to the ADM cycle. You create capability; you do not yet run Phase A Vision for a project.", hook: "" },
+              { title: "Determine desired capability — review organizational context", body: "Assess the environment for EA: goals, objectives, structures, organizations, processes, constraints, challenges. Build capability to suit that environment.", hook: "Context scan: <strong>GOSP-CC</strong> — Goals, Objectives, Structures, Processes, Constraints, Challenges." },
+              { title: "Identify and scope elements affected by the architecture capability", body: "If EA management starts tomorrow, who/what is affected, who influences it, who interacts with it? Units, stakeholders, processes, applications, data, technologies, policy, standards.", hook: "Affected set (4+): <strong>BU-PP-ADT-P</strong> story: Business Units, Processes, Applications, Data, Technology, Policy." },
+              { title: "Identify intersecting frameworks, methods, processes", body: "If the org already has a framework for a capability that TOGAF also covers, decide which framework to use going forward.", hook: "" },
+              { title: "Establish a capability maturity target", body: "Managed process vs managed-and-measured vs continuous improvement. Use Architecture Maturity Models Series Guide to evaluate and quantify maturity.", hook: "Maturity story: <strong>Managed → Measured → Improving</strong>." },
+              { title: "Establish the capability", body: "Define/establish organizational model for EA; detailed process and resources for architecture governance; select/implement tools; define architecture principles. Leader’s Guide Series Guide supports establishing/evolving the capability.", hook: "Establish quartet: <strong>OGTP</strong> — Org model, Governance, Tools, Principles." }
+            ]
+          },
+          io: [
+            { name: "Organizational model for EA", kind: "Deliverable · Draft then Approved by Architecture Board / execs", mandatory: true, repo: "Governance Repository (EA capability, not Landscape models)", bb: "EA-practice capability — not business ABBs/SBBs", detail: "Roles, skills, responsibilities, teams, partitions, Architecture Board.", template: "Roles · skills · RACI · team structure · partitions · Board charter" },
+            { name: "Architecture principles", kind: "Deliverable · Principles catalog", mandatory: true, repo: "Reference Library / governance; used as constraints on later ABBs", bb: "Constraints on ABB/SBB choices later — principles are not SBBs", detail: "General rules/guidelines every architecture project orients to. See document 19.", template: "Name · Statement · Rationale · Implications" },
+            { name: "Tailored architecture framework", kind: "Deliverable", mandatory: true, repo: "Architecture Repository — often with the metamodel/content framework", bb: "Defines how ABBs/SBBs will be described", detail: "Customized TOGAF (and other frameworks) for this enterprise.", template: "Terminology · processes · content (see Steps)" },
+            { name: "Request for Architecture Work", kind: "Output that triggers Phase A", mandatory: true, repo: "Governance Repository", bb: "Work request, not a building block", detail: "Once capability exists, sponsors can order architecture work. High-level.", template: "Purpose · Request · Business imperative · Key constraints · Additional" },
+            { name: "Architecture Maturity Assessment / target", kind: "Assessment", mandatory: false, repo: "EA capability records", bb: "N/A", detail: "Desired maturity (managed / measured / improving). Series Guide techniques.", template: "Current rating · target · gaps · actions" }
+          ],
+          kase: {
+            title: "Helvetia — no more ‘architecture as a hobby’",
+            trigger: "After a failed 2019 core program, ExCo admitted there was no EA discipline: no Board, no principles, PowerPoint stored on a file share. DORA and a three-core merger forced them to stand up capability before any Vision project.",
+            artifacts: "<strong>COO + Group CIO</strong> set EA goals (cost-income, resilience). <strong>Interim Chief Architect</strong> scoped affected units (Retail, SME, Risk, Data Office). <strong>PMO</strong> drafted Board charter. <strong>HR</strong> defined EA roles. Maturity target set to ‘managed and measured’ using the Architecture Maturity Models Series Guide — not ‘optimizing’ in year one.",
+            excerpt: "<table class='w-full text-xs border border-gray-200'><thead><tr><th class='border p-2 text-left'>Objective</th><th class='border p-2 text-left'>Capability element</th><th class='border p-2 text-left'>Status</th></tr></thead><tbody><tr><td class='border p-2'>Determine capability</td><td class='border p-2'>Context: merger + DORA; affected: Retail/SME cores</td><td class='border p-2'>Approved</td></tr><tr><td class='border p-2'>Establish capability</td><td class='border p-2'>Architecture Board monthly; 4 FTE EA; principles catalog v1</td><td class='border p-2'>Draft → Approved</td></tr></tbody></table>",
+            sampleDoc: sampleShell("Architecture Capability Record", "Preliminary · determine then establish · CAP-HRB-P-2026 · fit-for-purpose (not optimizing)", `
+              <p><strong>Enterprise:</strong> Helvetia Retail Bank. <strong>This is not an architecture project.</strong> Phase A (Vision / SoAW) starts only after this capability exists and a Request for Architecture Work is issued.</p>
+              <h6 class="font-bold text-sm">Objective 1 — Determine the architecture capability desired</h6>
+              <table class="w-full border">
+                <tr><td class="border p-2 font-semibold">Organizational context</td><td class="border p-2">Merger leftover platforms; DORA; informal branch culture; failed 2019 core program</td></tr>
+                <tr><td class="border p-2 font-semibold">Affected elements</td><td class="border p-2">Retail, SME, Risk, Data Office, Payments; processes, applications, data, technology, policy</td></tr>
+                <tr><td class="border p-2 font-semibold">Intersecting frameworks</td><td class="border p-2">PMO stage-gates; DAMA in Data Office; TOGAF to be tailored (not replaced)</td></tr>
+                <tr><td class="border p-2 font-semibold">Maturity target</td><td class="border p-2">Managed and measured EA process in 12 months (Architecture Maturity Models Series Guide). Not continuous-improvement / optimizing in year one.</td></tr>
+              </table>
+              <h6 class="font-bold text-sm">Objective 2 — Establish the architecture capability (OGTP)</h6>
+              <table class="w-full border">
+                <tr><td class="border p-2 font-semibold">Org model</td><td class="border p-2">Chief Architect + 3 domain architects (4 FTE); partitions: Retail/SME vs shared capabilities</td></tr>
+                <tr><td class="border p-2 font-semibold">Governance</td><td class="border p-2">Architecture Board monthly; architecture approval and change paths; Board charter v1.0 Approved</td></tr>
+                <tr><td class="border p-2 font-semibold">Tools</td><td class="border p-2">Governed repository (not a full EAM suite yet). Tooling is not a core-banking SBB.</td></tr>
+                <tr><td class="border p-2 font-semibold">Principles</td><td class="border p-2">Principles catalog PC-HRB-P-2026 (see document 19)</td></tr>
+              </table>
+              <p><strong>Downstream output:</strong> once capability is live, sponsors may issue RFAW-HRB-2026-03 to start Phase A. Value is not from capability alone — enhance maturity later if work needs it.</p>`),
+            gov: "<strong>Challenge:</strong> A vendor offered a ‘full EA tool + target architecture in 6 weeks,’ skipping capability. <strong>Resolution:</strong> Architecture Board: tools without governance are just a drawing package. Preliminary would select a fit-for-purpose repository; product SBBs for core banking wait until after Phase A SoAW."
+          },
+          exam: {
+            cards: [
+              { h: "Where it sits", b: "Preliminary to the ADM cycle — create architecture capability, not the architecture project." },
+              { h: "Two objectives", b: "Determine desired capability; establish that capability." },
+              { h: "Three purposes (notes)", b: "Capability + customize TOGAF + define architecture principles." },
+              { h: "Fit-for-purpose", b: "Only the maturity needed for current work; enhance later. Capability alone is not value." }
+            ],
+            compare: [
+              ["Documentation structure", "Monolithic TOGAF 9.2", "TOGAF 10: Fundamental Content (ADM including Preliminary) + Series Guides for maturity and EA capability leadership"],
+              ["Maturity models", "Often a 9.2 chapter / CAMM discussion", "Explicit Series Guide: Architecture Maturity Models"],
+              ["Establishing EA", "ADM Preliminary still existed", "Leader’s Guide Series Guide for establishing and evolving an EA capability"],
+              ["Agile capability", "Often a big-bang EA office", "Iterate capability to the level current architecture work needs"],
+              ["Modular tailoring", "Tailor TOGAF in Preliminary", "Same activity; TOGAF 10 makes it clearer you pick Fundamental Content + relevant Series Guides, not the whole library"],
+              ["Cycle start", "Same exam trap in 9.2", "Still: Preliminary ≠ first development-cycle phase (that is A)"]
+            ],
+            mnemonics: [
+              "<strong>OGTP</strong> to establish capability — Org model, Governance, Tools, Principles.",
+              "Determine vs establish: <strong>Decide the height of the ladder, then climb it.</strong>",
+              "Affected elements story: units, stakeholders, processes, apps, data, tech, policy."
+            ],
+            quiz: [
+              { q: "The Preliminary Phase is best described as:", opts: ["The first phase of the architecture development cycle", "The phase that is preliminary to the ADM cycle, creating architecture capability", "Phase A under another name", "Implementation Governance"], a: "B", trap: "A is the classic trap — Phase A starts the development cycle." },
+              { q: "Which pair matches the two Preliminary objectives?", opts: ["Develop Vision and sign SoAW", "Determine desired architecture capability and establish that capability", "Select SBBs and sign vendor contracts", "Finalize ADD and ARS"], a: "B", trap: "A is Phase A." },
+              { q: "Architecture principles are defined in Preliminary because they:", opts: ["Replace the Architecture Vision", "Are guidelines to which every architecture project is oriented", "Are SBBs in the Solutions Continuum", "Are only used in Phase H"], a: "B", trap: "C — principles constrain later SBB choices; they are not solutions." },
+              { q: "A Series Guide named for evaluating EA maturity is:", opts: ["The Agile Architecture Series only", "Architecture Maturity Models", "The Data Architecture catalogue", "ISO 27001"], a: "B", trap: "A — agile guides do not replace maturity models." },
+              { q: "You should build architecture capability:", opts: ["To the maximum possible maturity on day one", "Only to the maturity needed for current architecture work", "Never; skip to Phase E", "Only after Phase G"], a: "B", trap: "A is the over-engineering trap the notes warn about." },
+              { q: "Customizing TOGAF is:", opts: ["Forbidden in TOGAF 10", "A purpose of the Preliminary Phase", "Done only in Phase D", "The same as selecting a core-banking SBB"], a: "B", trap: "A — TOGAF is intended to be tailored." }
+            ]
+          }
+        },
+        {
+          id: "18",
+          nav: "18 Steps",
+          filename: "18 Steps.docx",
+          phase: "Preliminary Phase — six recommended steps",
+          series: "ADM steps: Foundation exam does not require memorizing steps (Practitioner / Part 2 does)",
+          lede: "Preliminary answers where, what, why, who, and how you do architecture. Six steps from scoping impacted organizations through a tools-and-techniques implementation plan.",
+          overview: {
+            scope: "How to build the architecture capability. Notes: steps are <strong>not</strong> official Foundation (Part 1) curriculum; they are Part 2 / Practitioner. Taught here to understand the phase.",
+            purpose: "Define <strong>where, what, why, who, how</strong> architecture is done. Sequence: scope orgs → governance frameworks → EA team → principles → tailor TOGAF → tools/techniques strategy.",
+            concepts: "Core vs ‘soft’ enterprise units. Governance of standards, guidelines, models, compliance reports. Tailoring three topics: <strong>terminology, processes, content</strong>. Tools from file repos to professional EAM.",
+            elevator: [
+              "Six steps: <strong>SG-TP-TT</strong> — Scope, Governance, Team, Principles, Tailor, Tools.",
+              "Foundation: know the <em>phase purpose</em>; Practitioner: know the <em>steps</em>.",
+              "Tailor = terminology + processes + content — not ‘pick a vendor core’."
+            ],
+            callouts: [
+              box("tip", "💡 Core vs soft units", "Core units get most value from EA and architecture work. Soft units see capability change but are not directly affected."),
+              box("yield", "🎯 High-yield tailoring", "When tailoring you adapt <strong>three</strong> topics: terminology, processes, and content."),
+              box("trap", "⚠️ Exam trap (exam level)", "Do not panic if Part 1 does not list all six steps — the notes say they are beyond Foundation. Still know WWWWH and that Preliminary is capability, not Vision.")
+            ]
+          },
+          steps: {
+            mnemonic: "<strong>SG-TP-TT</strong> — Scope, Governance, Team, Principles, Tailor, Tools. Story: “See the org, Govern the artifacts, Team the practice, Principle the decisions, Tailor TOGAF, Tool the work.” Also <strong>WWWWH</strong>: Where, What, Why, Who, How.",
+            chunked: [
+              "Bound the enterprise (core/soft units, stakeholders, governance bodies) and confirm how architecture is governed.",
+              "Stand up the EA team/organization and the principles catalog.",
+              "Tailor TOGAF (terminology, processes, content) and plan tools/techniques at the intended maturity."
+            ],
+            items: [
+              { title: "Scope the enterprise organizations impacted", body: "Identify <strong>core</strong> enterprise units (most effective / most value from EA). Identify <strong>soft</strong> units (capability change, not directly affected). Identify affected stakeholders and governance bodies.", hook: "Four identification targets: <strong>Core, Soft, Stakeholders, Bodies</strong> — <strong>CSSB</strong>." },
+              { title: "Confirm governance and support frameworks", body: "How are standards, guidelines, models, compliance reports brought under governance? Who owns which artifact? How is implementation governed? How is change governed? Change existing models or set them up at least for EAM.", hook: "Governance questions: <strong>O-I-C</strong> — Ownership, Implementation, Change." },
+              { title: "Define and establish the EA team and organization", body: "Budget requirements, key roles and responsibilities, architecture processes.", hook: "" },
+              { title: "Identify and establish architecture principles", body: "Covered in depth in document 19.", hook: "" },
+              { title: "Tailor TOGAF and other selected frameworks", body: "Adapt to organizational needs. Three topics: <strong>terminology, processes, content</strong>.", hook: "<strong>TPC</strong> — Terminology, Processes, Content." },
+              { title: "Develop strategy and implementation plan for tools and techniques", body: "Implement tools/techniques for the maturity you aim for. Tools: simple file repositories → professional EAM. Techniques: management, decision-making, workshops, business modeling, detailed infrastructure modeling, etc.", hook: "Technique types (4+): <strong>MDWB-I</strong> — Management, Decision-making, Workshops, Business modeling, Infrastructure modeling." }
+            ]
+          },
+          io: [
+            { name: "Scoped organization map (core / soft / stakeholders / bodies)", kind: "Catalogue / matrix", mandatory: true, repo: "Governance + context (not yet Landscape target models)", bb: "Identifies who will later own ABBs; no SBBs yet", detail: "Output of step 1.", template: "Unit | Core/Soft | Stakeholders | Governance body" },
+            { name: "Governance and support framework description", kind: "Deliverable", mandatory: true, repo: "Governance Repository", bb: "N/A", detail: "Ownership of artifacts; implementation and change governance.", template: "Artifact type | owner | approval path | change path" },
+            { name: "EA team model and budget", kind: "Deliverable", mandatory: true, repo: "EA capability / org model", bb: "N/A", detail: "Roles, processes, budget.", template: "Roles · RACI · processes · budget" },
+            { name: "Tailored framework definition", kind: "Deliverable", mandatory: true, repo: "Architecture Repository content framework", bb: "Metamodel for future ABB/SBB descriptions", detail: "TPC tailoring of TOGAF and other frameworks (e.g. ArchiMate).", template: "Terminology map · process map · content metamodel deltas" },
+            { name: "Tools and techniques strategy / plan", kind: "Deliverable", mandatory: false, repo: "EA capability", bb: "Tooling is not an SBB of the business architecture", detail: "Fit to maturity target.", template: "Current tools · target · implementation plan" }
+          ],
+          kase: {
+            title: "Helvetia — six steps before anyone draws a core",
+            trigger: "Retail wanted ‘target architecture next Monday.’ EA insisted on Preliminary steps so Vision would have a Board, principles, and a repository.",
+            artifacts: "<strong>Chief Architect</strong> mapped core (Retail, SME, Payments) vs soft (HR, Corporate Markets). <strong>Operational Risk</strong> confirmed DORA reporting as a governance intersection. <strong>EA PMO</strong> sized a 4-person team. <strong>Board</strong> approved principles candidates. Framework tailored: TOGAF ADM + ArchiMate views; terminology mapped ‘application component’ to bank’s ‘system of record.’ Tool: start with a governed repository, not a full EAM suite.",
+            excerpt: "<ul class='text-xs list-disc list-inside'><li><strong>Where:</strong> Retail + SME (core); Markets = soft.</li><li><strong>What/Why:</strong> EA to enable one-ledger capability and DORA evidence.</li><li><strong>Who:</strong> Board, Chief Architect, domain architects, Risk.</li><li><strong>How:</strong> Tailored TOGAF TPC; monthly Board; repository + ArchiMate.</li></ul>",
+            sampleDoc: sampleShell("Preliminary Steps Pack (WWWWH)", "Six steps · SG-TP-TT · PRELIM-STEPS-HRB-2026 · Practitioner-level detail", `
+              <p>Defines where, what, why, who, and how architecture is done. Foundation Part 1 does not require memorizing every step; this pack shows what the steps produce.</p>
+              <h6 class="font-bold text-sm">1. Scope the enterprise organizations impacted</h6>
+              <table class="w-full border">
+                <tr class="bg-gray-50"><th class="border p-2 text-left">Unit</th><th class="border p-2 text-left">Core / Soft</th><th class="border p-2 text-left">Notes</th></tr>
+                <tr><td class="border p-2">Retail, SME, Payments</td><td class="border p-2">Core</td><td class="border p-2">Most value from EA</td></tr>
+                <tr><td class="border p-2">HR, Corporate Markets</td><td class="border p-2">Soft</td><td class="border p-2">See capability change; not directly in this EA</td></tr>
+                <tr><td class="border p-2">Risk, DORA office, Data Office</td><td class="border p-2">Stakeholders / bodies</td><td class="border p-2">Governance bodies include Architecture Board</td></tr>
+              </table>
+              <h6 class="font-bold text-sm">2. Confirm governance and support frameworks</h6>
+              <table class="w-full border">
+                <tr class="bg-gray-50"><th class="border p-2 text-left">Artifact type</th><th class="border p-2 text-left">Owner</th><th class="border p-2 text-left">Implementation / change path</th></tr>
+                <tr><td class="border p-2">Principles catalog</td><td class="border p-2">Architecture Board</td><td class="border p-2">Amendment process</td></tr>
+                <tr><td class="border p-2">Models / compliance reports</td><td class="border p-2">Chief Architect</td><td class="border p-2">Board then sponsor as applicable</td></tr>
+                <tr><td class="border p-2">DORA evidence</td><td class="border p-2">Risk (intersecting)</td><td class="border p-2">EA provides views; Risk owns regulatory pack</td></tr>
+              </table>
+              <h6 class="font-bold text-sm">3. EA team and organization</h6>
+              <p>Budget: 4 FTE + Board secretary. Roles: Chief Architect, business/data/application-technology architects. Processes: intake, Board cycle, repository publish.</p>
+              <h6 class="font-bold text-sm">4. Architecture principles</h6>
+              <p>See PC-HRB-P-2026 (document 19). Candidates by EAs + stakeholders; Board approved.</p>
+              <h6 class="font-bold text-sm">5. Tailor TOGAF and other frameworks (TPC)</h6>
+              <table class="w-full border">
+                <tr><td class="border p-2 font-semibold">Terminology</td><td class="border p-2">TOGAF application component = bank term system of record. DAMA retained as intersecting data method, not a competing ADM.</td></tr>
+                <tr><td class="border p-2 font-semibold">Processes</td><td class="border p-2">ADM phases mapped to PMO stage-gates; Board owns architecture compliance at gates.</td></tr>
+                <tr><td class="border p-2 font-semibold">Content</td><td class="border p-2">Fundamental Content ADM + ArchiMate views + Maturity Models and Leader Series Guides. Not the entire TOGAF library on day one.</td></tr>
+              </table>
+              <h6 class="font-bold text-sm">6. Tools and techniques strategy</h6>
+              <p>Current: file share. Target (managed maturity): governed repository + ArchiMate. Techniques: workshops, decision records, business modeling. Defer professional EAM suite until reuse demand is proven.</p>`),
+            gov: "<strong>Challenge:</strong> Data Office already used DAMA and refused TOGAF terms. <strong>Resolution:</strong> Tailoring step produced a terminology map (TPC) rather than a framework war. Data principles still went to the Architecture Board; DAMA stayed as an intersecting method."
+          },
+          exam: {
+            cards: [
+              { h: "WWWWH", b: "Where, what, why, who, how you do architecture." },
+              { h: "Six steps", b: "Scope orgs → governance frameworks → team → principles → tailor → tools/techniques." },
+              { h: "TPC tailoring", b: "Terminology, processes, content." },
+              { h: "Foundation vs Practitioner", b: "Steps not required for Part 1; required thinking for Part 2." }
+            ],
+            compare: [
+              ["Step examinability", "9.2 Foundation also light on step lists", "TOGAF 10 Part 1 still phase-purpose focused; Part 2 still deeper"],
+              ["Framework tailoring", "Customize TOGAF", "Modular standard: tailor which Series Guides you adopt, not only ADM diagrams"],
+              ["ArchiMate / other frameworks", "Often mentioned as ‘other frameworks’", "Same: Preliminary decides integration with modeling and PM frameworks"],
+              ["Tooling", "From files to EAM suites", "Unchanged; agile teams still need a governed repository"],
+              ["Soft enterprise units", "9.2 scoping language", "Still a useful distinction in training notes for impact without over-scoping"],
+              ["Governance of change", "Set up if missing", "TOGAF 10 still: existing corporate governance may need to change to support EAM"]
+            ],
+            mnemonics: [
+              "<strong>SG-TP-TT</strong> — Scope, Governance, Team, Principles, Tailor, Tools.",
+              "<strong>WWWWH</strong> — Where, What, Why, Who, How.",
+              "<strong>TPC</strong> — Terminology, Processes, Content.",
+              "<strong>CSSB</strong> — Core units, Soft units, Stakeholders, Bodies."
+            ],
+            quiz: [
+              { q: "Which is the first Preliminary step in the notes?", opts: ["Develop Architecture Vision", "Scope the enterprise organizations impacted", "Select cloud SBBs", "Write the Implementation and Migration Plan"], a: "B", trap: "A is Phase A." },
+              { q: "Tailoring TOGAF adapts which three topics?", opts: ["Cost, quality, time", "Terminology, processes, and content", "Baseline, target, gap", "Catalogues, matrices, vendors"], a: "B", trap: "D mixes artifact types with tailoring." },
+              { q: "‘Soft enterprise units’ are:", opts: ["The Architecture Board", "Units that see capability change but are not directly affected by EA", "Only outsourced vendors", "Phase F work packages"], a: "B", trap: "A — Board is a governance body, identified separately." },
+              { q: "Tools in Preliminary range from:", opts: ["Source-code IDEs only", "Simple file repositories to professional EAM solutions", "Only mainframes", "Only vendor core-banking suites"], a: "B", trap: "D jumps to Solutions Continuum products." },
+              { q: "The notes say Preliminary steps are:", opts: ["Mandatory memorization for Part 1 Foundation", "Not part of official Foundation curriculum (more Part 2), but useful to understand the phase", "Illegal to teach", "Identical to Phase G steps"], a: "B", trap: "A overstates Foundation requirements." },
+              { q: "Confirming governance frameworks includes:", opts: ["Who owns architectural artifacts and how implementation/change are governed", "Only network subnet design", "Only SMART business scenarios", "Signing the SoAW"], a: "A", trap: "D is Phase A output." }
+            ]
+          }
+        },
+        {
+          id: "19",
+          nav: "19 Architecture Principles",
+          filename: "19 Architecture Principles.docx",
+          phase: "Preliminary (establish); confirm in A; apply in B–D",
+          series: "ADM technique — Principles catalog; Architecture Governance",
+          lede: "Architecture principles are enduring general rules and guidelines for using resources and assets. They are identified and established in Preliminary, stored in a principles catalog, and used to govern decisions.",
+          overview: {
+            scope: "May be grouped as business, data, application, and technology principles. Distinct from (but below) <strong>enterprise principles</strong>. Small number; future-oriented; senior-management support; Architecture Board approval.",
+            purpose: "Guide architecture projects; basis for future decisions; reflect stakeholder consensus; align target architecture and implementation with business vision/strategy; frame policies/standards; resolve conflicts.",
+            concepts: "Standard structure: <strong>Name, Statement, Rationale, Implications</strong>. Five quality criteria: <strong>Complete, Consistent, Stable, Understandable, Robust</strong> (Part 1 may test these). Hierarchy: enterprise principles bound segment and architecture principles. Influenced by industry trends, mission/plans, strategic initiatives, current systems/tech, external constraints. Trace back to business objectives and architecture drivers.",
+            elevator: [
+              "<strong>NSRI</strong> template: Name, Statement, Rationale, Implications.",
+              "<strong>CCSUR</strong> quality: Complete, Consistent, Stable, Understandable, Robust.",
+              "Enterprise principles (whole mission) vs architecture principles (development, maintenance, use of EA). Established in Preliminary; reviewed in A; architectures in B–D must fulfill them."
+            ],
+            callouts: [
+              box("tip", "💡 Rationale vs implications", "Rationale = business benefits and relationship to other principles (why). Implications = resources, costs, activities, ‘how does this affect me?’ (so what)."),
+              box("yield", "🎯 High-yield exam", "Five criteria of a good principle are Foundation-testable. Keep the set small; enduring and seldom amended; change via amendment after Board enactment."),
+              box("trap", "⚠️ Exam trap", "Do not confuse enterprise principles with architecture principles. Do not treat a principle as an SBB. Do not wait until Phase D to invent principles.")
+            ]
+          },
+          steps: {
+            mnemonic: "<strong>NSRI</strong> for the template. <strong>CCSUR</strong> for quality. Lifecycle: <strong>Draft with stakeholders → Board approve → catalog → amend via process</strong>.",
+            chunked: [
+              "Derive candidates from enterprise principles, drivers, constraints, and BDAT domains; keep the set small.",
+              "Write each as Name / Statement / Rationale / Implications; test CCSUR.",
+              "Architecture Board approves; store in principles catalog; use in A (confirm) and B–D (fulfill)."
+            ],
+            items: [
+              { title: "Place in the hierarchy", body: "Overarching <strong>enterprise principles</strong> set boundaries. Lower: segment principles and architecture principles, elaborating those above. Architecture principles embody the spirit of enterprise principles.", hook: "Three levels: <strong>Enterprise → Segment → Architecture</strong>." },
+              { title: "Write the four sections", body: "<strong>Name</strong> (easy to remember, essence). <strong>Statement</strong> (short, crisp rule). <strong>Rationale</strong> (business benefits, links to other principles, balanced interpretation). <strong>Implications</strong> (resources, costs, activities, impact on reader’s team).", hook: "<strong>NSRI</strong>." },
+              { title: "Test the five quality criteria", body: "Complete (covers perceived situations). Consistent (flexible interpretation, no contradictions). Stable (enduring yet accommodates environment change). Understandable (clear, unambiguous; violations minimized). Robust (good decisions even in complex situations — plans, policies, standards).", hook: "<strong>CCSUR</strong> — Complete, Consistent, Stable, Understandable, Robust." },
+              { title: "Approve and govern", body: "Candidates by EAs with key stakeholders; approved by Architecture Board; altered/removed via amendment. Senior management support; future-oriented.", hook: "" },
+              { title: "Use across ADM", body: "Established in Preliminary. Phase A: generate new or review/confirm existing. B, C, D: ensure target business, IS, and technology architectures fulfill the principles.", hook: "Placement: <strong>P establish · A confirm · BCD fulfill</strong>." }
+            ]
+          },
+          io: [
+            { name: "Principles catalog", kind: "Catalogue (mandatory store)", mandatory: true, repo: "Reference Library / Architecture Requirements &amp; governance", bb: "Constraints on ABB selection and later SBB compliance — not building blocks themselves", detail: "Describes what a good architecture and solution should look like. Trace to objectives and drivers.", template: "ID | Domain (B/D/A/T) | Name | Statement | Rationale | Implications | status Draft/Approved" },
+            { name: "Enterprise principles (input)", kind: "Context", mandatory: true, repo: "Corporate governance", bb: "N/A", detail: "Basis for decision-making throughout the enterprise; key to architecture governance strategy. Large orgs may have subsidiary unit principles.", template: "Name · statement · (org-specific)" },
+            { name: "Example: Compliance with law", kind: "Sample principle (business)", mandatory: false, repo: "Catalog", bb: "Drives data ABBs (retention, collection) not a product SBB", detail: "Statement: EIM processes comply with all relevant laws, policies, regulations. Implications: collection/retention/management of data; education/access to rules; law changes may drive process/application change.", template: "NSRI filled" }
+          ],
+          kase: {
+            title: "Helvetia — ‘COTS over custom’ as a real principle",
+            trigger: "Corporate banking wanted unique ledgers. Group needed enduring rules before Phase A so Vision would not become a product bake-off.",
+            artifacts: "<strong>Enterprise architects + COO/CFO/Risk</strong> drafted candidates. <strong>Architecture Board</strong> approved a short catalog (eight principles). Data principle ‘one customer legal entity = one truth’ traced to the merger driver. Technology principle ‘EU-region by default’ traced to DORA/GDPR.",
+            excerpt: "<table class='w-full text-xs border border-gray-200'><tr><th class='border p-2 text-left'>Section</th><th class='border p-2 text-left'>Compliance with law (example from notes)</th></tr><tr><td class='border p-2 font-semibold'>Name</td><td class='border p-2'>Compliance with law</td></tr><tr><td class='border p-2 font-semibold'>Statement</td><td class='border p-2'>Enterprise information management processes comply with all relevant laws, policies and regulations.</td></tr><tr><td class='border p-2 font-semibold'>Rationale</td><td class='border p-2'>Enterprise policy is to abide by laws, policies and regulations.</td></tr><tr><td class='border p-2 font-semibold'>Implications</td><td class='border p-2'>Mindful collection/retention/management of data; education and access to rules; legal change may drive process/application change.</td></tr></table>",
+            sampleDoc: sampleShell("Architecture Principles Catalog", "Established in Preliminary · PC-HRB-P-2026 · Approved by Architecture Board · small set, enduring", `
+              <p>General rules and guidelines for use of resources and assets. Below enterprise principles. Used to evaluate architecture decisions; confirm in Phase A; fulfill in B–D. Change only via amendment after Board enactment. Design standards live in the Standards Information Base, not this catalog.</p>
+              <h6 class="font-bold text-sm">Hierarchy</h6>
+              <p>Enterprise principles (mission / whole-enterprise decisions) → segment (Retail/SME) → architecture principles (this catalog).</p>
+              <h6 class="font-bold text-sm">Principle 1 — Compliance with law (NSRI)</h6>
+              <table class="w-full border">
+                <tr><td class="border p-2 font-semibold w-28">Name</td><td class="border p-2">Compliance with law</td></tr>
+                <tr><td class="border p-2 font-semibold">Statement</td><td class="border p-2">Enterprise information management processes comply with all relevant laws, policies and regulations.</td></tr>
+                <tr><td class="border p-2 font-semibold">Rationale</td><td class="border p-2">Enterprise policy is to abide by laws, policies and regulations. Relates to EU-region principle; supports balanced interpretation under GDPR/DORA.</td></tr>
+                <tr><td class="border p-2 font-semibold">Implications</td><td class="border p-2">Mindful collection, retention and management of data. Education and access to rules. Law/regulation change may drive process or application change. Answers: how does this affect my team?</td></tr>
+              </table>
+              <h6 class="font-bold text-sm">Principle 2 — Prefer COTS/SaaS</h6>
+              <p><strong>Statement:</strong> Prefer commercial off-the-shelf or SaaS over custom ledger software. <strong>Rationale:</strong> Cost-income goal; differentiate on journeys not on core code. <strong>Implications:</strong> Phase A Vision stays at ABBs; product selection is later SBB work under this constraint.</p>
+              <h6 class="font-bold text-sm">Principle 3 — EU-region by default</h6>
+              <p><strong>Statement:</strong> Customer data remains in EU/EEA. <strong>Rationale:</strong> DORA/GDPR drivers. <strong>Implications:</strong> Landing-zone principles; no extra-EEA SaaS without Board amendment.</p>
+              <h6 class="font-bold text-sm">Principle 4 — One customer truth</h6>
+              <p><strong>Statement:</strong> One customer legal entity = one system of record. <strong>Rationale:</strong> Merger driver. <strong>Implications:</strong> No second customer master in any architecture project.</p>
+              <h6 class="font-bold text-sm">CCSUR quality check (catalog as a whole)</h6>
+              <p>Complete · Consistent · Stable · Understandable · Robust. Eight principles maximum this version. Senior management supported. Traceable to business objectives and architecture drivers.</p>`),
+            gov: "<strong>Challenge:</strong> A division tried to add 40 ‘principles’ that were really design standards. <strong>Resolution:</strong> Board applied CCSUR and ‘keep the number small.’ Standards went to the Standards Information Base; only enduring, Board-approved rules stayed in the principles catalog. Amendment process required for changes."
+          },
+          exam: {
+            cards: [
+              { h: "NSRI", b: "Name, Statement, Rationale, Implications." },
+              { h: "CCSUR", b: "Complete, Consistent, Stable, Understandable, Robust." },
+              { h: "Enterprise vs architecture", b: "Enterprise: whole-mission decisions. Architecture: govern development, maintenance, use of EA; below enterprise principles." },
+              { h: "ADM use", b: "Create in Preliminary; confirm in A; fulfill in B–D." }
+            ],
+            compare: [
+              ["Principle structure", "NSRI in 9.2", "Unchanged in TOGAF 10 Fundamental Content — still a Foundation favorite"],
+              ["Quality criteria", "Understandable/robust/complete/consistent/stable (order may vary in texts)", "Same five; notes order CCSUR — exam may shuffle order"],
+              ["Catalog", "Principles catalog", "Still a catalogue artifact in the content framework"],
+              ["Digital / agile principles", "Less product-centric", "Series Guides may add digital principles; they still need Board approval and CCSUR"],
+              ["Governance", "Architecture Board enacts", "Unchanged: candidates by EAs + stakeholders; Board approves; amendment process"],
+              ["Domain split", "B/D/A/T principles", "Still valid grouping; do not invent a fifth ‘cloud’ domain as an ADM domain"]
+            ],
+            mnemonics: [
+              "<strong>NSRI</strong> — Name, Statement, Rationale, Implications.",
+              "<strong>CCSUR</strong> — Complete, Consistent, Stable, Understandable, Robust.",
+              "Hierarchy: <strong>ESA</strong> — Enterprise, Segment, Architecture.",
+              "Benefits (4+): <strong>GAGV</strong> — Guidelines, (enable) decisions, Align enterprise, Governance, (reflect) Values/culture."
+            ],
+            quiz: [
+              { q: "The TOGAF recommended structure of a principle is:", opts: ["Vision, baseline, target, gap", "Name, Statement, Rationale, Implications", "Catalogue, matrix, diagram, SBB", "SMART only"], a: "B", trap: "D confuses business-scenario outcomes with principles." },
+              { q: "Which is NOT one of the five quality criteria in the notes?", opts: ["Complete", "Cheap", "Consistent", "Robust"], a: "B", trap: "Cost is an implication topic, not a quality criterion." },
+              { q: "Architecture principles are typically approved by:", opts: ["A random vendor", "The Architecture Board", "Phase F only", "Requirements Management automatically"], a: "B", trap: "A is the ‘vendor writes architecture’ trap." },
+              { q: "Enterprise principles:", opts: ["Are identical to SBBs", "Provide a basis for decision-making throughout the enterprise and inform the mission", "Are only technology standards", "Replace the ADM"], a: "B", trap: "A — principles are not solutions." },
+              { q: "During Phases B, C, and D you:", opts: ["Delete the catalog", "Ensure target architectures fulfill the architecture principles", "Create the RFAW", "Skip governance"], a: "B", trap: "C is Preliminary/sponsor trigger, not BCD." },
+              { q: "Implications of a principle should answer:", opts: ["The UML class model", "How this affects me, my team, or my organization (resources, costs, activities)", "The cloud unit price only", "The Phase G PIR date"], a: "B", trap: "C is procurement detail." },
+              { q: "Good architecture principles should be:", opts: ["Numerous and changed weekly", "Few, enduring, and seldom amended", "Secret from stakeholders", "Written only in Phase G"], a: "B", trap: "A violates ‘small number’ and ‘stable’." }
+            ]
+          }
+        },
+        {
+          id: "20",
+          nav: "20 Approach",
+          filename: "20 Approach.docx",
+          phase: "Preliminary Phase — approach summary",
+          series: "Defines the enterprise; integrate EA with existing management frameworks",
+          lede: "Summarizes how to build architecture capability: define the enterprise boundary, capture drivers and context, define principles, tailor and integrate frameworks, then mature the capability on purpose.",
+          overview: {
+            scope: "The <strong>enterprise</strong> is the highest-level description used to identify the boundary of EA — the outer limit EA must address. It may be one organization, several joined by a common mission, or a part (e.g. R&amp;D or production).",
+            purpose: "Set the boundary for architecture work; understand context so you can select and tailor the framework; define principles as constraints; integrate EA with existing management frameworks (e.g. project management); strategically grow capability via maturity assessments.",
+            concepts: "Context questions: budget, stakeholders, issues/concerns, stakeholder requirements for EA, formality of culture. Framework questions: which TOGAF elements, other frameworks (e.g. ArchiMate), interaction with PM. Then regularly assess current capability, set desired capability, initiate measures.",
+            elevator: [
+              "<strong>Define the enterprise</strong> = set the outer limit of EA (not always ‘the whole legal entity’).",
+              "Context → tailor/integrate frameworks → principles as constraints.",
+              "Maturity loop: assess current → set desired → initiate measures (repeat)."
+            ],
+            callouts: [
+              box("tip", "💡 Enterprise ≠ always the whole company", "It can be a set of organizations with a common mission, or just a function such as production."),
+              box("yield", "🎯 High-yield", "Preliminary defines principles that become <strong>constraints</strong> on later architecture work. Tailor TOGAF <em>and</em> integrate with existing management frameworks."),
+              box("trap", "⚠️ Exam trap", "Do not start Phase A without a defined enterprise boundary. Do not assume ‘enterprise’ always means the entire corporation.")
+            ]
+          },
+          steps: {
+            mnemonic: "<strong>E-C-P-F-M</strong> — Enterprise, Context, Principles, Frameworks (tailor/integrate), Maturity. Story: “Fence the farm, read the weather, post the rules, pick the playbook, grow the team.”",
+            chunked: [
+              "Define the enterprise boundary (outer limit of EA).",
+              "Read organizational context and drivers; define principles; tailor/integrate frameworks.",
+              "Run a repeating maturity loop: assess, target, improve."
+            ],
+            items: [
+              { title: "Define the enterprise", body: "Highest-level description identifying the EA boundary — the outer limit to address. One org, many orgs with a common mission, or a part of an org (function).", hook: "Three shapes: <strong>One / Many / Part</strong>." },
+              { title: "Identify key drivers and organizational context", body: "Budget, stakeholders, key issues/concerns, stakeholder requirements for EA, formal vs informal culture. Informs framework selection and tailoring.", hook: "Context (4+): <strong>BSSRC</strong> — Budget, Stakeholders, Issues, Requirements, Culture." },
+              { title: "Define architectural principles", body: "They form part of the constraints on architecture work.", hook: "" },
+              { title: "Define, tailor, and integrate frameworks", body: "Which TOGAF elements? Other architecture frameworks (e.g. ArchiMate)? How does EAM interact with project management and other management frameworks?", hook: "Integration trio: <strong>TOGAF · modeling · PM</strong>." },
+              { title: "Strategically develop architecture capability", body: "Regular EA maturity assessment of current capability; determine desired capability; initiate measures to achieve it.", hook: "Loop: <strong>Assess → Desire → Act</strong>." }
+            ]
+          },
+          io: [
+            { name: "Definition of the enterprise (boundary)", kind: "Deliverable / statement", mandatory: true, repo: "Governance / context; bounds later Landscape", bb: "Sets which ABBs are in play; excludes out-of-enterprise SBBs", detail: "Outer limit the EA must address.", template: "In-scope orgs/functions · out of scope · common mission (if multi-org)" },
+            { name: "Organizational context &amp; drivers pack", kind: "Input analysis", mandatory: true, repo: "Governance context", bb: "N/A", detail: "Budget, stakeholders, issues, EA requirements, culture.", template: "Question list from notes" },
+            { name: "Tailored &amp; integrated framework set", kind: "Deliverable", mandatory: true, repo: "Architecture Repository / EA operating model", bb: "How ABBs/SBBs will be described and delivered via PM", detail: "TOGAF elements in use + other frameworks + PM interface.", template: "Framework map · interfaces to PM/budgeting" },
+            { name: "Architecture principles (constraints)", kind: "Catalogue", mandatory: true, repo: "Principles catalog", bb: "Constraints", detail: "See document 19.", template: "NSRI" },
+            { name: "EA maturity assessment cycle", kind: "Recurring assessment", mandatory: false, repo: "EA capability", bb: "N/A", detail: "Current vs desired capability; improvement measures.", template: "Current · target · initiatives" }
+          ],
+          kase: {
+            title: "Helvetia — the enterprise is Retail+SME, not ‘the whole group’",
+            trigger: "Group legal entity included asset management and a foreign branch. ExCo tried to make EA ‘everything.’ Approach: define enterprise as Retail+SME plus shared payments — Markets only as a soft unit — so capability matched budget and culture (still informal in branches).",
+            artifacts: "<strong>Strategy office</strong> documented the common mission (universal bank, EU retail). <strong>CFO</strong> set EA budget. <strong>Chief Architect</strong> mapped TOGAF ADM + ArchiMate + existing PMO stage-gates. Principles catalog referenced as constraints. First maturity assessment scored ‘ad hoc’; target ‘managed’ in 12 months.",
+            excerpt: "<p class='text-xs'><strong>Enterprise definition (Approved):</strong> Helvetia Retail &amp; SME (CH/EU books), including shared customer, payments, and ledger capabilities. Out of scope this capability cycle: Markets, Group Asset Management. Foreign branch consumes ABBs but does not define them.</p>",
+            sampleDoc: sampleShell("Enterprise Definition and Framework Approach", "Preliminary approach · ENT-HRB-P-2026 · Approved · outer limit of EA", `
+              <h6 class="font-bold text-sm">1. Define the enterprise (boundary)</h6>
+              <p>The enterprise is the highest-level description identifying the outer limit EA must address. Here it is <strong>a part of the legal group</strong>, not the whole corporation.</p>
+              <table class="w-full border">
+                <tr><td class="border p-2 font-semibold">In</td><td class="border p-2">Helvetia Retail and SME (CH/EU books); shared Customer, Payments, Ledger capabilities</td></tr>
+                <tr><td class="border p-2 font-semibold">Out this cycle</td><td class="border p-2">Markets; Group Asset Management</td></tr>
+                <tr><td class="border p-2 font-semibold">Consumes but does not define</td><td class="border p-2">Foreign branch uses ABBs defined by Retail/SME EA</td></tr>
+              </table>
+              <h6 class="font-bold text-sm">2. Key drivers and organizational context</h6>
+              <table class="w-full border">
+                <tr><td class="border p-2 font-semibold">Budget</td><td class="border p-2">EA capability funded as 4 FTE + repository; architecture project budget comes later via RFAW</td></tr>
+                <tr><td class="border p-2 font-semibold">Stakeholders</td><td class="border p-2">COO, CIO, Risk, Retail, Data Office, PMO, branch network</td></tr>
+                <tr><td class="border p-2 font-semibold">Issues / concerns</td><td class="border p-2">2019 failure; DORA evidence; merger platforms</td></tr>
+                <tr><td class="border p-2 font-semibold">EA requirements</td><td class="border p-2">Board, principles, tailored ADM, fit-for-purpose tools before any Vision</td></tr>
+                <tr><td class="border p-2 font-semibold">Culture</td><td class="border p-2">Still informal in branches — communications and BTRA will matter in Phase A</td></tr>
+              </table>
+              <h6 class="font-bold text-sm">3. Principles as constraints</h6>
+              <p>PC-HRB-P-2026 constrains later architecture work (COTS, EU-region, one customer truth, compliance with law).</p>
+              <h6 class="font-bold text-sm">4. Tailor and integrate frameworks</h6>
+              <p>TOGAF Fundamental Content (ADM) + ArchiMate for views. PMO keeps stage-gates; Architecture Board owns architecture compliance at those gates. DAMA intersects for data method. Leader’s Guide used to evolve the EA office. Unsigned enterprise definition = no RFAW for a whole-group Vision.</p>
+              <h6 class="font-bold text-sm">5. Maturity loop</h6>
+              <table class="w-full border">
+                <tr><td class="border p-2 font-semibold">Current</td><td class="border p-2">Ad hoc (file-share EA)</td></tr>
+                <tr><td class="border p-2 font-semibold">Desired</td><td class="border p-2">Managed within 12 months</td></tr>
+                <tr><td class="border p-2 font-semibold">Measures</td><td class="border p-2">Board cadence, catalog, repository, role fill; reassess quarterly</td></tr>
+              </table>`),
+            gov: "<strong>Challenge:</strong> Group PMO claimed EA must follow waterfall stage-gates with no tailoring. <strong>Resolution:</strong> Preliminary integration map: PMO keeps stage-gates; Architecture Board owns architecture compliance at those gates. TOGAF was tailored (not replaced). Unsigned enterprise definition = no RFAW for a ‘whole group’ Vision."
+          },
+          exam: {
+            cards: [
+              { h: "Enterprise definition", b: "Highest-level description; outer limit EA must address. One org, many with a mission, or a part." },
+              { h: "Context before framework", b: "Budget, stakeholders, issues, EA requirements, culture → select and tailor." },
+              { h: "Principles as constraints", b: "Defined in Preliminary; constrain later work." },
+              { h: "Maturity loop", b: "Assess current, determine desired, initiate measures — regularly." }
+            ],
+            compare: [
+              ["Enterprise scoping", "Same idea in 9.2", "TOGAF 10 still allows federated / capability-scoped enterprises; digital product orgs often ‘part of org’"],
+              ["Management framework integration", "PM interface in Preliminary", "Stronger expectation to integrate with agile delivery frameworks, not only classic PM"],
+              ["Modular TOGAF", "Tailor the 9.2 book", "Tailor Fundamental Content + choose Series Guides (maturity, leaders, agile)"],
+              ["Modeling frameworks", "ArchiMate as example", "Same: Preliminary decides if/how modeling frameworks sit beside ADM"],
+              ["Capability evolution", "Establish then maybe forget", "Leader’s Guide: evolve capability; maturity assessments are repeating, not one-off"]
+            ],
+            mnemonics: [
+              "<strong>E-C-P-F-M</strong> — Enterprise, Context, Principles, Frameworks, Maturity.",
+              "Enterprise shapes: <strong>One / Many / Part</strong>.",
+              "Context: <strong>BSSRC</strong> — Budget, Stakeholders, Issues, Requirements, Culture."
+            ],
+            quiz: [
+              { q: "In TOGAF, ‘the enterprise’ is:", opts: ["Always the entire legal corporation", "The highest-level description identifying the boundary (outer limit) of the EA — which may be one org, many, or a part", "Only the IT department", "Only Phase D technology"], a: "B", trap: "A is the ‘enterprise always means everything’ trap." },
+              { q: "Architecture principles in this approach are:", opts: ["Optional slogans", "Constraints on architecture work in the enterprise", "SBBs to procure", "Phase G PIRs"], a: "B", trap: "C — principles are not products." },
+              { q: "Understanding organizational context is necessary to:", opts: ["Skip governance", "Make effective decisions about the architecture framework to use and how to tailor it", "Write SQL only", "Close Phase H"], a: "B", trap: "A is opposite of Preliminary’s job." },
+              { q: "Integrating frameworks includes asking how EA management interacts with:", opts: ["Only social media", "Project management (and other management frameworks)", "Only HVAC", "Phase A solution concept drawings exclusively"], a: "B", trap: "D is later and too narrow." },
+              { q: "Strategic development of architecture capability uses:", opts: ["A one-time tool purchase only", "Regular maturity assessment, a desired capability, and measures to get there", "Deleting principles yearly", "Vendor lock-in as policy"], a: "B", trap: "A is the ‘tool = capability’ trap." },
+              { q: "After Preliminary, the next ADM phase in the notes is:", opts: ["Phase G", "Phase A Architecture Vision", "Requirements Management only", "Phase F"], a: "B", trap: "C is the hub, not the next development phase." }
+            ]
+          }
+        }
+      ];
+
+      return {
+        docs,
+        tabs: [
+          { id: "overview", label: "1. Overview & Objectives" },
+          { id: "steps", label: "2. Phase Steps & Workflow" },
+          { id: "io", label: "3. Inputs, Outputs & Templates" },
+          { id: "case", label: "4. Real-World Case Study" },
+          { id: "exam", label: "5. TOGAF 10 Exam Revision" }
+        ],
+        active: "17",
+        tabId: "overview",
+        openStep: {},
+        showAns: {},
+        init() {
+          this.docs.forEach(d => { this.openStep[d.id] = 0; this.showAns[d.id] = false; });
+          this.$nextTick(() => lucide.createIcons());
+        },
+        select(id) {
+          this.active = id;
+          this.tabId = "overview";
+          this.$nextTick(() => lucide.createIcons());
+        },
+        toggleStep(docId, idx) {
+          this.openStep[docId] = this.openStep[docId] === idx ? -1 : idx;
+        },
+        boxClass(type) {
+          if (type === "trap") return "bg-[#FEE2E2] border-[#EF4444]";
+          if (type === "yield") return "bg-[#FEF3C7] border-[#F59E0B]";
+          return "bg-[#DBEAFE] border-[#3B82F6]";
+        }
+      };
+    }
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => lucide.createIcons());
+  </script>
+</body>
+</html>
